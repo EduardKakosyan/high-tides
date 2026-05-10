@@ -42,9 +42,8 @@ pnpm secrets:scan     # Scan entire codebase for secrets
 
 **Branching Strategy:**
 
-- `main` is protected - no direct pushes
-- Create feature branches from `dev`
-- Only `dev` merges into `main` via PR
+- `main` is the long-lived branch — protected, merges happen via PR
+- Cut feature branches from `main`
 - Branch naming: `feat/description`, `fix/description`, `chore/description`
 
 **Commit Message Format (enforced by commitlint):**
@@ -146,9 +145,9 @@ describe("ComponentName", () => {
 
 ## Adding New Features
 
-1. Create feature branch from `dev`
+1. Cut a feature branch from `main` (`git checkout -b feat/...`)
 2. Implement with tests
 3. Run full validation: `pnpm lint && pnpm type-check && pnpm test`
 4. Create changeset: `pnpm changeset`
 5. Commit with conventional format
-6. Create PR using template
+6. Open a PR against `main`

@@ -96,10 +96,10 @@ Select the appropriate bump type:
 
 ## Pull Request Process
 
-1. Create PR against `dev` branch (not `main`)
+1. Cut your branch from `main` and open the PR against `main`
 2. Fill out the PR template completely
 3. Ensure CI passes
-4. Request review
+4. Request review (if applicable)
 5. Address feedback
 6. Squash and merge when approved
 
