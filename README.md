@@ -1,249 +1,94 @@
-# venture-template
+# High Tides
 
-A production-ready startup template optimized for Next.js + Supabase + Vercel with AI-assisted development in mind.
+A single-property showcase site for the High Tides cottage. Built with Next.js 16 (App Router) + Tailwind v4 + Cloudinary.
 
-## Features
+The site is editorial-first: hero video, About, photo gallery with lightbox, amenities, location, and a `mailto:` contact CTA. No booking engine, no auth, no payments — just a beautiful storefront for the property.
 
-- **Code Quality**: ESLint + Prettier with auto-fix on commit
-- **Type Safety**: TypeScript strict mode
-- **Testing**: Vitest + React Testing Library
-- **CI/CD**: GitHub Actions for PR validation
-- **Local CI**: Pre-push hook runs GitHub Actions locally via [act](https://github.com/nektos/act)
-- **Git Workflow**: Husky hooks + commitlint for consistent commits
-- **Versioning**: Changesets for semantic versioning
-- **Security**: Gitleaks secret scanning on every commit and push
-- **AI-Ready**: CLAUDE.md + AGENTS.md for AI coding assistants
-
-## Quick Start
+## Quick start
 
 ```bash
-# 1. Fork and clone this repository
-git clone <your-fork-url>
-cd venture-template
-
-# 2. Install dependencies (requires pnpm)
 pnpm install
-
-# 3. Create dev branch
-git checkout -b dev
-
-# 4. Start building!
+cp .env.example .env.local       # add your Cloudinary cloud name
+pnpm dev                          # http://localhost:3000
 ```
+
+If you don't yet have a Cloudinary cloud name, the site renders fallback gradients and placeholder images so you can iterate on layout without uploading assets.
+
+## Wiring up your media
+
+1. Create a Cloudinary account (free) and copy your **cloud name** into `.env.local`:
+   ```
+   NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name
+   ```
+2. Upload your photos and the hero video to folders under `high-tides/` in your Cloudinary dashboard.
+3. Open [`src/lib/media.ts`](./src/lib/media.ts) and replace the placeholder `publicId`s with your real ones. Set accurate `width`, `height`, and `alt` for every photo.
+4. Edit [`src/lib/site.ts`](./src/lib/site.ts) to set the property name, tagline, email, phone, address, and amenities.
+
+That's the whole content surface — no CMS, no rebuild scripts. Re-run `pnpm dev` (or deploy) after editing.
 
 ## Commands
 
-| Command              | Description                 |
-| -------------------- | --------------------------- |
-| `pnpm install`       | Install dependencies        |
-| `pnpm lint`          | Run ESLint + Prettier check |
-| `pnpm lint:fix`      | Auto-fix lint issues        |
-| `pnpm type-check`    | Run TypeScript validation   |
-| `pnpm test`          | Run unit tests              |
-| `pnpm test:watch`    | Run tests in watch mode     |
-| `pnpm test:coverage` | Generate coverage report    |
-| `pnpm changeset`     | Create version changeset    |
-| `pnpm secrets:scan`  | Scan codebase for secrets   |
+| Command              | Description                    |
+| -------------------- | ------------------------------ |
+| `pnpm dev`           | Run the Next.js dev server     |
+| `pnpm build`         | Build for production           |
+| `pnpm start`         | Serve the production build     |
+| `pnpm lint`          | ESLint + Prettier check        |
+| `pnpm lint:fix`      | Auto-fix lint issues           |
+| `pnpm type-check`    | `tsc --noEmit`                 |
+| `pnpm test`          | Run all unit tests             |
+| `pnpm test:coverage` | Tests + coverage report (≥60%) |
+| `pnpm secrets:scan`  | Gitleaks scan of the codebase  |
+| `pnpm changeset`     | Create a version changeset     |
 
-## Git Workflow
-
-### Branching Strategy
+## Project structure
 
 ```
-main (protected)
-  └── dev (integration)
-       ├── feat/feature-name
-       ├── fix/bug-description
-       └── chore/task-description
+src/
+  app/
+    layout.tsx              # fonts, metadata, SmoothScroll wrapper
+    page.tsx                # composes the six sections
+    globals.css             # Tailwind v4 import + @theme tokens
+    sitemap.ts / robots.ts
+  components/
+    layout/    Nav, Footer, SmoothScroll (Lenis)
+    sections/  Hero, About, Gallery, Amenities, Location, Contact
+    ui/        SectionHeading, RevealOnScroll, ScrollIndicator
+  lib/
+    site.ts        # property content (name, address, amenities, email, phone)
+    media.ts       # Cloudinary public_id registry
+    cloudinary.ts  # cloud-name + hasCloudinary feature flag
+    cld-client.ts  # client boundary re-export for next-cloudinary
 ```
 
-- `main` is protected - no direct pushes
-- Create feature branches from `dev`
-- Merge to `dev` first, then `dev` → `main` via PR
+## Deploying
 
-### Commit Format
+1. Push to GitHub.
+2. Import the repository in Vercel.
+3. Set `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` in the Vercel project's environment variables.
+4. Deploy. Preview URLs work the same way per-branch.
 
-Commits are validated by commitlint. Format: `type: description`
+## Architecture decisions
 
-| Type       | Description             |
-| ---------- | ----------------------- |
-| `feat`     | New feature             |
-| `fix`      | Bug fix                 |
-| `chore`    | Maintenance task        |
-| `refactor` | Code refactoring        |
-| `docs`     | Documentation only      |
-| `test`     | Adding/updating tests   |
-| `ci`       | CI/CD changes           |
-| `perf`     | Performance improvement |
+See [`docs/adr/0001-stack-choice.md`](./docs/adr/0001-stack-choice.md) for the rationale behind the stack choices (Next.js 16, Tailwind v4, Cloudinary, Lenis, Motion, gallery libs, `mailto:` contact).
 
-Examples:
+## Git workflow
+
+`main` is protected. Branch off `dev` for features. Commit format is `type: description` (`feat`, `fix`, `chore`, `refactor`, `docs`, `test`, `ci`, `perf`) — enforced by commitlint.
 
 ```bash
-git commit -m "feat: add user authentication"
-git commit -m "fix: resolve login timeout issue"
-git commit -m "chore: update dependencies"
+git checkout -b feat/something
+# make changes
+pnpm lint && pnpm type-check && pnpm test
+git commit -m "feat: something"
 ```
 
-### PR Workflow
+Pre-commit runs Gitleaks + lint-staged. Pre-push optionally runs the GitHub Actions workflow locally via [act](https://github.com/nektos/act).
 
-1. Create feature branch from `dev`
-2. Make changes with tests
-3. Run validation: `pnpm lint && pnpm type-check && pnpm test`
-4. Create changeset (if needed): `pnpm changeset`
-5. Push and create PR
-6. CI validates automatically
-7. Get review and merge
+## Accessibility & performance notes
 
-## Project Structure
-
-```
-venture-template/
-├── src/
-│   └── lib/              # Utility functions
-│       └── __tests__/    # Unit tests
-├── docs/
-│   └── adr/              # Architecture Decision Records
-├── .github/
-│   └── workflows/        # GitHub Actions
-├── .husky/               # Git hooks (pre-commit, pre-push, commit-msg)
-├── .changeset/           # Version changesets
-├── .actrc                # act configuration for local CI
-├── .actignore            # Files excluded from act container
-├── .gitleaks.toml        # Secret scanning rules
-├── .secrets.example      # Template for local act secrets
-├── CLAUDE.md             # Claude Code instructions
-├── AGENTS.md             # AI agent instructions
-└── [config files]
-```
-
-## Adding Your Next.js App
-
-This template is tooling-only. To add your Next.js application:
-
-```bash
-# Option 1: Create new Next.js app in this directory
-pnpm create next-app . --typescript --tailwind --eslint --app --src-dir
-
-# Option 2: Copy your existing Next.js app
-# (merge package.json dependencies manually)
-```
-
-## Architecture Decisions
-
-Major decisions are documented in `docs/adr/`. To add a new decision:
-
-1. Copy the template: `cp docs/adr/TEMPLATE.md docs/adr/NNNN-title.md`
-2. Fill in the details
-3. Include in your PR
-
-## CI/CD
-
-GitHub Actions automatically run on PRs to `main` and `dev`:
-
-- **Lint**: ESLint + Prettier validation
-- **Type Check**: TypeScript compilation
-- **Test**: Vitest unit tests
-- **Secret Scan**: Gitleaks secret detection
-- **Changeset Check**: Warns if no changeset for versioned changes
-
-### Local CI Testing with act (Optional)
-
-This template includes a **pre-push hook** that automatically runs GitHub Actions locally using [nektos/act](https://github.com/nektos/act) before pushing. This catches CI failures early, saving time and avoiding failed builds.
-
-#### Setup
-
-1. **Install Docker** (required):
-   - [Docker Desktop](https://www.docker.com/products/docker-desktop/) for macOS/Windows
-   - `sudo apt install docker.io` for Linux
-
-2. **Install act**:
-
-   ```bash
-   # macOS
-   brew install act
-
-   # Windows
-   scoop install act
-   # or: choco install act-cli
-
-   # Linux
-   curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash
-   ```
-
-3. **Configure secrets** (optional, for full Gitleaks support):
-
-   ```bash
-   cp .secrets.example .secrets
-   # Edit .secrets with your tokens
-   ```
-
-4. **First run** - act will prompt to select an image size:
-   - Choose **medium** for good compatibility vs. download size
-   - The `.actrc` file pre-configures sensible defaults
-
-#### Usage
-
-The pre-push hook runs automatically:
-
-```bash
-git push  # act runs CI checks before push
-```
-
-Manual commands:
-
-```bash
-# Run full CI workflow
-act push
-
-# Run specific job
-act -j validate
-
-# List available workflows
-act -l
-
-# Dry run (show what would run)
-act -n
-```
-
-#### Skipping Local CI
-
-If you need to bypass the local CI check:
-
-```bash
-SKIP=act git push
-```
-
-**Note**: act supports ~79% of GitHub Actions features. Some complex actions may behave differently locally. If local CI fails but you're confident the code is correct, you can skip and let GitHub Actions run the authoritative check.
-
-## Security
-
-### Secret Scanning
-
-Every commit is scanned for secrets using [Gitleaks](https://github.com/gitleaks/gitleaks):
-
-- API keys (Supabase, Vercel, Stripe, etc.)
-- Authentication tokens
-- Private keys
-- High-entropy strings
-
-**If blocked**: Remove the secret, use environment variables, and update `.env.example`.
-
-**False positive?** Add `// gitleaks:allow` inline or update `.gitleaks.toml`.
-
-### Environment Variables
-
-- Use `.env.local` for local development (gitignored)
-- Use `.env.example` to document required variables (committed)
-- Never commit real secrets
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-## AI Assistance
-
-This template is optimized for AI-assisted development:
-
-- **CLAUDE.md**: Instructions for Claude Code
-- **AGENTS.md**: Vendor-neutral AI agent instructions
-
-These files provide context, patterns, and boundaries to help AI assistants write high-quality code that matches project conventions.
+- Smooth scroll is disabled when `prefers-reduced-motion: reduce` is set **or** when the user is on a coarse pointer (touch device).
+- All scroll-triggered reveals (`RevealOnScroll`) short-circuit to a static render under reduced-motion.
+- Every `CldImage` has alt text sourced from `lib/media.ts`.
+- The hero serves a poster image as the LCP element; the video loads after.
+- Fonts use `next/font` with `display: 'swap'` to avoid blank text on first paint.

@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+
+  --color-foam: #f7f4ee;
+  --color-sand-50: #faf7f1;
+  --color-sand-100: #f1ebde;
+  --color-sand-200: #e3d8c3;
+  --color-sand-300: #c9b89a;
+  --color-sea-300: #93b8c4;
+  --color-sea-500: #4a7d8c;
+  --color-sea-700: #2c5562;
+  --color-sea-900: #173641;
+  --color-deep: #0e1f24;
+
+  --container-7xl: 88rem;
+
+  --text-display-2xl: clamp(3rem, 7vw, 6.5rem);
+  --text-display-xl: clamp(2.5rem, 5.5vw, 4.5rem);
+  --text-display-lg: clamp(2rem, 4vw, 3rem);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-foam);
+    color: var(--color-deep);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background-color: var(--color-sea-700);
+    color: var(--color-foam);
+  }
+
+  /* Respect prefers-reduced-motion globally for utility-driven transitions */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
