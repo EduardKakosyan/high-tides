@@ -18,18 +18,19 @@ export function Contact() {
           className="flex flex-col items-center gap-6"
         >
           <p className="text-xs uppercase tracking-[0.4em] text-teal-300">
-            Stay with us
+            Write to us
           </p>
           <h2
             id="contact-heading"
             className="font-display text-display-xl leading-[1.02] text-foam"
           >
-            Plan your week at High Tides
+            Say hello, ask anything
           </h2>
           <p className="max-w-2xl text-pretty text-lg leading-relaxed text-foam/85">
-            We answer every enquiry personally — usually within a day. Tell us
-            the dates you have in mind, how many will be staying, and anything
-            you&rsquo;d like to know about the cottage.
+            One of us reads every email and writes back within a day. Dates, how
+            many of you, what you&rsquo;re hoping for — that&rsquo;s plenty to
+            start. Questions about the kitchen, the dog rules, or whether the
+            lobster suppers are still on? Ask.
           </p>
         </RevealOnScroll>
 

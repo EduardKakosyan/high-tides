@@ -17,7 +17,7 @@ export function About() {
             id="about-heading"
             eyebrow="The place"
             title="A small cottage in a smaller village"
-            description="High Tides sits a little way back from the water in Port Mouton, an old fishing village on Nova Scotia's South Shore. Four minutes on foot puts you on a private stretch of beach. The wharf is just down the road; the lobster boats head out before you&rsquo;re up."
+            description="An old fishing settlement of maybe a hundred houses, a Tim Hortons twenty minutes away, and a cove that goes from glass to whitecaps by lunch. The lobster boats leave the wharf before sunrise — you can hear the diesels start from the porch."
           />
           <RevealOnScroll
             direction="up"
@@ -25,15 +25,17 @@ export function About() {
             className="flex flex-col gap-4 text-base leading-relaxed text-teal-900/80 sm:text-lg"
           >
             <p>
-              It&rsquo;s the kind of place that fills up with the people you
-              actually want to spend time with. Bring books you mean to read,
-              meals you mean to cook, conversations you mean to have. The
-              village keeps the rest of the world a comfortable distance away.
+              A four-minute walk through the spruce puts you on a private
+              stretch of beach. In June it&rsquo;s lupins along the path and fog
+              that burns off by ten. In late August the water finally warms up.
+              September is our favourite — emptier, sharper, the surf louder
+              against fewer voices.
             </p>
             <p>
-              We&rsquo;ve been coming here for years. We let it out to a small
-              number of guests each season so it stays cared for and well-loved
-              — and the neighbours keep being the neighbours.
+              We&rsquo;ve had the cottage in the family a long time. A handful
+              of guests each season keeps it lived-in without wearing it out.
+              The people next door will wave when you pull in; that&rsquo;s
+              about the welcoming committee.
             </p>
           </RevealOnScroll>
         </div>

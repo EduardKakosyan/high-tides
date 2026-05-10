@@ -18,7 +18,7 @@ export function Location() {
             id="location-heading"
             eyebrow="Getting here"
             title="Port Mouton, on the Lighthouse Route"
-            description="On Nova Scotia's South Shore, between Liverpool and Shelburne. About two hours from Halifax — long enough for the road to clear your head, short enough that you can be on the beach before lunch."
+            description="Route 103 south from Halifax, then a turn-off you’d miss without the GPS. Blueberry barrens on the left, the South Shore opening up on the right."
           />
           <RevealOnScroll
             direction="up"
@@ -59,7 +59,8 @@ export function Location() {
               </li>
             </ul>
             <p className="mt-3 text-sm text-teal-700">
-              Precise directions are shared when we confirm your dates.
+              We send the driveway, the door code, and a couple of local tips
+              once your dates are confirmed.
             </p>
           </RevealOnScroll>
         </div>

@@ -15,6 +15,8 @@ describe("About", () => {
 
   it("describes Port Mouton character in the body copy", () => {
     render(<About />);
-    expect(screen.getByText(/been coming here for years/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/had the cottage in the family/i),
+    ).toBeInTheDocument();
   });
 });

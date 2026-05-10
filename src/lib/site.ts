@@ -27,9 +27,9 @@ export interface SiteData {
 
 export const site: SiteData = {
   name: "High Tides",
-  tagline: "A quiet cottage in Port Mouton, a short walk from the Atlantic",
+  tagline: "A cottage by the Atlantic, kept for a few guests each summer.",
   description:
-    "High Tides is a renovated cottage in Port Mouton, on Nova Scotia's South Shore. A four-minute walk takes you to a private stretch of beach. Browse the place and get in touch to plan your stay.",
+    "A renovated cottage on the South Shore — three bedrooms, a wood stove, a kayak in the shed, and a path down to the water through the spruce. Enquiries by email.",
   url: "https://hightides.example.com",
   email: "stay@hightides.example.com",
   phone: "+1-902-555-0123",
@@ -45,33 +45,33 @@ export const site: SiteData = {
   },
   amenities: [
     {
-      title: "The setting",
+      title: "Outside",
       items: [
-        "Four-minute walk to a private stretch of beach",
-        "Carters Beach and the Kejimkujik Seaside Adjunct a short drive away",
-        "Lobster boats at the wharf in the morning",
-        "Quiet road, stars overhead, surf within earshot",
+        "Screened porch facing the spruce",
+        "Small back deck with a kettle barbecue",
+        "Outdoor shower for after the beach",
+        "Fire pit and a stack of dry hardwood",
       ],
     },
     {
-      title: "The cottage",
+      title: "Inside",
       items: [
         "Three bedrooms, sleeps up to six",
-        "Open-plan kitchen with full appliances",
         "Cast-iron wood stove for the cool evenings",
-        "Screened porch and a small back deck",
-        "High-speed Wi-Fi if you have to keep one foot at work",
+        "Open kitchen with full appliances and a French press",
+        "A shelf of paperbacks and a turntable that mostly works",
+        "Wi-Fi if you need to take a call",
       ],
     },
     {
-      title: "On the water and in the woods",
+      title: "Gear in the shed",
       items: [
-        "Paddleboards and a kayak you can carry to the beach",
-        "Beach towels, chairs, and a cooler always packed",
-        "Walking trails into the spruce and along the shore",
-        "Lobster pound and farm stand a short drive away",
+        "A kayak and two paddleboards you can carry down",
+        "Beach chairs, towels, and a cooler ready by the door",
+        "Bikes for the back roads, helmets in the bin",
+        "Tide chart on the fridge, bird book on the windowsill",
       ],
     },
   ],
-  inquirySubject: "High Tides Port Mouton — enquiry",
+  inquirySubject: "High Tides — enquiry",
 };

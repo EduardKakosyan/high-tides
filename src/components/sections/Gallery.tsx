@@ -86,9 +86,9 @@ export function Gallery() {
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-12 px-6 sm:px-10">
         <SectionHeading
           id="gallery-heading"
-          eyebrow="Gallery"
-          title="The cottage, room by room and out to the water"
-          description="Tap any photo to view it full-screen. Use the arrow keys to move through the set."
+          eyebrow="A look around"
+          title="Photographs, mostly unstaged"
+          description="Tap any image to open it. Arrow keys move through the set."
         />
 
         <RowsPhotoAlbum

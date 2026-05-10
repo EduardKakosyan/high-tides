@@ -12,9 +12,9 @@ export function Amenities() {
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-16 px-6 sm:px-10">
         <SectionHeading
           id="amenities-heading"
-          eyebrow="What you get"
-          title="Everything for a slow week by the water"
-          description="High Tides is set up for the way people actually use a cottage — with the comforts that make a long stay feel easy and the gear that lets you spend the day outdoors."
+          eyebrow="What’s here"
+          title="The honest inventory"
+          description="Not a checklist for a hotel. Here’s what’s actually waiting when you open the door, what works, and what you can grab on the way out."
         />
 
         <div className="grid gap-12 sm:grid-cols-2 lg:grid-cols-3">
