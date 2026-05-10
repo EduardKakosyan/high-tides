@@ -12,7 +12,7 @@ export function Hero() {
     <section
       id="top"
       aria-label="Welcome to High Tides"
-      className="relative isolate flex h-dvh min-h-[640px] w-full items-end overflow-hidden bg-sea-900"
+      className="relative isolate flex h-dvh min-h-[640px] w-full items-end overflow-hidden bg-teal-900"
     >
       <div className="absolute inset-0 -z-10">
         {hasCloudinary ? (
@@ -32,7 +32,7 @@ export function Hero() {
         ) : (
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-b from-sea-700 via-sea-900 to-deep"
+            className="absolute inset-0 bg-gradient-to-b from-teal-700 via-teal-900 to-deep"
           />
         )}
         <div
@@ -43,7 +43,7 @@ export function Hero() {
 
       <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 px-6 pb-24 pt-40 sm:px-10 sm:pb-32">
         <p className="text-xs uppercase tracking-[0.5em] text-foam/80">
-          Waterfront cottage · Nova Scotia
+          Port Mouton · Nova Scotia
         </p>
         <h1 className="font-display text-display-2xl leading-[0.95] text-foam">
           {site.name}

@@ -16,23 +16,24 @@ export function About() {
           <SectionHeading
             id="about-heading"
             eyebrow="The place"
-            title="A quiet stretch of coast that feels yours alone"
-            description="High Tides sits on a private cove where the day moves with the water. Mornings start with mist on the bay; afternoons drift into long swims and slow lunches on the deck; evenings end around the fire pit, watching the lights from across the cove flicker on."
+            title="A small cottage in a smaller village"
+            description="High Tides sits a little way back from the water in Port Mouton, an old fishing village on Nova Scotia's South Shore. Four minutes on foot puts you on a private stretch of beach. The wharf is just down the road; the lobster boats head out before you&rsquo;re up."
           />
           <RevealOnScroll
             direction="up"
             delay={0.1}
-            className="flex flex-col gap-4 text-base leading-relaxed text-sea-900/80 sm:text-lg"
+            className="flex flex-col gap-4 text-base leading-relaxed text-teal-900/80 sm:text-lg"
           >
             <p>
               It&rsquo;s the kind of place that fills up with the people you
               actually want to spend time with. Bring books you mean to read,
               meals you mean to cook, conversations you mean to have. The
-              cottage keeps the rest of the world a comfortable distance away.
+              village keeps the rest of the world a comfortable distance away.
             </p>
             <p>
-              We&rsquo;ve loved this place for years. We let it out to a small
-              number of guests each season so it stays cared for and well-loved.
+              We&rsquo;ve been coming here for years. We let it out to a small
+              number of guests each season so it stays cared for and well-loved
+              — and the neighbours keep being the neighbours.
             </p>
           </RevealOnScroll>
         </div>
@@ -53,9 +54,9 @@ export function About() {
           ) : (
             <div
               aria-hidden
-              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-sand-200 via-sand-100 to-sea-300/40"
+              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-sand-200 via-sand-100 to-teal-300/40"
             >
-              <span className="font-display text-2xl text-sea-700">
+              <span className="font-display text-2xl text-teal-700">
                 Photo placeholder
               </span>
             </div>

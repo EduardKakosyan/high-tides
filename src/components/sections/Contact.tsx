@@ -10,14 +10,14 @@ export function Contact() {
     <section
       id="contact"
       aria-labelledby="contact-heading"
-      className="bg-sea-900 py-28 text-foam sm:py-40"
+      className="bg-teal-900 py-28 text-foam sm:py-40"
     >
       <div className="mx-auto flex w-full max-w-4xl flex-col items-center gap-10 px-6 text-center sm:px-10">
         <RevealOnScroll
           direction="up"
           className="flex flex-col items-center gap-6"
         >
-          <p className="text-xs uppercase tracking-[0.4em] text-sea-300">
+          <p className="text-xs uppercase tracking-[0.4em] text-teal-300">
             Stay with us
           </p>
           <h2

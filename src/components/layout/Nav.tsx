@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Logo } from "@/components/ui/Logo";
 import { site } from "@/lib/site";
 
 const sections = [
@@ -30,12 +31,11 @@ export function Nav() {
         aria-label="Primary"
         className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 sm:px-10"
       >
-        <a
-          href="#top"
-          className="font-display text-xl tracking-tight text-foam data-[scrolled=true]:text-deep transition-colors duration-500"
-          data-scrolled={scrolled}
-        >
-          {site.name}
+        <a href="#top" aria-label={`${site.name} — back to top`}>
+          <Logo
+            data-scrolled={scrolled}
+            className="text-foam transition-colors duration-500 data-[scrolled=true]:text-deep"
+          />
         </a>
         <ul className="hidden items-center gap-8 md:flex">
           {sections.map((section) => (
@@ -43,7 +43,7 @@ export function Nav() {
               <a
                 href={`#${section.id}`}
                 data-scrolled={scrolled}
-                className="text-sm tracking-wide text-foam/85 hover:text-foam data-[scrolled=true]:text-sea-900/80 data-[scrolled=true]:hover:text-deep transition-colors duration-500"
+                className="text-sm tracking-wide text-foam/85 hover:text-foam data-[scrolled=true]:text-teal-900/80 data-[scrolled=true]:hover:text-deep transition-colors duration-500"
               >
                 {section.label}
               </a>

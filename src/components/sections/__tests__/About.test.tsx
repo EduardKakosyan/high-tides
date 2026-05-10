@@ -8,13 +8,15 @@ describe("About", () => {
     expect(
       screen.getByRole("heading", {
         level: 2,
-        name: /quiet stretch of coast/i,
+        name: /small cottage in a smaller village/i,
       }),
     ).toBeInTheDocument();
   });
 
-  it("describes the property in the body copy", () => {
+  it("describes Port Mouton character in the body copy", () => {
     render(<About />);
-    expect(screen.getByText(/loved this place for years/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/been coming here for years/i),
+    ).toBeInTheDocument();
   });
 });

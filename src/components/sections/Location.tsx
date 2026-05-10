@@ -17,13 +17,13 @@ export function Location() {
           <SectionHeading
             id="location-heading"
             eyebrow="Getting here"
-            title="A short drive from the city, a world away"
-            description={`High Tides is tucked along the coast in ${site.address.region}. The drive from town takes about an hour — long enough for the road to clear your head, short enough that you can swim before lunch.`}
+            title="Port Mouton, on the Lighthouse Route"
+            description="On Nova Scotia's South Shore, between Liverpool and Shelburne. About two hours from Halifax — long enough for the road to clear your head, short enough that you can be on the beach before lunch."
           />
           <RevealOnScroll
             direction="up"
             delay={0.1}
-            className="flex flex-col gap-2 text-base text-sea-900/85 sm:text-lg"
+            className="flex flex-col gap-3 text-base text-teal-900/85 sm:text-lg"
           >
             <p className="font-medium text-deep">{site.address.line1}</p>
             {site.address.line2 ? <p>{site.address.line2}</p> : null}
@@ -32,7 +32,33 @@ export function Location() {
               {site.address.postal ? `, ${site.address.postal}` : ""}
             </p>
             <p>{site.address.country}</p>
-            <p className="mt-2 text-sm text-sea-700">
+            <ul className="mt-4 grid gap-2 text-base text-teal-900/80">
+              <li className="flex justify-between gap-6 border-b border-teal-900/10 pb-2">
+                <span>Private beach</span>
+                <span className="text-teal-700">4-minute walk</span>
+              </li>
+              <li className="flex justify-between gap-6 border-b border-teal-900/10 pb-2">
+                <span>Carters Beach</span>
+                <span className="text-teal-700">5 minutes by car</span>
+              </li>
+              <li className="flex justify-between gap-6 border-b border-teal-900/10 pb-2">
+                <span>Kejimkujik Seaside</span>
+                <span className="text-teal-700">15 minutes</span>
+              </li>
+              <li className="flex justify-between gap-6 border-b border-teal-900/10 pb-2">
+                <span>Liverpool</span>
+                <span className="text-teal-700">20 minutes</span>
+              </li>
+              <li className="flex justify-between gap-6 border-b border-teal-900/10 pb-2">
+                <span>Lunenburg</span>
+                <span className="text-teal-700">~1 hour</span>
+              </li>
+              <li className="flex justify-between gap-6">
+                <span>Halifax</span>
+                <span className="text-teal-700">~2 hours</span>
+              </li>
+            </ul>
+            <p className="mt-3 text-sm text-teal-700">
               Precise directions are shared when we confirm your dates.
             </p>
           </RevealOnScroll>
@@ -54,9 +80,9 @@ export function Location() {
           ) : (
             <div
               aria-hidden
-              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-sea-300/40 via-sand-100 to-sand-200"
+              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-teal-300/40 via-sand-100 to-sand-200"
             >
-              <span className="font-display text-2xl text-sea-700">
+              <span className="font-display text-2xl text-teal-700">
                 Map placeholder
               </span>
             </div>

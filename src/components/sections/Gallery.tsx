@@ -27,7 +27,7 @@ const sizes = "(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw";
 function toAlbumPhoto(photo: Photo): AlbumPhoto {
   const src = hasCloudinary
     ? getCldImageUrl({ src: photo.publicId, width: photo.width })
-    : `https://placehold.co/${photo.width}x${photo.height}/e3d8c3/2c5562?text=${encodeURIComponent(photo.alt)}`;
+    : `https://placehold.co/${photo.width}x${photo.height}/efe7d2/18686e?text=${encodeURIComponent(photo.alt)}`;
 
   return {
     src,

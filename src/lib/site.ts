@@ -27,18 +27,18 @@ export interface SiteData {
 
 export const site: SiteData = {
   name: "High Tides",
-  tagline: "A waterfront retreat where the day moves with the tide",
+  tagline: "A quiet cottage in Port Mouton, a short walk from the Atlantic",
   description:
-    "High Tides is a private waterfront cottage available to rent — open horizons, slow mornings, and quiet evenings on the water. Browse the gallery and get in touch to plan your stay.",
+    "High Tides is a renovated cottage in Port Mouton, on Nova Scotia's South Shore. A four-minute walk takes you to a private stretch of beach. Browse the place and get in touch to plan your stay.",
   url: "https://hightides.example.com",
   email: "stay@hightides.example.com",
   phone: "+1-902-555-0123",
   address: {
     line1: "Address available on request",
-    city: "Halifax Region",
+    city: "Port Mouton",
     region: "Nova Scotia",
     country: "Canada",
-    postal: "",
+    postal: "B0T",
   },
   socials: {
     instagram: undefined,
@@ -47,30 +47,31 @@ export const site: SiteData = {
     {
       title: "The setting",
       items: [
-        "Private waterfront with dock access",
-        "Wraparound deck and outdoor dining",
-        "Wood-fired hot tub overlooking the cove",
-        "Fire pit and stargazing chairs",
+        "Four-minute walk to a private stretch of beach",
+        "Carters Beach and the Kejimkujik Seaside Adjunct a short drive away",
+        "Lobster boats at the wharf in the morning",
+        "Quiet road, stars overhead, surf within earshot",
       ],
     },
     {
-      title: "Inside",
+      title: "The cottage",
       items: [
         "Three bedrooms, sleeps up to six",
         "Open-plan kitchen with full appliances",
-        "Cast-iron wood stove for cool evenings",
-        "High-speed Wi-Fi and dedicated workspace",
+        "Cast-iron wood stove for the cool evenings",
+        "Screened porch and a small back deck",
+        "High-speed Wi-Fi if you have to keep one foot at work",
       ],
     },
     {
-      title: "On the water",
+      title: "On the water and in the woods",
       items: [
-        "Two paddleboards and a kayak",
-        "Fishing gear and a small rowboat",
-        "Sea-level swimming at low tide",
-        "Sunrise yoga deck",
+        "Paddleboards and a kayak you can carry to the beach",
+        "Beach towels, chairs, and a cooler always packed",
+        "Walking trails into the spruce and along the shore",
+        "Lobster pound and farm stand a short drive away",
       ],
     },
   ],
-  inquirySubject: "High Tides — enquiry",
+  inquirySubject: "High Tides Port Mouton — enquiry",
 };

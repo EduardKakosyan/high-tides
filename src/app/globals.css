@@ -4,16 +4,32 @@
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
 
-  --color-foam: #f7f4ee;
-  --color-sand-50: #faf7f1;
-  --color-sand-100: #f1ebde;
-  --color-sand-200: #e3d8c3;
-  --color-sand-300: #c9b89a;
-  --color-sea-300: #93b8c4;
-  --color-sea-500: #4a7d8c;
-  --color-sea-700: #2c5562;
-  --color-sea-900: #173641;
-  --color-deep: #0e1f24;
+  /* Neutrals — warm bone of beach sand, cool fog over the bay,
+     and the weathered cedar of a south-shore shingle. */
+  --color-foam: #f6f1e6;
+  --color-fog: #e8ebec;
+  --color-driftwood: #a89e8e;
+
+  /* Sand — beach grass and pine straw underfoot */
+  --color-sand-50: #faf6ec;
+  --color-sand-100: #efe7d2;
+  --color-sand-200: #ddcea9;
+  --color-sand-300: #c9b88c;
+
+  /* Teal — the brand colour. Pulled from a calm-day Atlantic
+     and a freshly-painted dory hull. */
+  --color-teal-100: #d6ecec;
+  --color-teal-300: #7fc5c8;
+  --color-teal-500: #2f9aa0;
+  --color-teal-700: #18686e;
+  --color-teal-900: #0a3034;
+
+  /* Accent — used sparingly, like the brass on a buoy
+     or a lobster trap rope. */
+  --color-copper: #b26e47;
+
+  /* Deep — near-black with a teal undertone */
+  --color-deep: #08181c;
 
   --container-7xl: 88rem;
 
@@ -36,7 +52,7 @@
   }
 
   ::selection {
-    background-color: var(--color-sea-700);
+    background-color: var(--color-teal-700);
     color: var(--color-foam);
   }
 
