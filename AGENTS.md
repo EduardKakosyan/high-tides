@@ -139,7 +139,7 @@ SKIP=act git push                    # Skip local CI
 
 ### Forbidden Actions
 
-- Committing to `main` branch directly
+- Pushing directly to `main` (always go through a PR)
 - Modifying `.env` files or committing secrets
 - Disabling TypeScript strict mode
 - Removing or skipping tests
@@ -165,11 +165,11 @@ SKIP=act git push                    # Skip local CI
 
 ### Add a New Feature
 
-1. Create feature branch from `dev`
+1. Create feature branch from `main` (`git checkout -b feat/...`)
 2. Implement with tests
 3. Run full validation
 4. Create changeset: `pnpm changeset` (select `minor`)
-5. Create PR using template
+5. Open a PR against `main`
 
 ## Dependencies
 

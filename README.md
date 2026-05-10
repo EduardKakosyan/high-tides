@@ -74,7 +74,7 @@ See [`docs/adr/0001-stack-choice.md`](./docs/adr/0001-stack-choice.md) for the r
 
 ## Git workflow
 
-`main` is protected. Branch off `dev` for features. Commit format is `type: description` (`feat`, `fix`, `chore`, `refactor`, `docs`, `test`, `ci`, `perf`) — enforced by commitlint.
+`main` is the long-lived branch. Cut feature branches off `main` and merge back via PR. Commit format is `type: description` (`feat`, `fix`, `chore`, `refactor`, `docs`, `test`, `ci`, `perf`) — enforced by commitlint.
 
 ```bash
 git checkout -b feat/something
