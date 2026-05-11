@@ -1,24 +1,42 @@
+import Image from "next/image";
 import { site } from "@/lib/site";
 
-type LogoProps = React.HTMLAttributes<HTMLSpanElement>;
+const LOGO_W = 1080;
+const LOGO_H = 949;
+const ASPECT = LOGO_W / LOGO_H;
+
+interface LogoProps {
+  /** Rendered height in pixels (default 40). Width auto-scales from aspect. */
+  size?: number;
+  /** Mark above-the-fold instances priority. */
+  priority?: boolean;
+  /** Optional wrapper className. */
+  className?: string;
+}
 
 /**
- * Wordmark for High Tides.
- *
- * The proper logo isn't ready yet, so this renders a serif wordmark for now.
- * When the logo file lands, drop it in at `public/logo.svg` (and a dark
- * variant if needed) and swap the inner content for a `next/image` `<Image>`
- * — the existing `className` / data-attribute pass-through means Nav's
- * scroll-state colour transition keeps working without changes at the call
- * site.
+ * High Tides logomark: yellow anchor crown forming the "Hi", navy "TIDES"
+ * with the anchor body underneath. PNG asset at `public/logo.png`.
+ * Replace with `logo.svg` later for sharper scaling — same dimensions
+ * mean the `LOGO_W` / `LOGO_H` constants stay valid.
  */
-export function Logo({ className, ...rest }: LogoProps) {
+export function Logo({ size = 40, priority = false, className }: LogoProps) {
+  const width = Math.round(ASPECT * size);
+
   return (
     <span
-      {...rest}
-      className={`font-display text-xl tracking-tight ${className ?? ""}`.trim()}
+      className={`inline-flex items-center ${className ?? ""}`.trim()}
+      aria-hidden={false}
     >
-      {site.name}
+      <Image
+        src="/logo.png"
+        alt={site.name}
+        width={width}
+        height={size}
+        priority={priority}
+        className="block h-auto w-auto select-none"
+        style={{ height: `${size}px`, width: "auto" }}
+      />
     </span>
   );
 }

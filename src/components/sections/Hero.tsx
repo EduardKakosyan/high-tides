@@ -12,7 +12,7 @@ export function Hero() {
     <section
       id="top"
       aria-label="Welcome to High Tides"
-      className="relative isolate flex h-dvh min-h-[640px] w-full items-end overflow-hidden bg-teal-900"
+      className="relative isolate flex h-dvh min-h-[640px] w-full items-end overflow-hidden bg-navy-900"
     >
       <div className="absolute inset-0 -z-10">
         {hasCloudinary ? (
@@ -32,7 +32,7 @@ export function Hero() {
         ) : (
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-b from-teal-700 via-teal-900 to-deep"
+            className="absolute inset-0 bg-gradient-to-b from-navy-700 via-navy-900 to-deep"
           />
         )}
         <div

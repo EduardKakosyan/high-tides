@@ -4,32 +4,34 @@
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
 
-  /* Neutrals — warm bone of beach sand, cool fog over the bay,
-     and the weathered cedar of a south-shore shingle. */
-  --color-foam: #f6f1e6;
-  --color-fog: #e8ebec;
+  /* Neutrals — the warm cream of the logo's background and the
+     weathered cedar of a South Shore shingle. */
+  --color-foam: #f2efe7;
+  --color-fog: #e7e8e6;
   --color-driftwood: #a89e8e;
 
-  /* Sand — beach grass and pine straw underfoot */
+  /* Sand — pulled to harmonise with the cream of the logo. */
   --color-sand-50: #faf6ec;
   --color-sand-100: #efe7d2;
   --color-sand-200: #ddcea9;
   --color-sand-300: #c9b88c;
 
-  /* Teal — the brand colour. Pulled from a calm-day Atlantic
-     and a freshly-painted dory hull. */
-  --color-teal-100: #d6ecec;
-  --color-teal-300: #7fc5c8;
-  --color-teal-500: #2f9aa0;
-  --color-teal-700: #18686e;
-  --color-teal-900: #0a3034;
+  /* Navy — the brand colour from the logo's anchor and TIDES wordmark. */
+  --color-navy-50: #f0f3fa;
+  --color-navy-100: #dae2f2;
+  --color-navy-300: #8ba0d5;
+  --color-navy-500: #3f61b5;
+  --color-navy-700: #1b3d8a;
+  --color-navy-900: #0b1f4d;
 
-  /* Accent — used sparingly, like the brass on a buoy
-     or a lobster trap rope. */
-  --color-copper: #b26e47;
+  /* Marigold — the brand accent from the logo's Hi and anchor crown. */
+  --color-marigold-100: #fcf2d1;
+  --color-marigold-300: #f5cd6e;
+  --color-marigold-500: #f0b22a;
+  --color-marigold-700: #c28912;
 
-  /* Deep — near-black with a teal undertone */
-  --color-deep: #08181c;
+  /* Deep — near-black with a navy undertone for big dark sections. */
+  --color-deep: #060f2e;
 
   --container-7xl: 88rem;
 
@@ -52,8 +54,8 @@
   }
 
   ::selection {
-    background-color: var(--color-teal-700);
-    color: var(--color-foam);
+    background-color: var(--color-navy-700);
+    color: var(--color-marigold-500);
   }
 
   /* Respect prefers-reduced-motion globally for utility-driven transitions */

@@ -22,7 +22,7 @@ export function About() {
           <RevealOnScroll
             direction="up"
             delay={0.1}
-            className="flex flex-col gap-4 text-base leading-relaxed text-teal-900/80 sm:text-lg"
+            className="flex flex-col gap-4 text-base leading-relaxed text-navy-900/80 sm:text-lg"
           >
             <p>
               A four-minute walk through the spruce puts you on a private
@@ -56,9 +56,9 @@ export function About() {
           ) : (
             <div
               aria-hidden
-              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-sand-200 via-sand-100 to-teal-300/40"
+              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-sand-200 via-sand-100 to-navy-300/40"
             >
-              <span className="font-display text-2xl text-teal-700">
+              <span className="font-display text-2xl text-navy-700">
                 Photo placeholder
               </span>
             </div>
