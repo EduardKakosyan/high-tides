@@ -11,7 +11,7 @@ export function Hero() {
   return (
     <section
       id="top"
-      aria-label="Welcome to High Tides"
+      aria-label={`Welcome to ${site.name}`}
       className="relative isolate flex h-dvh min-h-[640px] w-full items-end overflow-hidden bg-navy-900"
     >
       <div className="absolute inset-0 -z-10">

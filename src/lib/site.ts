@@ -26,7 +26,7 @@ export interface SiteData {
 }
 
 export const site: SiteData = {
-  name: "High Tides",
+  name: "HiTides",
   tagline: "A cottage by the Atlantic, kept for a few guests each summer.",
   description:
     "A renovated cottage on the South Shore — three bedrooms, a wood stove, a kayak in the shed, and a path down to the water through the spruce. Enquiries by email.",
@@ -73,5 +73,5 @@ export const site: SiteData = {
       ],
     },
   ],
-  inquirySubject: "High Tides — enquiry",
+  inquirySubject: "HiTides — enquiry",
 };

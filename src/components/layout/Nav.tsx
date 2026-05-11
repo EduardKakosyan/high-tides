@@ -34,10 +34,9 @@ export function Nav() {
         <a
           href="#top"
           aria-label={`${site.name} — back to top`}
-          data-scrolled={scrolled}
-          className="inline-flex items-center rounded-full bg-foam/85 px-3 py-1.5 backdrop-blur-md transition-all duration-500 data-[scrolled=true]:bg-transparent data-[scrolled=true]:px-0 data-[scrolled=true]:py-0 data-[scrolled=true]:backdrop-blur-none"
+          className="inline-flex items-center"
         >
-          <Logo size={36} priority />
+          <Logo size={40} priority />
         </a>
         <ul className="hidden items-center gap-8 md:flex">
           {sections.map((section) => (
