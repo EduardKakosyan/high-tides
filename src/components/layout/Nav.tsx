@@ -31,11 +31,13 @@ export function Nav() {
         aria-label="Primary"
         className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-5 sm:px-10"
       >
-        <a href="#top" aria-label={`${site.name} — back to top`}>
-          <Logo
-            data-scrolled={scrolled}
-            className="text-foam transition-colors duration-500 data-[scrolled=true]:text-deep"
-          />
+        <a
+          href="#top"
+          aria-label={`${site.name} — back to top`}
+          data-scrolled={scrolled}
+          className="inline-flex items-center rounded-full bg-foam/85 px-3 py-1.5 backdrop-blur-md transition-all duration-500 data-[scrolled=true]:bg-transparent data-[scrolled=true]:px-0 data-[scrolled=true]:py-0 data-[scrolled=true]:backdrop-blur-none"
+        >
+          <Logo size={36} priority />
         </a>
         <ul className="hidden items-center gap-8 md:flex">
           {sections.map((section) => (
@@ -43,7 +45,7 @@ export function Nav() {
               <a
                 href={`#${section.id}`}
                 data-scrolled={scrolled}
-                className="text-sm tracking-wide text-foam/85 hover:text-foam data-[scrolled=true]:text-teal-900/80 data-[scrolled=true]:hover:text-deep transition-colors duration-500"
+                className="text-sm tracking-wide text-foam/85 hover:text-foam data-[scrolled=true]:text-navy-900/80 data-[scrolled=true]:hover:text-deep transition-colors duration-500"
               >
                 {section.label}
               </a>

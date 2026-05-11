@@ -4,9 +4,9 @@ import { Footer } from "../Footer";
 import { site } from "@/lib/site";
 
 describe("Footer", () => {
-  it("shows the property name and tagline", () => {
+  it("shows the brand logo (with site name as alt) and the tagline", () => {
     render(<Footer />);
-    expect(screen.getByText(site.name)).toBeInTheDocument();
+    expect(screen.getByAltText(site.name)).toBeInTheDocument();
     expect(screen.getByText(site.tagline)).toBeInTheDocument();
   });
 

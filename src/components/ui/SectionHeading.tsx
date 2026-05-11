@@ -26,7 +26,7 @@ export function SectionHeading({
       {eyebrow ? (
         <p
           id={id ? `${id}-eyebrow` : undefined}
-          className="text-xs uppercase tracking-[0.4em] text-teal-700"
+          className="text-xs uppercase tracking-[0.4em] text-navy-700"
         >
           {eyebrow}
         </p>
@@ -38,7 +38,7 @@ export function SectionHeading({
         {title}
       </h2>
       {description ? (
-        <p className="text-pretty text-base leading-relaxed text-teal-900/80 sm:text-lg">
+        <p className="text-pretty text-base leading-relaxed text-navy-900/80 sm:text-lg">
           {description}
         </p>
       ) : null}

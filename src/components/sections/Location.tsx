@@ -23,7 +23,7 @@ export function Location() {
           <RevealOnScroll
             direction="up"
             delay={0.1}
-            className="flex flex-col gap-3 text-base text-teal-900/85 sm:text-lg"
+            className="flex flex-col gap-3 text-base text-navy-900/85 sm:text-lg"
           >
             <p className="font-medium text-deep">{site.address.line1}</p>
             {site.address.line2 ? <p>{site.address.line2}</p> : null}
@@ -32,33 +32,33 @@ export function Location() {
               {site.address.postal ? `, ${site.address.postal}` : ""}
             </p>
             <p>{site.address.country}</p>
-            <ul className="mt-4 grid gap-2 text-base text-teal-900/80">
-              <li className="flex justify-between gap-6 border-b border-teal-900/10 pb-2">
+            <ul className="mt-4 grid gap-2 text-base text-navy-900/80">
+              <li className="flex justify-between gap-6 border-b border-navy-900/10 pb-2">
                 <span>Private beach</span>
-                <span className="text-teal-700">4-minute walk</span>
+                <span className="text-navy-700">4-minute walk</span>
               </li>
-              <li className="flex justify-between gap-6 border-b border-teal-900/10 pb-2">
+              <li className="flex justify-between gap-6 border-b border-navy-900/10 pb-2">
                 <span>Carters Beach</span>
-                <span className="text-teal-700">5 minutes by car</span>
+                <span className="text-navy-700">5 minutes by car</span>
               </li>
-              <li className="flex justify-between gap-6 border-b border-teal-900/10 pb-2">
+              <li className="flex justify-between gap-6 border-b border-navy-900/10 pb-2">
                 <span>Kejimkujik Seaside</span>
-                <span className="text-teal-700">15 minutes</span>
+                <span className="text-navy-700">15 minutes</span>
               </li>
-              <li className="flex justify-between gap-6 border-b border-teal-900/10 pb-2">
+              <li className="flex justify-between gap-6 border-b border-navy-900/10 pb-2">
                 <span>Liverpool</span>
-                <span className="text-teal-700">20 minutes</span>
+                <span className="text-navy-700">20 minutes</span>
               </li>
-              <li className="flex justify-between gap-6 border-b border-teal-900/10 pb-2">
+              <li className="flex justify-between gap-6 border-b border-navy-900/10 pb-2">
                 <span>Lunenburg</span>
-                <span className="text-teal-700">~1 hour</span>
+                <span className="text-navy-700">~1 hour</span>
               </li>
               <li className="flex justify-between gap-6">
                 <span>Halifax</span>
-                <span className="text-teal-700">~2 hours</span>
+                <span className="text-navy-700">~2 hours</span>
               </li>
             </ul>
-            <p className="mt-3 text-sm text-teal-700">
+            <p className="mt-3 text-sm text-navy-700">
               We send the driveway, the door code, and a couple of local tips
               once your dates are confirmed.
             </p>
@@ -81,9 +81,9 @@ export function Location() {
           ) : (
             <div
               aria-hidden
-              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-teal-300/40 via-sand-100 to-sand-200"
+              className="flex h-full w-full items-center justify-center bg-gradient-to-br from-navy-300/40 via-sand-100 to-sand-200"
             >
-              <span className="font-display text-2xl text-teal-700">
+              <span className="font-display text-2xl text-navy-700">
                 Map placeholder
               </span>
             </div>
