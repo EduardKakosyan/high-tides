@@ -1,0 +1,75 @@
+---
+// MediaShowcase — demonstrates the media pipeline end to end (issue #6).
+//
+// - The processed drone loop plays muted + looping, with a poster frame for
+//   first paint / no-JS fallback. Source files live in public/media/ and were
+//   produced by scripts/process-video.sh from Content/videos/drone/main-aeral.mp4.
+// - The interior still flows through Astro's <Image> (astro:assets), which emits
+//   AVIF/WebP + a responsive srcset and lazy-loads it. Source JPEGs live in
+//   src/assets/media/ and were produced by scripts/process-images.sh from .CR3/.DNG.
+//
+// Self-contained on purpose so index.astro stays a one-liner (minimizes merge
+// conflict with the parallel quick-facts/good-to-know work in #9).
+import { Image } from 'astro:assets';
+import seating from '../assets/media/seating-area-indoor.jpg';
+import kitchen from '../assets/media/kitchen.jpg';
+---
+
+<section class="bg-bg">
+  <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
+    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+      The view &amp; the home
+    </p>
+    <h2 class="max-w-[18ch] text-3xl font-semibold text-ink sm:text-4xl">
+      The whole bay opens up below you.
+    </h2>
+
+    <!-- Processed drone loop: muted, autoplay, looping, with poster fallback -->
+    <figure class="mt-10 overflow-hidden rounded-2xl border border-line bg-ink/5">
+      <video
+        class="aspect-video w-full object-cover"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster="/media/aerial-loop.jpg"
+        aria-label="Aerial drone loop over the beach and cottage at Port Mouton"
+      >
+        <source src="/media/aerial-loop.webm" type="video/webm" />
+        <source src="/media/aerial-loop.mp4" type="video/mp4" />
+      </video>
+    </figure>
+
+    <!-- Optimized interior stills via Astro <Image> (AVIF/WebP + srcset + lazy) -->
+    <div class="mt-6 grid gap-6 sm:grid-cols-2">
+      <figure class="overflow-hidden rounded-2xl border border-line">
+        <Image
+          src={seating}
+          alt="Indoor seating area with a mustard sofa, framed by the cottage's coastal light"
+          widths={[480, 768, 1200, 1800]}
+          sizes="(min-width: 640px) 50vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover"
+        />
+      </figure>
+      <figure class="overflow-hidden rounded-2xl border border-line">
+        <Image
+          src={kitchen}
+          alt="The cottage's full kitchen, bright and ready for slow coastal mornings"
+          widths={[480, 768, 1200, 1800]}
+          sizes="(min-width: 640px) 50vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover"
+        />
+      </figure>
+    </div>
+
+    <p class="mt-5 max-w-[52ch] text-sm text-muted">
+      Photographs and the aerial loop are Brian&rsquo;s own, shot above Port
+      Mouton on Nova Scotia&rsquo;s South Shore.
+    </p>
+  </div>
+</section>
