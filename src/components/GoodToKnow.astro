@@ -1,0 +1,132 @@
+---
+// Section 8 — "Good to know / how it works" (issue #9).
+// Two trust-building blocks that stand in for a booking engine:
+//   1. A 3-step "how it works" flow (dates → Brian replies → details by email).
+//   2. A "good to know" key-facts list (stay rules).
+// Self-contained, dependency-free (inline SVG icons), responsive grid that
+// collapses to a single column on mobile. "Cool & coastal" tokens throughout.
+// Host is Brian Greening (CONTEXT.md / NOTES.md).
+
+interface Step {
+  n: string;
+  title: string;
+  body: string;
+}
+
+const steps: Step[] = [
+  {
+    n: '1',
+    title: 'Send your dates',
+    body: 'Drop a quick note with the dates you have in mind and how many of you are coming.',
+  },
+  {
+    n: '2',
+    title: 'Brian replies personally',
+    body: 'No bots, no booking engine — Brian gets back to you himself, usually within a day.',
+  },
+  {
+    n: '3',
+    title: 'Details sorted by email',
+    body: 'Rates, availability and the little arrival details all get squared away over email.',
+  },
+];
+
+interface Fact {
+  label: string;
+  /** Inline SVG path data (24×24 viewBox, stroke-based). */
+  icon: string;
+}
+
+const facts: Fact[] = [
+  {
+    label: '6-night minimum stay',
+    icon: 'M8 2v4 M16 2v4 M3 10h18 M5 4h14a2 2 0 0 1 2 2v13a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+  },
+  {
+    label: 'No pets',
+    icon: 'M4 4l16 16 M10 5.2A4 4 0 0 1 18 7c0 2.5-2.5 4.5-4 6 M6 9c-1 1.5-2 3-2 5a4 4 0 0 0 7 3',
+  },
+  {
+    label: 'Children welcome',
+    icon: 'M9 7a3 3 0 1 1 6 0 3 3 0 0 1-6 0z M12 10v6 M9 13h6 M8 21l1.5-5 M16 21l-1.5-5',
+  },
+  {
+    label: 'Open year-round',
+    icon: 'M12 2v20 M2 12h20 M5 5l14 14 M19 5 5 19',
+  },
+  {
+    label: 'Rates on request',
+    icon: 'M12 1v22 M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6',
+  },
+];
+---
+
+<section aria-labelledby="good-to-know-heading" class="bg-bg">
+  <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
+    <p
+      class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted"
+    >
+      Good to know
+    </p>
+    <h2 id="good-to-know-heading" class="text-3xl font-semibold sm:text-4xl">
+      How it works
+    </h2>
+    <p class="mt-4 max-w-[52ch] text-lg text-muted">
+      Booking here is refreshingly old-fashioned — a short conversation, not a
+      checkout flow.
+    </p>
+
+    <!-- 3-step flow -->
+    <ol class="mt-12 grid gap-6 sm:grid-cols-3">
+      {
+        steps.map((step) => (
+          <li class="rounded-2xl border border-line bg-surface p-7">
+            <span
+              class="flex h-10 w-10 items-center justify-center rounded-full bg-blue font-head text-lg font-semibold text-white"
+              aria-hidden="true"
+            >
+              {step.n}
+            </span>
+            <h3 class="mt-5 text-lg font-semibold text-ink">
+              <span class="sr-only">{`Step ${step.n}: `}</span>
+              {step.title}
+            </h3>
+            <p class="mt-2 text-sm text-muted">{step.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+
+    <!-- Key facts / stay rules -->
+    <div class="mt-12 rounded-2xl border border-line bg-surface p-7 sm:p-9">
+      <h3
+        class="text-xs font-semibold uppercase tracking-[0.22em] text-muted"
+      >
+        Before you ask
+      </h3>
+      <ul
+        class="mt-5 grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        {
+          facts.map((fact) => (
+            <li class="flex items-center gap-3">
+              <svg
+                class="h-5 w-5 flex-shrink-0 text-gold"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d={fact.icon} />
+              </svg>
+              <span class="text-sm font-medium text-ink">{fact.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
