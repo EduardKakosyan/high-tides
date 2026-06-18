@@ -1,6 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Wordmark from '../components/Wordmark.astro';
+// Issue #9 — trust-building blocks (quick facts + how it works)
+import QuickFacts from '../components/QuickFacts.astro';
+import GoodToKnow from '../components/GoodToKnow.astro';
 
 // Walking-skeleton home page: a single, sparse-but-real section in the
 // "Cool & coastal" system. The placeholder hero block stands in until the
@@ -54,6 +57,12 @@ import Wordmark from '../components/Wordmark.astro';
       </div>
     </div>
   </section>
+
+  <!-- Issue #9 — quick-facts row (section 3), straight after the hero -->
+  <QuickFacts />
+
+  <!-- Issue #9 — "Good to know / how it works" (section 8), before inquire CTA -->
+  <GoodToKnow />
 
   <!-- Sparse-but-real intro band so the page reads as a real site, not a stub -->
   <section id="inquire" class="bg-surface">
