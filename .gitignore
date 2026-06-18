@@ -1,0 +1,25 @@
+# Build output
+dist/
+.astro/
+
+# Dependencies
+node_modules/
+
+# Netlify
+.netlify/
+
+# OS / editor
+.DS_Store
+*.log
+npm-debug.log*
+
+# Local env
+.env
+.env.*
+!.env.example
+
+# Raw source media (multi-GB RAW stills + drone video) — processed into the
+# site separately, never committed. Also keeps Tailwind's scanner out of them.
+Content/
+.work/
+prototype.html

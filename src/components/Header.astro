@@ -1,0 +1,24 @@
+---
+import Wordmark from './Wordmark.astro';
+
+// Responsive shell header. Sits transparent over the hero; the wordmark and
+// CTA stay legible against the dark coastal gradient. Nav links arrive with
+// the real sections in later slices.
+---
+
+<header class="absolute inset-x-0 top-0 z-20">
+  <div
+    class="mx-auto flex max-w-6xl items-center justify-between px-6 py-5 sm:px-8"
+  >
+    <a href="/" class="text-xl sm:text-2xl" aria-label="Hi Tides — home">
+      <Wordmark variant="light" />
+    </a>
+
+    <a
+      href="#inquire"
+      class="rounded-full bg-gold px-5 py-2 text-sm font-semibold text-ink transition-transform hover:-translate-y-0.5"
+    >
+      Inquire
+    </a>
+  </div>
+</header>

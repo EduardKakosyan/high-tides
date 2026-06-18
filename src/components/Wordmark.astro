@@ -1,0 +1,18 @@
+---
+// The Hi Tides wordmark — gold "Hi", purple "Tides", echoing the painted
+// round wooden sign on the cottage (CONTEXT.md). "Hi Tides" is always two
+// words; the pun ("hi" + high tide) is a brand asset, never corrected.
+interface Props {
+  /** Render light (for dark backgrounds like the hero) or branded colours. */
+  variant?: 'brand' | 'light';
+  class?: string;
+}
+
+const { variant = 'brand', class: className = '' } = Astro.props;
+const hi = variant === 'light' ? 'text-white' : 'text-gold';
+const tides = variant === 'light' ? 'text-white' : 'text-purple';
+---
+
+<span class={`font-head font-semibold tracking-tight ${className}`}>
+  <span class={hi}>Hi</span> <span class={tides}>Tides</span>
+</span>

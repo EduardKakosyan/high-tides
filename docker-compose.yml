@@ -1,0 +1,29 @@
+# One-command containerized dev environment with a pinned Node.
+#   docker compose up dev      -> live dev server at http://localhost:4321
+#   docker compose run --rm build   -> produce static output in ./dist
+#
+# node_modules lives in a named volume so the container's Linux-native install
+# is never clobbered by the host bind mount.
+services:
+  dev:
+    build: .
+    command: npm run dev -- --host 0.0.0.0
+    ports:
+      - '4321:4321'
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    environment:
+      - ASTRO_TELEMETRY_DISABLED=1
+
+  build:
+    build: .
+    command: npm run build
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    environment:
+      - ASTRO_TELEMETRY_DISABLED=1
+
+volumes:
+  node_modules:

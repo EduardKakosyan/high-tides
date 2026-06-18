@@ -1,0 +1,49 @@
+/*
+  source("../") confines Tailwind's class scanner to ./src — without it, v4
+  auto-detection walks the whole repo, including the multi-GB raw media in
+  Content/ and .work/, and pegs every core trying to read video as text.
+*/
+@import 'tailwindcss' source('../');
+
+/*
+  "Cool & coastal" design system — the locked visual direction (see NOTES.md).
+  Tokens live in Tailwind's @theme so they are available both as utilities
+  (bg-bg, text-ink, font-head, …) and as CSS custom properties (var(--color-ink)).
+*/
+@theme {
+  /* Surfaces & text */
+  --color-bg: #f2f4f5; /* cool white background */
+  --color-surface: #e3e9ec; /* pale grey-blue section background */
+  --color-ink: #16262f; /* deep navy text / dark sections */
+  --color-muted: #586a74; /* slate secondary text */
+  --color-line: #d2dbdf; /* hairlines / borders */
+
+  /* Accents */
+  --color-blue: #2b5eab; /* primary accent / CTA (Atlantic blue) */
+  --color-gold: #d9a12e; /* warm pop (from the sign / mustard sofa) */
+  --color-purple: #4a3b8c; /* brand accent (held back; from the sign) */
+  --color-cedar: #7e8a93; /* grey-blue cedar tone */
+
+  /* Type — headline grotesk + Inter body (self-hosted via @fontsource) */
+  --font-head: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-head);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+}
