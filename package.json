@@ -12,7 +12,11 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "media": "bash scripts/process-media.sh",
+    "media:all": "bash scripts/process-media.sh --all",
+    "media:images": "bash scripts/process-images.sh",
+    "media:video": "bash scripts/process-video.sh"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.1.1",

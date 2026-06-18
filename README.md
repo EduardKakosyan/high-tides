@@ -53,9 +53,17 @@ src/
     Wordmark.astro          # "Hi" (gold) + "Tides" (purple) — from the painted sign
     Header.astro            # responsive header, wordmark + Inquire CTA
     Footer.astro            # wordmark + location line
-  pages/index.astro         # home: placeholder hero (real hero -> #3) + intro
+    MediaShowcase.astro     # optimized <Image> stills + processed video loop (#6)
+  pages/index.astro         # home: placeholder hero (real hero -> #3) + intro + media demo
   styles/global.css         # Cool & coastal tokens + base styles
-public/favicon.svg
+  assets/media/             # committed web JPEG stills (Astro <Image> optimizes these)
+public/
+  media/                    # committed web video (MP4 + WebM) + poster frames
+  favicon.svg
+scripts/
+  process-media.sh          # runs both pipelines below
+  process-images.sh         # .CR3/.DNG/.JPG -> web JPEG
+  process-video.sh          # large .MP4/.mov -> muted MP4+WebM loop + poster
 ```
 
 ## Raw media — keep it out of the repo and the scanner
@@ -65,6 +73,55 @@ are **gitignored**. They are also scoped out of Tailwind's class scanner via
 `@import "tailwindcss" source("../")` in `global.css` — without that, Tailwind 4's
 auto-detection walks the whole tree and tries to read gigabytes of video as
 source text, pegging every CPU core. Keep new raw media under `Content/`.
+
+## Media pipeline — RAW masters → web-ready assets
+
+Brian's masters in `Content/` are huge (Canon `.CR3`, 36 MP drone `.DNG`,
+multi-GB `.MP4`/`.mov`). They are **never committed and never modified**. A pair
+of idempotent scripts turn them into small, committed web derivatives:
+
+| Source (`Content/`)         | Tool     | Output (committed)        | Consumed by                       |
+| --------------------------- | -------- | ------------------------- | --------------------------------- |
+| `.CR3` / `.DNG` / `.JPG`    | `sips`   | `src/assets/media/*.jpg`  | Astro `<Image>` (AVIF/WebP+srcset) |
+| large `.MP4` / `.mov`       | `ffmpeg` | `public/media/*.{mp4,webm,jpg}` | `<video>` (muted loop + poster) |
+
+**Convention:** stills go to `src/assets/media/` so `astro:assets` `<Image>`
+can emit AVIF/WebP + a responsive `srcset` and lazy-load them at build time.
+Videos go to `public/media/` (Astro's `<Image>` does not process video) and are
+referenced by absolute URL (`/media/<name>.mp4`).
+
+### Prerequisites
+
+- macOS `sips` (built in) — decodes/resizes RAW stills.
+- `ffmpeg` + `ffprobe` (`brew install ffmpeg`) — trims/encodes video.
+
+### Run it
+
+```bash
+npm run media          # process the curated SAMPLE set (fast; what the site renders)
+npm run media:all      # process EVERY still under Content/ (+ the sample video)
+npm run media:images   # stills only
+npm run media:video    # video only
+# or call the scripts directly:
+scripts/process-media.sh
+```
+
+The scripts auto-locate `Content/` (it lives at the main checkout root, so they
+walk up from the repo root and also work from inside a git worktree). Override
+anything via env vars:
+
+```bash
+MAX_DIM=3000 JPEG_QUALITY=80 scripts/process-images.sh   # bigger / higher-quality stills
+START=00:00:05 DUR=15 MAX_W=1600 scripts/process-video.sh # different trim window
+```
+
+**Idempotent:** a derivative is only (re)written if it is missing or older than
+its source, so re-running is cheap. To add/curate sample assets, edit the
+`SAMPLE_STILLS` / `SAMPLE_CLIPS` arrays near the top of each script.
+
+The default sample set is one interior seating area + one kitchen (`.CR3`), one
+aerial bay still (`.DNG`), and a ~7s muted drone loop from
+`Content/videos/drone/main-aeral.mp4` (MP4 + WebM + poster).
 
 ## Deploy (Netlify)
 
