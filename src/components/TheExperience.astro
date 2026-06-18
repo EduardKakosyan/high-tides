@@ -1,0 +1,82 @@
+---
+// Section 4 — "The Experience" (issue #10).
+// Atmosphere over amenities: the deck, the light, slow mornings, the feel of
+// a stay. Lifestyle imagery in a refined asymmetric grid — deliberately a
+// different visual rhythm from The View so the two beats don't read alike.
+// Light "Cool & coastal" band (bg-bg) following the dark View section.
+import { Image } from 'astro:assets';
+import deckSeating from '../assets/media/deck-seating-back.jpg';
+import sideDeck from '../assets/media/side-deck.jpg';
+import flowers from '../assets/media/seating-area-flowers.jpg';
+import detail from '../assets/media/detail-pic.jpg';
+---
+
+<section aria-labelledby="the-experience-heading" class="bg-bg">
+  <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
+    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+      The experience
+    </p>
+    <h2
+      id="the-experience-heading"
+      class="max-w-[22ch] font-head text-3xl font-semibold text-ink sm:text-4xl"
+    >
+      Coffee on the deck. Sunsets that take their time.
+    </h2>
+    <p class="mt-5 max-w-[52ch] text-lg text-muted">
+      Days here have a rhythm of their own. Salt air off the water, long
+      mornings with nowhere to be, and evenings that stretch out over the
+      bay. The kind of quiet you come back for.
+    </p>
+
+    <!-- Refined asymmetric grid: one tall feature + a stacked pair, then a wide band -->
+    <div class="mt-12 grid gap-4 sm:grid-cols-3 sm:gap-6">
+      <figure
+        class="overflow-hidden rounded-2xl border border-line sm:col-span-2 sm:row-span-2"
+      >
+        <Image
+          src={deckSeating}
+          alt="Deck seating at the back of the cottage, set up for slow mornings overlooking the bay"
+          widths={[480, 768, 1200, 1800]}
+          sizes="(min-width: 640px) 66vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover"
+        />
+      </figure>
+      <figure class="overflow-hidden rounded-2xl border border-line">
+        <Image
+          src={sideDeck}
+          alt="The side deck in afternoon coastal light"
+          widths={[480, 768, 1200]}
+          sizes="(min-width: 640px) 33vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/3] w-full object-cover sm:aspect-auto sm:h-full"
+        />
+      </figure>
+      <figure class="overflow-hidden rounded-2xl border border-line">
+        <Image
+          src={flowers}
+          alt="A seating area dressed with fresh flowers inside the cottage"
+          widths={[480, 768, 1200]}
+          sizes="(min-width: 640px) 33vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/3] w-full object-cover sm:aspect-auto sm:h-full"
+        />
+      </figure>
+    </div>
+
+    <figure class="mt-4 overflow-hidden rounded-2xl border border-line sm:mt-6">
+      <Image
+        src={detail}
+        alt="A small detail of the cottage's coastal styling"
+        widths={[480, 768, 1200, 1800]}
+        sizes="(min-width: 1024px) 1152px, 100vw"
+        loading="lazy"
+        decoding="async"
+        class="aspect-[21/9] w-full object-cover"
+      />
+    </figure>
+  </div>
+</section>

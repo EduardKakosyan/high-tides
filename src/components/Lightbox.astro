@@ -1,0 +1,260 @@
+---
+// Accessible, dependency-free lightbox overlay (issue #11).
+//
+// Renders a single hidden dialog that the gallery thumbnails drive. Each
+// thumbnail is a <button> carrying data-lightbox-src / data-lightbox-alt /
+// data-lightbox-index; the script below reads them into an ordered list and
+// wires up open/close, keyboard nav, focus trapping and focus restoration.
+//
+// No npm packages, no framework — just an Astro <script> island.
+---
+
+<div
+  id="lightbox"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-ink/90 p-4 backdrop-blur-sm sm:p-8"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Photo gallery viewer"
+  aria-hidden="true"
+>
+  <!-- Backdrop: clicking it closes. The inner content stops propagation. -->
+  <div class="absolute inset-0" data-lightbox-backdrop></div>
+
+  <div class="relative z-10 flex max-h-full w-full max-w-5xl flex-col">
+    <div class="mb-3 flex items-center justify-between gap-4">
+      <p
+        class="text-xs font-semibold uppercase tracking-[0.22em] text-white/70"
+        data-lightbox-counter
+        aria-live="polite"
+      >
+      </p>
+      <button
+        type="button"
+        class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+        data-lightbox-close
+        aria-label="Close gallery viewer"
+      >
+        <svg
+          class="h-5 w-5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M18 6 6 18 M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <figure class="relative flex min-h-0 flex-1 items-center justify-center">
+      <button
+        type="button"
+        class="absolute left-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:-left-16"
+        data-lightbox-prev
+        aria-label="Previous photo"
+      >
+        <svg
+          class="h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m15 18-6-6 6-6"></path>
+        </svg>
+      </button>
+
+      <img
+        class="max-h-[80svh] w-auto max-w-full rounded-xl object-contain"
+        data-lightbox-image
+        src=""
+        alt=""
+        decoding="async"
+      />
+
+      <button
+        type="button"
+        class="absolute right-0 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:-right-16"
+        data-lightbox-next
+        aria-label="Next photo"
+      >
+        <svg
+          class="h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="m9 18 6-6-6-6"></path>
+        </svg>
+      </button>
+
+      <figcaption
+        class="mt-3 max-w-[60ch] text-center text-sm text-white/80"
+        data-lightbox-caption
+      >
+      </figcaption>
+    </figure>
+  </div>
+</div>
+
+<script>
+  // --- Lightbox controller -------------------------------------------------
+  // Dependency-free. Reads the ordered image list from the thumbnail triggers
+  // so the markup stays the single source of truth.
+  type Slide = { src: string; alt: string };
+
+  const lightbox = document.getElementById('lightbox');
+  if (lightbox) {
+    const imageEl = lightbox.querySelector<HTMLImageElement>(
+      '[data-lightbox-image]',
+    );
+    const captionEl = lightbox.querySelector<HTMLElement>(
+      '[data-lightbox-caption]',
+    );
+    const counterEl = lightbox.querySelector<HTMLElement>(
+      '[data-lightbox-counter]',
+    );
+    const backdropEl = lightbox.querySelector<HTMLElement>(
+      '[data-lightbox-backdrop]',
+    );
+    const closeBtn = lightbox.querySelector<HTMLButtonElement>(
+      '[data-lightbox-close]',
+    );
+    const prevBtn = lightbox.querySelector<HTMLButtonElement>(
+      '[data-lightbox-prev]',
+    );
+    const nextBtn = lightbox.querySelector<HTMLButtonElement>(
+      '[data-lightbox-next]',
+    );
+
+    // The triggers carry the full-resolution src + alt + their order.
+    const triggers = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-lightbox-trigger]'),
+    ).sort(
+      (a, b) =>
+        Number(a.dataset.lightboxIndex ?? 0) -
+        Number(b.dataset.lightboxIndex ?? 0),
+    );
+
+    const slides: Slide[] = triggers.map((t) => ({
+      src: t.dataset.lightboxSrc ?? '',
+      alt: t.dataset.lightboxAlt ?? '',
+    }));
+
+    let current = 0;
+    let lastFocused: HTMLElement | null = null;
+
+    const main = document.querySelector('main');
+
+    function focusables(): HTMLElement[] {
+      if (!lightbox) return [];
+      return Array.from(
+        lightbox.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter((el) => el.offsetParent !== null || el === document.activeElement);
+    }
+
+    function render() {
+      const slide = slides[current];
+      if (!slide || !imageEl) return;
+      imageEl.src = slide.src;
+      imageEl.alt = slide.alt;
+      if (captionEl) captionEl.textContent = slide.alt;
+      if (counterEl)
+        counterEl.textContent = `${current + 1} / ${slides.length}`;
+    }
+
+    function open(index: number, trigger: HTMLElement) {
+      if (!lightbox) return;
+      lastFocused = trigger;
+      current = index;
+      render();
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+      lightbox.setAttribute('aria-hidden', 'false');
+      // Hide the rest of the page from AT + pointer while modal is open.
+      if (main) main.setAttribute('inert', '');
+      document.body.style.overflow = 'hidden';
+      // Move focus into the dialog.
+      closeBtn?.focus();
+      document.addEventListener('keydown', onKeydown);
+    }
+
+    function close() {
+      if (!lightbox) return;
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+      lightbox.setAttribute('aria-hidden', 'true');
+      if (main) main.removeAttribute('inert');
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', onKeydown);
+      // Restore focus to the thumbnail that opened the lightbox.
+      lastFocused?.focus();
+      lastFocused = null;
+    }
+
+    function show(index: number) {
+      const count = slides.length;
+      if (count === 0) return;
+      current = (index + count) % count; // wrap around
+      render();
+    }
+
+    function onKeydown(event: KeyboardEvent) {
+      switch (event.key) {
+        case 'Escape':
+          event.preventDefault();
+          close();
+          break;
+        case 'ArrowRight':
+          event.preventDefault();
+          show(current + 1);
+          break;
+        case 'ArrowLeft':
+          event.preventDefault();
+          show(current - 1);
+          break;
+        case 'Tab': {
+          // Trap focus within the dialog.
+          const items = focusables();
+          if (items.length === 0) break;
+          const first = items[0];
+          const last = items[items.length - 1];
+          const active = document.activeElement as HTMLElement | null;
+          if (event.shiftKey) {
+            if (active === first || !lightbox?.contains(active)) {
+              event.preventDefault();
+              last.focus();
+            }
+          } else {
+            if (active === last || !lightbox?.contains(active)) {
+              event.preventDefault();
+              first.focus();
+            }
+          }
+          break;
+        }
+      }
+    }
+
+    triggers.forEach((trigger, index) => {
+      trigger.addEventListener('click', () => open(index, trigger));
+    });
+
+    closeBtn?.addEventListener('click', close);
+    backdropEl?.addEventListener('click', close);
+    prevBtn?.addEventListener('click', () => show(current - 1));
+    nextBtn?.addEventListener('click', () => show(current + 1));
+  }
+</script>

@@ -1,0 +1,102 @@
+---
+// Section 7 — "The Host" (issue #13).
+// Brian Greening, the named human host, is a core trust signal of the site.
+// A warm, first-person note + a personal-reply promise, paired with a portrait.
+// Two columns on desktop, stacked on mobile. Self-contained, dependency-free.
+// "Cool & coastal" tokens throughout. Host facts from CONTEXT.md / NOTES.md.
+//
+// NO HOST PHOTO YET: Brian's real portrait hasn't been provided, so we render
+// an accessible placeholder (his initials in cedar/surface tones). See the
+// TODO comment in the markup for exactly how to swap in the real photo.
+
+const hostName = 'Brian Greening';
+const initials = 'BG';
+---
+
+<section aria-labelledby="the-host-heading" class="bg-bg">
+  <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
+    <div class="grid items-center gap-12 lg:grid-cols-[minmax(0,18rem)_1fr] lg:gap-16">
+      <!--
+        TODO: replace this placeholder portrait with the real photo once it
+        lands in the media pipeline, e.g.:
+          ---
+          import { Image } from 'astro:assets';
+          import brian from '../assets/media/host-brian.jpg';
+          ---
+          <Image
+            src={brian}
+            alt="Brian Greening, your host at Hi Tides"
+            class="aspect-square w-full rounded-3xl object-cover"
+            width={576}
+            height={576}
+          />
+        Drop the file at: src/assets/media/host-brian.jpg
+      -->
+      <div class="mx-auto w-full max-w-xs lg:mx-0">
+        <div
+          class="flex aspect-square w-full items-center justify-center rounded-3xl border border-line bg-surface bg-gradient-to-br from-surface to-cedar/30"
+          role="img"
+          aria-label="Portrait of Brian Greening, your host (photo coming soon)"
+        >
+          <span
+            class="font-head text-6xl font-semibold tracking-tight text-cedar sm:text-7xl"
+            aria-hidden="true"
+          >
+            {initials}
+          </span>
+        </div>
+      </div>
+
+      <div>
+        <p
+          class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted"
+        >
+          Your host
+        </p>
+        <h2 id="the-host-heading" class="text-3xl font-semibold sm:text-4xl">
+          {hostName}
+        </h2>
+
+        <div class="mt-6 max-w-[58ch] space-y-4 text-lg text-muted">
+          <p>
+            Years ago I settled into a small, hidden fishing village on Nova
+            Scotia&rsquo;s South Shore, and I&rsquo;ve never looked back. The
+            water here is almost tropical — clear and turquoise over long
+            stretches of white sand — with Carters Beach just five minutes down
+            the road and the lovely town of Liverpool a quarter-hour drive away.
+          </p>
+          <p>
+            What keeps me here, though, is the community. Folks look out for one
+            another, mornings are slow, and the bay puts on a show every evening.
+            I built Hi Tides to share that with people who&rsquo;ll love it the
+            way I do — and I&rsquo;d be glad to help you settle in.
+          </p>
+        </div>
+
+        <p class="mt-6 max-w-[58ch] text-base font-medium text-ink">
+          Send me a note with your dates and I&rsquo;ll get back to you
+          personally — usually within a day.
+        </p>
+
+        <a
+          href="#inquire"
+          class="mt-8 inline-flex items-center gap-2 rounded-full bg-blue px-7 py-3.5 font-semibold text-white transition-transform hover:-translate-y-0.5"
+        >
+          Send Brian a note
+          <svg
+            class="h-4 w-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14 M13 6l6 6-6 6" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

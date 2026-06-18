@@ -1,0 +1,211 @@
+---
+// Section 9 — Inquire (issue #8).
+// The whole site exists to produce an Inquiry: a warm, low-friction email
+// to Brian — not a booking, not a payment. No price and no payment UI here.
+//
+// Wired for Netlify Forms (data-netlify + honeypot). A small client script
+// intercepts submit and POSTs the url-encoded body to "/" (the Netlify Forms
+// endpoint) via fetch, then swaps the form for a success panel — so the
+// success state is observable in tests/preview without a live backend.
+//
+// "Cool & coastal" tokens throughout; host is Brian Greening (CONTEXT.md).
+
+// Cottage sleeps 4 (CONTEXT.md) — guests capped at 4.
+const guestOptions = [1, 2, 3, 4];
+
+// Shared input styling — cool white field, hairline border, blue focus ring.
+const fieldClass =
+  'w-full rounded-xl border border-line bg-bg px-4 py-3 text-ink placeholder:text-muted/70 transition focus:border-blue focus:outline-none focus:ring-2 focus:ring-blue/40';
+const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
+---
+
+<section id="inquire" aria-labelledby="inquire-heading" class="bg-surface">
+  <div class="mx-auto max-w-3xl px-6 py-24 sm:px-8">
+    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+      Start a conversation
+    </p>
+    <h2 id="inquire-heading" class="text-3xl font-semibold sm:text-4xl">
+      Send your inquiry
+    </h2>
+    <p class="mt-4 max-w-[54ch] text-lg text-muted">
+      No booking engine, no checkout — just a short note. Tell Brian the dates
+      you have in mind and a little about your trip, and he&rsquo;ll reply
+      personally, usually within a day. Stays are a 6-night minimum, and rates
+      are shared on request.
+    </p>
+
+    <!-- Inquiry form (Netlify Forms). The hidden form-name + honeypot are
+         required for Netlify to register and protect the form. -->
+    <form
+      id="inquiry-form"
+      name="inquiry"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="bot-field"
+      class="mt-10 rounded-2xl border border-line bg-bg p-6 sm:p-9"
+    >
+      <input type="hidden" name="form-name" value="inquiry" />
+      <p hidden>
+        <label>Don&rsquo;t fill this out: <input name="bot-field" /></label>
+      </p>
+
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div class="sm:col-span-2">
+          <label for="inquiry-name" class={labelClass}>Your name</label>
+          <input
+            type="text"
+            id="inquiry-name"
+            name="name"
+            required
+            autocomplete="name"
+            class={fieldClass}
+          />
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="inquiry-email" class={labelClass}>Email</label>
+          <input
+            type="email"
+            id="inquiry-email"
+            name="email"
+            required
+            autocomplete="email"
+            class={fieldClass}
+          />
+        </div>
+
+        <div>
+          <label for="inquiry-arrival" class={labelClass}>Arrival</label>
+          <input
+            type="date"
+            id="inquiry-arrival"
+            name="arrival"
+            class={fieldClass}
+          />
+        </div>
+
+        <div>
+          <label for="inquiry-departure" class={labelClass}>Departure</label>
+          <input
+            type="date"
+            id="inquiry-departure"
+            name="departure"
+            class={fieldClass}
+          />
+        </div>
+
+        <div>
+          <label for="inquiry-guests" class={labelClass}>Guests</label>
+          <select id="inquiry-guests" name="guests" class={fieldClass}>
+            {
+              guestOptions.map((n) => (
+                <option value={n}>
+                  {n} {n === 1 ? 'guest' : 'guests'}
+                </option>
+              ))
+            }
+          </select>
+          <p class="mt-1.5 text-xs text-muted">The cottage sleeps up to 4.</p>
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="inquiry-message" class={labelClass}>
+            Anything you&rsquo;d like Brian to know
+          </label>
+          <textarea
+            id="inquiry-message"
+            name="message"
+            rows="5"
+            placeholder="Your dates, who&rsquo;s coming, what you&rsquo;re hoping for…"
+            class={`${fieldClass} resize-y`}></textarea>
+        </div>
+      </div>
+
+      <p
+        id="inquiry-error"
+        hidden
+        role="alert"
+        class="mt-6 rounded-xl border border-gold/50 bg-gold/10 px-4 py-3 text-sm text-ink"
+      >
+        Something went wrong sending your inquiry. Please try again, or email
+        Brian directly at <a class="font-medium text-blue underline"
+          href="mailto:briangreening@eastlink.ca">briangreening@eastlink.ca</a
+        >.
+      </p>
+
+      <button
+        type="submit"
+        class="mt-8 rounded-full bg-gold px-7 py-3.5 font-semibold text-ink transition-transform hover:-translate-y-0.5"
+      >
+        Send your inquiry
+      </button>
+    </form>
+
+    <!-- Success panel — revealed by the script on a successful submit. -->
+    <div
+      id="inquiry-success"
+      hidden
+      role="status"
+      class="mt-10 rounded-2xl border border-line bg-bg p-8 text-center sm:p-12"
+    >
+      <span
+        class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue text-white"
+        aria-hidden="true"
+      >
+        <svg
+          class="h-6 w-6"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M20 6 9 17l-5-5"></path>
+        </svg>
+      </span>
+      <h3 class="mt-5 text-2xl font-semibold text-ink">Thanks — it&rsquo;s on its way</h3>
+      <p class="mx-auto mt-3 max-w-[46ch] text-muted">
+        Your inquiry is on its way to Brian. He&rsquo;ll reply personally,
+        usually within a day.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Progressive enhancement: intercept the submit, POST the url-encoded body
+  // to "/" (Netlify Forms endpoint) via fetch, then reveal the success panel.
+  // Falls back to a native submit if the elements aren't found.
+  const form = document.getElementById('inquiry-form') as HTMLFormElement | null;
+  const success = document.getElementById('inquiry-success');
+  const errorPanel = document.getElementById('inquiry-error');
+
+  if (form && success) {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (errorPanel) errorPanel.hidden = true;
+
+      const formData = new FormData(form);
+      const body = new URLSearchParams(
+        formData as unknown as Record<string, string>
+      ).toString();
+
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body,
+        });
+
+        if (!response.ok) throw new Error(`Request failed: ${response.status}`);
+
+        form.hidden = true;
+        success.hidden = false;
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } catch {
+        if (errorPanel) errorPanel.hidden = false;
+      }
+    });
+  }
+</script>

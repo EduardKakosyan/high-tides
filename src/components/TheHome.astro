@@ -1,0 +1,79 @@
+---
+// Section 5 — "The Home" (issue #11).
+//
+// A curated, editorial selection of the cottage's interiors and exterior — a
+// tasteful subset of the full set (the complete, grouped collection lives on
+// /gallery). One strong frame leads; the rest read as a refined, reflowing
+// grid. A prominent gold CTA sends visitors to the full gallery.
+//
+// Images flow through Astro's <Image> (astro:assets) → AVIF/WebP + responsive
+// srcset, lazy-loaded, with meaningful alt text. "Cool & coastal" tokens only.
+import { Image } from 'astro:assets';
+import { featured } from '../data/gallery';
+
+const [lead, ...rest] = featured;
+---
+
+<section aria-labelledby="the-home-heading" class="bg-bg">
+  <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
+    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+      The home
+    </p>
+    <h2
+      id="the-home-heading"
+      class="max-w-[20ch] text-3xl font-semibold text-ink sm:text-4xl"
+    >
+      Room to settle in, inside and out.
+    </h2>
+    <p class="mt-4 max-w-[52ch] text-sm text-muted sm:text-base">
+      Two bedrooms, a full kitchen, a wood stove, and a deck that wraps toward
+      the bay — a quiet place built for slow mornings and long evenings.
+    </p>
+
+    <!-- Lead frame + curated grid. Reflows to a single column on mobile. -->
+    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        lead && (
+          <figure class="overflow-hidden rounded-2xl border border-line sm:col-span-2 sm:row-span-2">
+            <Image
+              src={lead.src}
+              alt={lead.alt}
+              widths={[480, 768, 1200, 1800]}
+              sizes="(min-width: 1024px) 66vw, (min-width: 640px) 100vw, 100vw"
+              loading="lazy"
+              decoding="async"
+              class="h-full w-full object-cover"
+            />
+          </figure>
+        )
+      }
+      {
+        rest.map((image) => (
+          <figure class="overflow-hidden rounded-2xl border border-line">
+            <Image
+              src={image.src}
+              alt={image.alt}
+              widths={[400, 640, 960]}
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[4/3] h-full w-full object-cover"
+            />
+          </figure>
+        ))
+      }
+    </div>
+
+    <div class="mt-10 flex flex-wrap items-center gap-4">
+      <a
+        href="/gallery"
+        class="rounded-full bg-gold px-7 py-3.5 font-semibold text-ink transition-transform hover:-translate-y-0.5"
+      >
+        See all photos
+      </a>
+      <span class="text-sm text-muted">
+        Every room, grouped by space.
+      </span>
+    </div>
+  </div>
+</section>

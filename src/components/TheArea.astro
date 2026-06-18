@@ -1,0 +1,179 @@
+---
+// Section 6 — "The Area" (issue #12).
+// Conveys the sense of place: a hidden South Shore fishing village with
+// tropical-like water and white-sand beaches, the nearby highlights, and an
+// approximate-only map. Privacy is mandatory: the map is zoomed to town level
+// with NO marker — the exact address is shared with a Guest only after an
+// Inquiry. Self-contained; "Cool & coastal" tokens throughout.
+import { Image } from 'astro:assets';
+// Evocative drone derivatives that read as beach / coast / village.
+import beach from '../assets/media/dji_20250819114756_0002_d.jpg';
+import coast from '../assets/media/dji_20250819114909_0008_d.jpg';
+import village from '../assets/media/dji_20250819115212_0026_d.jpg';
+
+interface Highlight {
+  name: string;
+  detail: string;
+  /** Inline SVG path data (24×24 viewBox, stroke-based). */
+  icon: string;
+}
+
+const highlights: Highlight[] = [
+  {
+    name: 'Carters Beach',
+    detail: '~5 minutes away',
+    icon: 'M2 18h20 M4 18c2-4 5-6 8-6s6 2 8 6 M12 12V6 M9 6h6 M12 3l3 3-3 0z',
+  },
+  {
+    name: 'Liverpool',
+    detail: '~15-minute drive',
+    icon: 'M3 21V9l9-6 9 6v12 M9 21v-6h6v6 M3 21h18',
+  },
+  {
+    name: 'Golf nearby',
+    detail: 'a short drive',
+    icon: 'M12 3v13 M12 4l7 3-7 3V4z M7 20a5 5 0 0 1 10 0 M5 20h14',
+  },
+  {
+    name: 'Restaurants',
+    detail: 'local tables close by',
+    icon: 'M5 2v8a2 2 0 0 0 2 2v9 M7 2v8 M9 2v8 M17 2c-1.7 0-3 2.2-3 5 0 2.3 1 3.8 2 4v10h2V2z',
+  },
+];
+
+// Approximate-only OpenStreetMap embed. Centered roughly on Port Mouton village
+// (~43.94, -64.83) at a town-level zoom: the bbox spans a few km so the village
+// reads as a general area, never a building-level pin. Deliberately NO marker.
+const bbox = {
+  west: -64.87,
+  south: 43.915,
+  east: -64.79,
+  north: 43.965,
+};
+const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox.west}%2C${bbox.south}%2C${bbox.east}%2C${bbox.north}&layer=mapnik`;
+const mapLink = 'https://www.openstreetmap.org/#map=13/43.94/-64.83';
+---
+
+<section aria-labelledby="the-area-heading" class="bg-bg">
+  <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
+    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+      The area
+    </p>
+    <h2
+      id="the-area-heading"
+      class="max-w-[20ch] text-3xl font-semibold text-ink sm:text-4xl"
+    >
+      A hidden fishing village on the South Shore.
+    </h2>
+    <p class="mt-5 max-w-[58ch] text-lg text-muted">
+      Hi Tides is tucked into a small, half-secret Nova Scotia fishing village,
+      where the Atlantic turns an improbable, almost-tropical blue against
+      long stretches of white sand. It is the kind of place that does not show
+      up on most maps of the province &mdash; and that is exactly the point.
+      Brian has come to love this community, and that warmth is the best part
+      of staying here.
+    </p>
+
+    <!-- Evocative imagery: beach / coast / village -->
+    <div class="mt-10 grid gap-6 sm:grid-cols-3">
+      <figure class="overflow-hidden rounded-2xl border border-line">
+        <Image
+          src={beach}
+          alt="White-sand beach and clear blue Atlantic water near Port Mouton, Nova Scotia"
+          widths={[480, 768, 1200]}
+          sizes="(min-width: 640px) 33vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/3] h-full w-full object-cover"
+        />
+      </figure>
+      <figure class="overflow-hidden rounded-2xl border border-line">
+        <Image
+          src={coast}
+          alt="Aerial view of the rugged South Shore coastline and bay below the cottage"
+          widths={[480, 768, 1200]}
+          sizes="(min-width: 640px) 33vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/3] h-full w-full object-cover"
+        />
+      </figure>
+      <figure class="overflow-hidden rounded-2xl border border-line">
+        <Image
+          src={village}
+          alt="Aerial view over the quiet Port Mouton village and surrounding shore"
+          widths={[480, 768, 1200]}
+          sizes="(min-width: 640px) 33vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/3] h-full w-full object-cover"
+        />
+      </figure>
+    </div>
+
+    <!-- Nearby highlights + approximate map -->
+    <div class="mt-12 grid gap-10 lg:grid-cols-2 lg:gap-12">
+      <div>
+        <h3 class="font-head text-xl font-semibold text-ink">
+          What&rsquo;s nearby
+        </h3>
+        <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+          {
+            highlights.map((spot) => (
+              <li class="flex items-start gap-3 rounded-2xl border border-line bg-surface px-4 py-5">
+                <svg
+                  class="mt-0.5 h-6 w-6 shrink-0 text-blue"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.6"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d={spot.icon} />
+                </svg>
+                <span class="flex flex-col">
+                  <span class="font-head text-base font-semibold leading-tight text-ink">
+                    {spot.name}
+                  </span>
+                  <span class="mt-0.5 text-sm text-muted">{spot.detail}</span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-6 max-w-[52ch] text-sm text-muted">
+          Beyond the village you&rsquo;ll find Kejimkujik&rsquo;s seaside
+          adjunct, the historic towns of Liverpool and Lunenburg, and a string
+          of beaches that stay quiet even in high summer.
+        </p>
+      </div>
+
+      <div>
+        <figure
+          class="overflow-hidden rounded-2xl border border-line bg-surface"
+        >
+          <iframe
+            title="Approximate location of Hi Tides: the general Port Mouton village area on Nova Scotia's South Shore"
+            src={mapSrc}
+            class="aspect-[4/3] w-full border-0"
+            loading="lazy"></iframe>
+          <figcaption class="border-t border-line px-4 py-3 text-sm text-muted">
+            This shows the <span class="font-medium text-ink">general area</span>{' '}
+            only &mdash; the exact address is shared after you send an inquiry.{' '}
+            <a
+              href={mapLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="font-medium text-blue underline-offset-2 hover:underline"
+            >
+              View the area on OpenStreetMap
+            </a>
+            .
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>

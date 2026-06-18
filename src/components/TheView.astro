@@ -1,0 +1,68 @@
+---
+// Section 2 — "The View" (issue #10).
+// The differentiator: the cottage sits *above* the beach with a commanding
+// Atlantic view — not beachfront, better. Drone-led so the first thing a
+// Guest reads is the cottage-above-the-shore relationship. Dark band so it
+// reads as a confident, cinematic beat distinct from the lighter sections.
+import { Image } from 'astro:assets';
+// Aerial that best shows the cottage perched above the white-sand shore.
+import aerialBay from '../assets/media/aerial-bay.jpg';
+// A wider bay vista — the whole shoreline opening up below.
+import aerialVista from '../assets/media/dji_20250819120112_0042_d.jpg';
+---
+
+<section aria-labelledby="the-view-heading" class="bg-ink text-white">
+  <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
+    <p
+      class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-gold"
+    >
+      The view
+    </p>
+    <h2
+      id="the-view-heading"
+      class="max-w-[20ch] font-head text-3xl font-semibold sm:text-4xl lg:text-5xl"
+    >
+      Not on the beach. Above it.
+    </h2>
+    <p class="mt-5 max-w-[52ch] text-lg text-white/85">
+      The cottage sits high on the shore, so the whole bay opens up below
+      you — white sand, open Atlantic, and a horizon that runs from sunrise
+      to last light. Beachfront puts you at sea level. This puts the sea at
+      your feet and the sky in full view.
+    </p>
+
+    <!-- Lead drone frame: the cottage-above-the-shore relationship -->
+    <figure class="mt-12 overflow-hidden rounded-2xl border border-white/10">
+      <Image
+        src={aerialBay}
+        alt="Aerial view of the cottage perched above the white-sand beach and open bay at Port Mouton, Nova Scotia"
+        widths={[480, 768, 1200, 1800]}
+        sizes="(min-width: 1024px) 1152px, 100vw"
+        loading="lazy"
+        decoding="async"
+        class="aspect-[16/9] w-full object-cover"
+      />
+    </figure>
+
+    <!-- Supporting vista + the vantage in words -->
+    <div class="mt-6 grid items-center gap-6 sm:grid-cols-5">
+      <figure
+        class="overflow-hidden rounded-2xl border border-white/10 sm:col-span-3"
+      >
+        <Image
+          src={aerialVista}
+          alt="The shoreline and Atlantic opening up below the cottage at Port Mouton"
+          widths={[480, 768, 1200, 1800]}
+          sizes="(min-width: 640px) 60vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[4/3] w-full object-cover"
+        />
+      </figure>
+      <p class="max-w-[34ch] text-base text-white/80 sm:col-span-2">
+        A short walk down to the sand when you want it — and a commanding
+        view of it from the moment you wake.
+      </p>
+    </div>
+  </div>
+</section>

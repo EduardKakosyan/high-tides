@@ -16,7 +16,11 @@
     "media": "bash scripts/process-media.sh",
     "media:all": "bash scripts/process-media.sh --all",
     "media:images": "bash scripts/process-images.sh",
-    "media:video": "bash scripts/process-video.sh"
+    "media:video": "bash scripts/process-video.sh",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
   },
   "dependencies": {
     "@fontsource-variable/inter": "^5.1.1",

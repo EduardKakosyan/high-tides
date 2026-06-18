@@ -1,0 +1,101 @@
+---
+import Wordmark from './Wordmark.astro';
+
+// Cinematic hero (issue #7) — opens the story page with the processed
+// beach->house drone loop playing full-bleed behind the Hi Tides wordmark
+// and the primary inquiry CTA.
+//
+// First-paint / no-JS / reduced-motion strategy:
+//  - The still (/media/aerial-loop.jpg) is rendered as an always-present <img>
+//    layered behind the video, so the hero looks correct before the video
+//    decodes, with JS off, and when motion is reduced.
+//  - The <video> uses poster + preload="metadata" so it never blocks first
+//    paint, and is hidden via a scoped reduced-motion media query so only the
+//    still shows for visitors who prefer reduced motion.
+//
+// The global Header sits transparent over this hero, so foreground content
+// keeps generous top padding to clear it.
+---
+
+<section
+  class="relative flex min-h-[100svh] items-end overflow-hidden bg-ink text-white"
+>
+  <!-- Always-present still: first paint + no-JS + reduced-motion fallback -->
+  <img
+    src="/media/aerial-loop.jpg"
+    alt="Aerial view over the white-sand beach and cottage at Port Mouton, Nova Scotia"
+    class="absolute inset-0 h-full w-full object-cover"
+    fetchpriority="high"
+    decoding="async"
+  />
+
+  <!-- Processed drone loop layered on top; hidden under reduced motion -->
+  <video
+    class="hero-video absolute inset-0 h-full w-full object-cover"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster="/media/aerial-loop.jpg"
+    aria-label="Aerial drone loop sweeping from the beach up to the cottage above Port Mouton"
+  >
+    <source src="/media/aerial-loop.webm" type="video/webm" />
+    <source src="/media/aerial-loop.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Coastal gradient overlays for legible white foreground text -->
+  <div
+    class="absolute inset-0 bg-gradient-to-b from-ink/40 via-blue/30 to-cedar/40"
+    aria-hidden="true"
+  >
+  </div>
+  <div
+    class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-ink/40"
+    aria-hidden="true"
+  >
+  </div>
+
+  <!-- Foreground content -->
+  <div class="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-32 sm:px-8 sm:pb-24 sm:pt-36">
+    <Wordmark variant="light" class="text-2xl sm:text-3xl" />
+
+    <p
+      class="mb-4 mt-8 text-xs font-semibold uppercase tracking-[0.22em] text-white/80"
+    >
+      Port Mouton · Nova Scotia
+    </p>
+    <h1 class="max-w-[16ch] text-4xl font-semibold sm:text-6xl lg:text-7xl">
+      A cottage above the beach.
+    </h1>
+    <p class="mt-5 max-w-[42ch] text-lg text-white/90 sm:text-xl">
+      Perched over the white sand of Port Mouton, on Nova Scotia&rsquo;s South
+      Shore — where the whole bay opens up below you.
+    </p>
+
+    <div class="mt-8 flex flex-wrap gap-4">
+      <a
+        href="#inquire"
+        class="rounded-full bg-gold px-7 py-3.5 font-semibold text-ink transition-transform hover:-translate-y-0.5"
+      >
+        Request your stay
+      </a>
+      <a
+        href="#inquire"
+        class="rounded-full border border-white/70 px-7 py-3.5 font-semibold text-white transition-colors hover:bg-white/10"
+      >
+        Take a look
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Reduced-motion / no-video fallback: hide the looping video so only the
+     still image background shows. The still <img> beneath always remains. */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-video {
+      display: none;
+    }
+  }
+</style>
