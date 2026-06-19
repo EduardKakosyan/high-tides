@@ -1,18 +1,31 @@
 ---
-// The Hi Tides wordmark — gold "Hi", purple "Tides", echoing the painted
-// round wooden sign on the cottage (CONTEXT.md). "Hi Tides" is always two
-// words; the pun ("hi" + high tide) is a brand asset, never corrected.
+// The Hi Tides logo — the hand-anchored brand mark (gold "HI" over the anchor
+// ring/stock, navy "TIDES" over the flukes). "Hi Tides" is always two words;
+// the pun ("hi" + high tide) is a brand asset, never corrected.
+//
+// Two finishes:
+//   brand  → full-colour logo (gold + navy) for light surfaces.
+//   light  → white silhouette for dark surfaces (e.g. over the hero video),
+//            where the navy of the full-colour mark would disappear.
+//
+// Size is controlled by the `class` prop via a height utility (e.g. h-12);
+// the image keeps its aspect ratio (w-auto) and its intrinsic width/height
+// reserve space to avoid layout shift.
 interface Props {
-  /** Render light (for dark backgrounds like the hero) or branded colours. */
+  /** Render the white silhouette (dark backgrounds) or full-colour mark. */
   variant?: 'brand' | 'light';
   class?: string;
 }
 
-const { variant = 'brand', class: className = '' } = Astro.props;
-const hi = variant === 'light' ? 'text-white' : 'text-gold';
-const tides = variant === 'light' ? 'text-white' : 'text-purple';
+const { variant = 'brand', class: className = 'h-10' } = Astro.props;
+const src = variant === 'light' ? '/brand/logo-white.png' : '/brand/logo.png';
 ---
 
-<span class={`font-head font-semibold tracking-tight ${className}`}>
-  <span class={hi}>Hi</span> <span class={tides}>Tides</span>
-</span>
+<img
+  src={src}
+  alt="Hi Tides"
+  width="480"
+  height="421"
+  decoding="async"
+  class={`w-auto ${className}`}
+/>

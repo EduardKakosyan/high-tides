@@ -1,14 +1,17 @@
 ---
 import Wordmark from './Wordmark.astro';
 
-// Cinematic hero (issue #7) — opens the story page with the processed
-// beach->house drone loop playing full-bleed behind the Hi Tides wordmark
-// and the primary inquiry CTA.
+// Cinematic hero (issue #7) — opens the story page with the processed beach
+// loop (from Content/videos/drone/"beach video.mov") playing full-bleed behind
+// the Hi Tides wordmark and the primary inquiry CTA.
 //
 // First-paint / no-JS / reduced-motion strategy:
-//  - The still (/media/aerial-loop.jpg) is rendered as an always-present <img>
+//  - The still (/media/beach-loop.jpg) is rendered as an always-present <img>
 //    layered behind the video, so the hero looks correct before the video
 //    decodes, with JS off, and when motion is reduced.
+//  - Above-the-fold, the hero uses the lean H.264 MP4 only (universal support
+//    for muted autoplay loops); the heavier VP9 WebM is skipped here to keep
+//    first load light.
 //  - The <video> uses poster + preload="metadata" so it never blocks first
 //    paint, and is hidden via a scoped reduced-motion media query so only the
 //    still shows for visitors who prefer reduced motion.
@@ -22,14 +25,14 @@ import Wordmark from './Wordmark.astro';
 >
   <!-- Always-present still: first paint + no-JS + reduced-motion fallback -->
   <img
-    src="/media/aerial-loop.jpg"
-    alt="Aerial view over the white-sand beach and cottage at Port Mouton, Nova Scotia"
+    src="/media/beach-loop.jpg"
+    alt="The white-sand beach and clear Atlantic water at Port Mouton, Nova Scotia"
     class="absolute inset-0 h-full w-full object-cover"
     fetchpriority="high"
     decoding="async"
   />
 
-  <!-- Processed drone loop layered on top; hidden under reduced motion -->
+  <!-- Processed beach loop layered on top; hidden under reduced motion -->
   <video
     class="hero-video absolute inset-0 h-full w-full object-cover"
     autoplay
@@ -37,11 +40,10 @@ import Wordmark from './Wordmark.astro';
     loop
     playsinline
     preload="metadata"
-    poster="/media/aerial-loop.jpg"
-    aria-label="Aerial drone loop sweeping from the beach up to the cottage above Port Mouton"
+    poster="/media/beach-loop.jpg"
+    aria-label="Looping aerial video of the white-sand beach and coastline at Port Mouton, Nova Scotia"
   >
-    <source src="/media/aerial-loop.webm" type="video/webm" />
-    <source src="/media/aerial-loop.mp4" type="video/mp4" />
+    <source src="/media/beach-loop.mp4" type="video/mp4" />
   </video>
 
   <!-- Coastal gradient overlays for legible white foreground text -->
@@ -58,7 +60,7 @@ import Wordmark from './Wordmark.astro';
 
   <!-- Foreground content -->
   <div class="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-32 sm:px-8 sm:pb-24 sm:pt-36">
-    <Wordmark variant="light" class="text-2xl sm:text-3xl" />
+    <Wordmark variant="light" class="h-16 sm:h-20" />
 
     <p
       class="mb-4 mt-8 text-xs font-semibold uppercase tracking-[0.22em] text-white/80"
@@ -76,7 +78,7 @@ import Wordmark from './Wordmark.astro';
     <div class="mt-8 flex flex-wrap gap-4">
       <a
         href="#inquire"
-        class="rounded-full bg-gold px-7 py-3.5 font-semibold text-ink transition-transform hover:-translate-y-0.5"
+        class="rounded-full bg-blue px-7 py-3.5 font-semibold text-white transition-transform hover:-translate-y-0.5"
       >
         Request your stay
       </a>

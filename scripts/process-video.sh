@@ -52,6 +52,7 @@ WEBM_CRF="${WEBM_CRF:-36}"  # VP9 quality knob; VP9 needs a higher CRF than x264
 # main-aeral.mp4 is a clean ~7s beach->house drone pass — perfect for a loop.
 SAMPLE_CLIPS=(
   "videos/drone/main-aeral.mp4|aerial-loop|00:00:00|7"
+  "videos/drone/beach video.mov|beach-loop|00:00:00|13"
 )
 
 # --- helpers --------------------------------------------------------------
