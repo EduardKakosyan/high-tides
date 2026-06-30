@@ -48,11 +48,11 @@ export const groups: GalleryGroup[] = [
     images: [
       {
         src: img('seating-area-2.jpg'),
-        alt: 'Bright living area with a mustard sofa and soft coastal daylight',
+        alt: 'Bright living area with a mustard sofa and coastal daylight',
       },
       {
         src: img('seating-area-indoor-1.jpg'),
-        alt: 'Indoor seating area arranged for slow, comfortable evenings',
+        alt: 'Comfortable indoor seating area arranged for relaxed evenings',
       },
       {
         src: img('seating-area-flowers.jpg'),
@@ -60,7 +60,7 @@ export const groups: GalleryGroup[] = [
       },
       {
         src: img('tv-1.jpg'),
-        alt: 'Seating area with a television, set up for cosy nights in',
+        alt: 'Seating area with a television',
       },
     ],
   },
@@ -70,15 +70,15 @@ export const groups: GalleryGroup[] = [
     images: [
       {
         src: img('kitchen-1.jpg'),
-        alt: 'Full kitchen, bright and ready for slow coastal mornings',
+        alt: 'Full kitchen at Hi Tides with bright natural light',
       },
       {
         src: img('kitchen-2.jpg'),
-        alt: 'Kitchen counter and cabinetry with ample prep space',
+        alt: 'Kitchen counter and cabinetry with prep space',
       },
       {
         src: img('kitchen-3.jpg'),
-        alt: 'Kitchen viewed from the dining side, fully equipped to cook in',
+        alt: 'Fully equipped kitchen viewed from the dining side',
       },
     ],
   },
@@ -88,15 +88,15 @@ export const groups: GalleryGroup[] = [
     images: [
       {
         src: img('main-bedroom-1.jpg'),
-        alt: 'Main bedroom with a queen bed dressed in calm, coastal tones',
+        alt: 'Main bedroom with a queen bed in calm coastal tones',
       },
       {
         src: img('back-main-bedroom.jpg'),
-        alt: 'Main bedroom seen from the back of the room, light and airy',
+        alt: 'Light main bedroom viewed from the back of the room',
       },
       {
         src: img('bed-1.jpg'),
-        alt: 'Queen bed made up with crisp linens in the second bedroom',
+        alt: 'Second bedroom with a queen bed and crisp linens',
       },
     ],
   },
@@ -106,7 +106,7 @@ export const groups: GalleryGroup[] = [
     images: [
       {
         src: img('bathroom-main-1.jpg'),
-        alt: 'Main full bathroom with a clean, bright finish',
+        alt: 'Bright full bathroom with a clean finish',
       },
       {
         src: img('on-suit-bathroom-1.jpg'),
@@ -114,7 +114,7 @@ export const groups: GalleryGroup[] = [
       },
       {
         src: img('on-suite-bathroom-2.jpg'),
-        alt: 'En-suite bathroom, second view showing the layout',
+        alt: 'Second view of the en-suite bathroom layout',
       },
       {
         src: img('shower-1.jpg'),
@@ -128,35 +128,35 @@ export const groups: GalleryGroup[] = [
     images: [
       {
         src: img('deck-seating-back.jpg'),
-        alt: 'Back deck seating with a view out over the bay',
+        alt: 'Back deck seating with a view over the bay',
       },
       {
         src: img('seating-deck-back.jpg'),
-        alt: 'Outdoor seating on the back deck, set for coffee in the morning sun',
+        alt: 'Outdoor seating on the back deck',
       },
       {
         src: img('side-deck.jpg'),
-        alt: 'Side deck of the cottage, wrapping along the cedar-shingle siding',
+        alt: 'Side deck along the cedar-shingle siding',
       },
       {
         src: img('side-deck-house.jpg'),
-        alt: 'Side deck looking back toward the grey-blue cedar-shingle house',
+        alt: 'Side deck looking back toward the grey-blue cedar-shingle cottage',
       },
       {
         src: img('front-house.jpg'),
-        alt: 'Front of the cottage with its weathered cedar shingles',
+        alt: 'Front exterior of Hi Tides with cedar shingles',
       },
       {
         src: img('back-of-house.jpg'),
-        alt: 'Back of the cottage facing the deck and the bay beyond',
+        alt: 'Back of the cottage facing the deck and bay',
       },
       {
         src: img('back-house.jpg'),
-        alt: 'Rear elevation of the cottage above the beach',
+        alt: 'Rear view of Hi Tides above the beach',
       },
       {
         src: img('back-full-shot.jpg'),
-        alt: 'Full view of the back of the house and deck from the yard',
+        alt: 'Back of the cottage and deck viewed from the yard',
       },
     ],
   },
@@ -166,19 +166,19 @@ export const groups: GalleryGroup[] = [
     images: [
       {
         src: img('detail-pic.jpg'),
-        alt: 'A small interior detail that gives the cottage its character',
+        alt: 'Small interior detail inside the cottage',
       },
       {
         src: img('hallway-pic.jpg'),
-        alt: 'Hallway connecting the rooms of the cottage',
+        alt: 'Hallway connecting the rooms inside Hi Tides',
       },
       {
         src: img('entrance-area-1.jpg'),
-        alt: 'Entrance area welcoming you in from the deck',
+        alt: 'Entrance area leading in from the deck',
       },
       {
         src: img('dryer-washer.jpg'),
-        alt: 'In-unit washer and dryer for longer stays',
+        alt: 'In-unit washer and dryer',
       },
     ],
   },
@@ -187,14 +187,14 @@ export const groups: GalleryGroup[] = [
 // A curated, tasteful subset for the homepage "The Home" section — one or two
 // strong frames per space, kept to ~8 images so the section stays editorial.
 export const featuredAltSet = new Set<string>([
-  'Bright living area with a mustard sofa and soft coastal daylight',
-  'Seating area with a television, set up for cosy nights in',
-  'Full kitchen, bright and ready for slow coastal mornings',
-  'Main bedroom with a queen bed dressed in calm, coastal tones',
-  'Main full bathroom with a clean, bright finish',
-  'Back deck seating with a view out over the bay',
-  'Front of the cottage with its weathered cedar shingles',
-  'Side deck of the cottage, wrapping along the cedar-shingle siding',
+  'Bright living area with a mustard sofa and coastal daylight',
+  'Seating area with a television',
+  'Full kitchen at Hi Tides with bright natural light',
+  'Main bedroom with a queen bed in calm coastal tones',
+  'Bright full bathroom with a clean finish',
+  'Back deck seating with a view over the bay',
+  'Front exterior of Hi Tides with cedar shingles',
+  'Side deck along the cedar-shingle siding',
 ]);
 
 export const featured: GalleryImage[] = groups

@@ -22,16 +22,15 @@ const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
 <section id="inquire" aria-labelledby="inquire-heading" class="bg-surface">
   <div class="mx-auto max-w-3xl px-6 py-24 sm:px-8">
     <p class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted">
-      Start a conversation
+      Start here
     </p>
     <h2 id="inquire-heading" class="text-3xl font-semibold sm:text-4xl">
       Send your inquiry
     </h2>
     <p class="mt-4 max-w-[54ch] text-lg text-muted">
-      No booking engine and no account to make — just a short note. Tell Brian
-      the dates you have in mind and a little about your trip, and he&rsquo;ll
-      reply personally, usually within a day. Stays are a 6-night minimum, and
-      rates are shared on request.
+      Share your dates, the number of guests, and anything useful about your
+      trip. Hi Tides sleeps up to 4 guests, has a 6-night minimum stay, and is
+      open year-round. Rates are shared on request.
     </p>
 
     <!-- Inquiry form (Netlify Forms). The hidden form-name + honeypot are
@@ -110,13 +109,13 @@ const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
 
         <div class="sm:col-span-2">
           <label for="inquiry-message" class={labelClass}>
-            Anything you&rsquo;d like Brian to know
+            Anything you would like us to know
           </label>
           <textarea
             id="inquiry-message"
             name="message"
             rows="5"
-            placeholder="Your dates, who&rsquo;s coming, what you&rsquo;re hoping for…"
+            placeholder="Your dates, who is coming, and what you are hoping for…"
             class={`${fieldClass} resize-y`}></textarea>
         </div>
       </div>
@@ -127,8 +126,8 @@ const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
         role="alert"
         class="mt-6 rounded-xl border border-gold/50 bg-gold/10 px-4 py-3 text-sm text-ink"
       >
-        Something went wrong sending your inquiry. Please try again, or email
-        Brian directly at <a class="font-medium text-blue underline"
+        Something went wrong sending your inquiry. Please try again, or email <a
+          class="font-medium text-blue underline"
           href="mailto:briangreening@eastlink.ca">briangreening@eastlink.ca</a
         >.
       </p>
@@ -164,10 +163,9 @@ const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
           <path d="M20 6 9 17l-5-5"></path>
         </svg>
       </span>
-      <h3 class="mt-5 text-2xl font-semibold text-ink">Thanks — it&rsquo;s on its way</h3>
+      <h3 class="mt-5 text-2xl font-semibold text-ink">Thanks, your inquiry has been sent</h3>
       <p class="mx-auto mt-3 max-w-[46ch] text-muted">
-        Your inquiry is on its way to Brian. He&rsquo;ll reply personally,
-        usually within a day.
+        Your note is on its way. You should receive a reply soon.
       </p>
     </div>
   </div>
