@@ -80,3 +80,40 @@ Sub-page: `/gallery` — all photos grouped by room/area.
 - Hero/accent video: trim large `.MP4`/`.mov` to 10–20s muted loops, encode MP4 + WebM, poster frame.
 - **Prereq:** `node`/`npm` not installed yet — needed before building Astro.
 - **Need from host:** interior photos are now in `Content/images/` (good); still need a host photo.
+
+## "Next level" motion & rails — locked decisions (2026-07-11)
+
+Goal: tech in service of feel — more craft, no new features. Explicitly NOT
+building: guest features (calendar, tours), host tooling, analytics.
+
+- **Library over native-only:** everyone gets the same experience across
+  browsers/mobile → GSAP + ScrollTrigger (scroll storytelling is its core
+  competency). Per-component timelines; `gsap.matchMedia()` for
+  reduced-motion and breakpoints.
+- **ClientRouter** (`astro:transitions`) sitewide for the photo morph between
+  The Home and /gallery in every browser. Discipline it imposes: every script
+  (re)inits on `astro:page-load` and reverts on `astro:before-swap`
+  (see `src/scripts/motion.ts`, Lightbox, InquiryForm; guarded by
+  `tests/lifecycle.spec.ts`).
+- **Photo morph identity:** `transition:name` derived from image alt text
+  (`morphName()` in `src/data/gallery.ts`) — alt is already each image's
+  identity (`featuredAltSet`).
+- **Hero (workstream D, pending spike verdict):** scroll-scrubbed drone
+  flight beach→cottage (clip `DJI_..._0039`, ~36s→76s). Pin ≤ 2 viewports,
+  visible scroll cue, the ONLY pinned section on the page. Reduced-motion /
+  data-saver / no-JS get the current loop/still. All-keyframe encode ≤ 8 MB.
+  Spike lives on `spike/hero-scrub` (throwaway — validate feel on a real
+  phone, then rebuild properly; never merge).
+- **Motion vocabulary (everything below the hero):** exactly three
+  primitives — `data-reveal` (fade-and-rise, once), `data-stagger`
+  (quick facts, how-it-works), `data-parallax` (four largest photos, ±5%
+  drift, 1.12 overscale). No other pins or scrubs. One bespoke beat for The
+  View is allowed later, only after living with the quiet version.
+- **CI (Tier 2, hard failures):** GitHub Actions — build + Playwright
+  (desktop + mobile projects, reduced-motion contract tests) + Lighthouse CI
+  budgets: LCP ≤ 2.5s / CLS ≤ 0.1 (devtools throttling — Lantern simulation
+  rejected: it reported ~3-4s LCP while observed LCP == FCP), script
+  transfer ≤ 120 KB, committed video ≤ 8 MB.
+- **No analytics, no monitoring:** Brian's inbox is the KPI. If a specific
+  question ever demands it: Plausible for one month, read the answer,
+  re-decide.
