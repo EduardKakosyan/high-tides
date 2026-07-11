@@ -175,11 +175,17 @@ const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
   // Progressive enhancement: intercept the submit, POST the url-encoded body
   // to "/" (Netlify Forms endpoint) via fetch, then reveal the success panel.
   // Falls back to a native submit if the elements aren't found.
-  const form = document.getElementById('inquiry-form') as HTMLFormElement | null;
-  const success = document.getElementById('inquiry-success');
-  const errorPanel = document.getElementById('inquiry-error');
+  //
+  // ClientRouter lifecycle: the form DOM is replaced on client-side
+  // navigation, so binding lives in an init re-run on astro:page-load.
+  function initInquiryForm() {
+    const form = document.getElementById(
+      'inquiry-form'
+    ) as HTMLFormElement | null;
+    const success = document.getElementById('inquiry-success');
+    const errorPanel = document.getElementById('inquiry-error');
 
-  if (form && success) {
+    if (!form || !success) return;
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       if (errorPanel) errorPanel.hidden = true;
@@ -206,4 +212,6 @@ const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
       }
     });
   }
+
+  document.addEventListener('astro:page-load', initInquiryForm);
 </script>

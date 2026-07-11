@@ -4,6 +4,12 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/space-grotesk';
 import '../styles/global.css';
 
+// Client-side router: every browser (incl. Firefox, via the simulated
+// fallback) gets the photo morph between the story page and /gallery.
+// Discipline it imposes: every script that touches the DOM must (re)init on
+// astro:page-load — a bundled module script runs only once per visit.
+import { ClientRouter } from 'astro:transitions';
+
 // Preload the two latin variable-font files. Without this they queue behind
 // the hero image on slow connections and the late font swap drags LCP past
 // budget (text is the LCP element on both pages). The ?url imports resolve to
@@ -51,6 +57,7 @@ const {
 
     <title>{title}</title>
     <meta name="description" content={description} />
+    <ClientRouter />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -63,5 +70,8 @@ const {
       <slot />
     </main>
     <Footer />
+    <!-- Overlays (modal dialogs) live outside <main> so making the page
+         inert behind a modal can never make the modal itself inert. -->
+    <slot name="overlay" />
   </body>
 </html>

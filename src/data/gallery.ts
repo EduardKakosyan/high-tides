@@ -239,3 +239,19 @@ export const featured: GalleryImage[] = groups
 
 /** The full, ordered list (used by the gallery + lightbox). */
 export const allImages: GalleryImage[] = groups.flatMap((g) => g.images);
+
+/**
+ * Stable view-transition name for a photo, shared by the story page and
+ * /gallery so the same photo morphs between them on navigation. Alt text is
+ * already each image's identity (see featuredAltSet); slug it into a valid
+ * CSS custom-ident.
+ */
+export function morphName(image: GalleryImage): string {
+  return (
+    'photo-' +
+    image.alt
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+  );
+}

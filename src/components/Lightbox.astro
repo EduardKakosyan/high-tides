@@ -111,10 +111,18 @@
   // --- Lightbox controller -------------------------------------------------
   // Dependency-free. Reads the ordered image list from the thumbnail triggers
   // so the markup stays the single source of truth.
+  //
+  // ClientRouter lifecycle: this module executes once per visit, but the DOM
+  // it wires is replaced on every client-side navigation — so all setup lives
+  // in an init function re-run on astro:page-load.
   type Slide = { src: string; alt: string };
 
-  const lightbox = document.getElementById('lightbox');
-  if (lightbox) {
+  function initLightbox() {
+    // Clear modal side effects that live on persistent nodes across swaps.
+    document.body.style.overflow = '';
+
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
     const imageEl = lightbox.querySelector<HTMLImageElement>(
       '[data-lightbox-image]',
     );
@@ -154,7 +162,10 @@
     let current = 0;
     let lastFocused: HTMLElement | null = null;
 
-    const main = document.querySelector('main');
+    // Regions made inert while the modal is open: every top-level body
+    // region that doesn't contain the dialog (header, main, footer). The
+    // dialog itself lives in the layout's overlay slot, outside <main>.
+    let inertedRegions: Element[] = [];
 
     function focusables(): HTMLElement[] {
       if (!lightbox) return [];
@@ -184,7 +195,10 @@
       lightbox.classList.add('flex');
       lightbox.setAttribute('aria-hidden', 'false');
       // Hide the rest of the page from AT + pointer while modal is open.
-      if (main) main.setAttribute('inert', '');
+      inertedRegions = Array.from(document.body.children).filter(
+        (el) => !el.contains(lightbox),
+      );
+      inertedRegions.forEach((el) => el.setAttribute('inert', ''));
       document.body.style.overflow = 'hidden';
       // Move focus into the dialog.
       closeBtn?.focus();
@@ -196,7 +210,8 @@
       lightbox.classList.add('hidden');
       lightbox.classList.remove('flex');
       lightbox.setAttribute('aria-hidden', 'true');
-      if (main) main.removeAttribute('inert');
+      inertedRegions.forEach((el) => el.removeAttribute('inert'));
+      inertedRegions = [];
       document.body.style.overflow = '';
       document.removeEventListener('keydown', onKeydown);
       // Restore focus to the thumbnail that opened the lightbox.
@@ -257,4 +272,6 @@
     prevBtn?.addEventListener('click', () => show(current - 1));
     nextBtn?.addEventListener('click', () => show(current + 1));
   }
+
+  document.addEventListener('astro:page-load', initLightbox);
 </script>

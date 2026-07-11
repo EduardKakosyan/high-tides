@@ -9,7 +9,7 @@
 // Images flow through Astro's <Image> (astro:assets) → AVIF/WebP + responsive
 // srcset, lazy-loaded, with meaningful alt text. "Cool & coastal" tokens only.
 import { Image } from 'astro:assets';
-import { featured } from '../data/gallery';
+import { featured, morphName } from '../data/gallery';
 
 const [lead, ...rest] = featured;
 ---
@@ -40,7 +40,10 @@ const [lead, ...rest] = featured;
     <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {
         lead && (
-          <figure class="overflow-hidden rounded-2xl border border-line sm:col-span-2 sm:row-span-2">
+          <figure
+            transition:name={morphName(lead)}
+            class="overflow-hidden rounded-2xl border border-line sm:col-span-2 sm:row-span-2"
+          >
             <Image
               src={lead.src}
               alt={lead.alt}
@@ -55,7 +58,10 @@ const [lead, ...rest] = featured;
       }
       {
         rest.map((image) => (
-          <figure class="overflow-hidden rounded-2xl border border-line">
+          <figure
+            transition:name={morphName(image)}
+            class="overflow-hidden rounded-2xl border border-line"
+          >
             <Image
               src={image.src}
               alt={image.alt}

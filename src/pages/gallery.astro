@@ -9,7 +9,7 @@
 import { Image, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Lightbox from '../components/Lightbox.astro';
-import { groups, allImages } from '../data/gallery';
+import { groups, allImages, morphName } from '../data/gallery';
 
 // Pre-generate an optimized full-size WebP for each image, in the same order as
 // allImages, so the lightbox triggers can carry a clean URL + a stable index.
@@ -76,7 +76,7 @@ const indexOf = new Map(allImages.map((image, i) => [image, i]));
                 const i = indexOf.get(image)!;
                 const full = fullViews[i];
                 return (
-                  <li>
+                  <li transition:name={morphName(image)}>
                     <button
                       type="button"
                       class="group block w-full overflow-hidden rounded-2xl border border-line focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"
@@ -115,5 +115,5 @@ const indexOf = new Map(allImages.map((image, i) => [image, i]));
     </div>
   </section>
 
-  <Lightbox />
+  <Lightbox slot="overlay" />
 </Base>
