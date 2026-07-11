@@ -2,9 +2,10 @@
 dist/
 .astro/
 
-# Test artifacts (Playwright)
+# Test artifacts (Playwright, Lighthouse CI)
 test-results/
 playwright-report/
+.lighthouseci/
 
 # Dependencies
 node_modules/

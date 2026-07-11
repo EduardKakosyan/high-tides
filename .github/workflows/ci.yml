@@ -1,0 +1,48 @@
+# Tier-2 CI: correctness (build + Playwright e2e) plus hard-failing
+# performance budgets (Lighthouse CI + media weight). The budgets defend the
+# site's feel — the day a dependency or a video blows the weight, this fails.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # Hero/section video budget: no committed web video may exceed 8 MB.
+      - name: Media weight budget (video ≤ 8 MB)
+        run: |
+          over=$(find public/media -type f \( -name '*.mp4' -o -name '*.webm' \) -size +8M || true)
+          if [ -n "$over" ]; then
+            echo "Video over the 8 MB budget:" && echo "$over" && exit 1
+          fi
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: E2E tests (desktop + mobile viewports)
+        run: npx playwright test
+
+      - name: Lighthouse budgets (LCP ≤ 2.5s, CLS ≤ 0.1, JS ≤ 120 KB)
+        run: npx lhci autorun
+
+      - name: Upload Lighthouse reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-reports
+          path: .lighthouseci

@@ -18,6 +18,12 @@ export default defineConfig({
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
+    {
+      // Mobile viewport (Chromium-based so CI stays one browser install).
+      // Real-device iOS checks happen by hand on spike/feature branches.
+      name: 'mobile',
+      use: { ...devices['Pixel 7'] },
+    },
   ],
   webServer: {
     command: 'npm run build && npm run preview',
