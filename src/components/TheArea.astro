@@ -9,7 +9,6 @@ import { Image } from 'astro:assets';
 // Evocative drone derivatives that read as beach / coast / village.
 import beach from '../assets/media/dji_20250819114756_0002_d.jpg';
 import coast from '../assets/media/dji_20250819114909_0008_d.jpg';
-import village from '../assets/media/dji_20250819115212_0026_d.jpg';
 
 interface Highlight {
   name: string;
@@ -82,14 +81,14 @@ const mapLink = 'https://www.openstreetmap.org/#map=13/43.94/-64.83';
       because it is still itself.
     </p>
 
-    <!-- Evocative imagery: beach / coast / village -->
-    <div class="mt-10 grid gap-6 sm:grid-cols-3">
+    <!-- Evocative imagery: the cottage from above -->
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
       <figure class="overflow-hidden rounded-2xl border border-line">
         <Image
           src={beach}
-          alt="White-sand beach and clear blue Atlantic water near Port Mouton, Nova Scotia"
+          alt="Aerial view of the cottage on its clearing, ringed by South Shore woods"
           widths={[480, 768, 1200]}
-          sizes="(min-width: 640px) 33vw, 100vw"
+          sizes="(min-width: 640px) 50vw, 100vw"
           loading="lazy"
           decoding="async"
           class="aspect-[4/3] h-full w-full object-cover"
@@ -98,20 +97,9 @@ const mapLink = 'https://www.openstreetmap.org/#map=13/43.94/-64.83';
       <figure class="overflow-hidden rounded-2xl border border-line">
         <Image
           src={coast}
-          alt="Aerial view of the South Shore coastline and bay below the cottage"
+          alt="Aerial view of the cottage and gravel drive tucked into the trees near Port Mouton"
           widths={[480, 768, 1200]}
-          sizes="(min-width: 640px) 33vw, 100vw"
-          loading="lazy"
-          decoding="async"
-          class="aspect-[4/3] h-full w-full object-cover"
-        />
-      </figure>
-      <figure class="overflow-hidden rounded-2xl border border-line">
-        <Image
-          src={village}
-          alt="Aerial view of Port Mouton village and surrounding coastline"
-          widths={[480, 768, 1200]}
-          sizes="(min-width: 640px) 33vw, 100vw"
+          sizes="(min-width: 640px) 50vw, 100vw"
           loading="lazy"
           decoding="async"
           class="aspect-[4/3] h-full w-full object-cover"

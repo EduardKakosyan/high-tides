@@ -179,6 +179,14 @@ export const groups: GalleryGroup[] = [
     title: 'Outdoor shower',
     images: [
       {
+        src: img('shower-inside.jpg'),
+        alt: 'Inside the outdoor shower: rainfall head, cedar walls, string lights and lobster-rope art',
+      },
+      {
+        src: img('shower-seat.jpg'),
+        alt: "The outdoor shower's cedar bench and woven rope panel, with the cottage beyond the open door",
+      },
+      {
         src: img('outdoor-shower-side.jpg'),
         alt: 'Cedar outdoor shower tucked into the greenery, with a bamboo sunburst detail',
       },

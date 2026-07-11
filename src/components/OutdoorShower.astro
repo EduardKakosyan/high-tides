@@ -9,6 +9,10 @@ import { Image } from 'astro:assets';
 // The shower in context: cedar-and-corrugated enclosure beside the cottage,
 // with the deck and bay just behind it.
 import showerEntrance from '../assets/media/outdoor-shower-entrance.jpg';
+// Inside: the rainfall head, string lights, and lobster-rope details.
+import showerInside from '../assets/media/shower-inside.jpg';
+// The cedar bench and woven rope panel, cottage beyond the open door.
+import showerSeat from '../assets/media/shower-seat.jpg';
 // The editorial side: bamboo sunburst, a little fish, greenery closing in.
 import showerSide from '../assets/media/outdoor-shower-side.jpg';
 ---
@@ -29,16 +33,39 @@ import showerSide from '../assets/media/outdoor-shower-side.jpg';
       way to wash off the salt and sand before you head back inside.
     </p>
     <p class="mt-4 max-w-[52ch] text-lg text-white/85">
-      Cedar posts, a little whimsy, and the tree canopy overhead. It is a small
-      thing that ends up being everyone's favourite part of the day.
+      Cedar posts, a rainfall head, a bench to sit on, and a bit of whimsy under
+      the tree canopy — string lights and lobster-rope details throughout. It is
+      a small thing that ends up being everyone's favourite part of the day.
     </p>
 
-    <!-- Two-up: the shower in context, then the editorial detail. -->
+    <!-- Context, then step inside, then the editorial details. -->
     <div class="mt-12 grid gap-6 sm:grid-cols-2">
       <figure class="overflow-hidden rounded-2xl border border-white/10">
         <Image
           src={showerEntrance}
           alt="Private outdoor shower beside the cottage at Hi Tides, with the deck and bay just behind"
+          widths={[480, 768, 1200, 1800]}
+          sizes="(min-width: 640px) 50vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[3/2] w-full object-cover"
+        />
+      </figure>
+      <figure class="overflow-hidden rounded-2xl border border-white/10">
+        <Image
+          src={showerInside}
+          alt="Inside the outdoor shower: rainfall head, cedar walls, string lights and lobster-rope art"
+          widths={[480, 768, 1200, 1800]}
+          sizes="(min-width: 640px) 50vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[3/2] w-full object-cover"
+        />
+      </figure>
+      <figure class="overflow-hidden rounded-2xl border border-white/10">
+        <Image
+          src={showerSeat}
+          alt="The outdoor shower's cedar bench and woven rope panel, with the cottage beyond the open door"
           widths={[480, 768, 1200, 1800]}
           sizes="(min-width: 640px) 50vw, 100vw"
           loading="lazy"
