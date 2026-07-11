@@ -19,28 +19,33 @@ import viewFromWindow from '../assets/media/view-2.jpg';
 <section aria-labelledby="the-view-heading" class="bg-ink text-white">
   <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
     <p
+      data-reveal
       class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-gold"
     >
       The view
     </p>
     <h2
       id="the-view-heading"
+      data-reveal
       class="max-w-[20ch] font-head text-3xl font-semibold sm:text-4xl lg:text-5xl"
     >
       High enough to see the whole bay.
     </h2>
-    <p class="mt-5 max-w-[52ch] text-lg text-white/85">
+    <p data-reveal class="mt-5 max-w-[52ch] text-lg text-white/85">
       The cottage is set above the shore, not down at sea level. From here, the
       beach, bay, and open Atlantic all sit in front of you.
     </p>
-    <p class="mt-4 max-w-[52ch] text-lg text-white/85">
+    <p data-reveal class="mt-4 max-w-[52ch] text-lg text-white/85">
       Walk down to the sand when you want the beach. Come back up when you want
       the view. Morning, evening, clear weather, rough weather, it is the kind
       of outlook that changes all day without ever getting old.
     </p>
 
     <!-- Lead drone frame: the cottage-above-the-shore relationship -->
-    <figure class="mt-12 overflow-hidden rounded-2xl border border-white/10">
+    <figure
+      data-parallax
+      class="mt-12 overflow-hidden rounded-2xl border border-white/10"
+    >
       <Image
         src={aerialBay}
         alt="Aerial view of Hi Tides above the white-sand beach and bay in Port Mouton, Nova Scotia"

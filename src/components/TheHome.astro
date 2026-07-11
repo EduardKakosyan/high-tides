@@ -16,21 +16,25 @@ const [lead, ...rest] = featured;
 
 <section aria-labelledby="the-home-heading" class="bg-surface">
   <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
-    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+    <p
+      data-reveal
+      class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted"
+    >
       The cottage
     </p>
     <h2
       id="the-home-heading"
+      data-reveal
       class="max-w-[20ch] text-3xl font-semibold text-ink sm:text-4xl"
     >
       Simple, bright, and easy to settle into.
     </h2>
-    <p class="mt-5 max-w-[52ch] text-lg text-muted">
+    <p data-reveal class="mt-5 max-w-[52ch] text-lg text-muted">
       Inside, the cottage has two bedrooms, two full baths, a full kitchen,
       comfortable living space, and a wood stove for cooler days. The deck faces
       the bay and gives you the best seat in the house.
     </p>
-    <p class="mt-4 max-w-[52ch] text-lg text-muted">
+    <p data-reveal class="mt-4 max-w-[52ch] text-lg text-muted">
       It is not a resort. It is not trying to be one. Hi Tides is a clean, calm
       coastal cottage in a beautiful place, made for slow mornings, beach days,
       and quiet evenings in.
@@ -42,6 +46,7 @@ const [lead, ...rest] = featured;
         lead && (
           <figure
             transition:name={morphName(lead)}
+            data-parallax
             class="overflow-hidden rounded-2xl border border-line sm:col-span-2 sm:row-span-2"
           >
             <Image

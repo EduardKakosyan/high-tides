@@ -73,5 +73,8 @@ const {
     <!-- Overlays (modal dialogs) live outside <main> so making the page
          inert behind a modal can never make the modal itself inert. -->
     <slot name="overlay" />
+    <script>
+      import '../scripts/motion';
+    </script>
   </body>
 </html>

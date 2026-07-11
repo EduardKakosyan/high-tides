@@ -64,20 +64,25 @@ const facts: Fact[] = [
 <section aria-labelledby="good-to-know-heading" class="bg-bg">
   <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
     <p
+      data-reveal
       class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted"
     >
       Good to know
     </p>
-    <h2 id="good-to-know-heading" class="text-3xl font-semibold sm:text-4xl">
+    <h2
+      id="good-to-know-heading"
+      data-reveal
+      class="text-3xl font-semibold sm:text-4xl"
+    >
       How it works
     </h2>
-    <p class="mt-4 max-w-[52ch] text-lg text-muted">
+    <p data-reveal class="mt-4 max-w-[52ch] text-lg text-muted">
       Hi Tides is booked by inquiry. Send your dates, confirm the details by
       email, and plan your stay from there.
     </p>
 
     <!-- 3-step flow -->
-    <ol class="mt-12 grid gap-6 sm:grid-cols-3">
+    <ol data-stagger class="mt-12 grid gap-6 sm:grid-cols-3">
       {
         steps.map((step) => (
           <li class="rounded-2xl border border-line bg-surface p-7">

@@ -13,21 +13,25 @@ import detail from '../assets/media/detail-pic.jpg';
 
 <section aria-labelledby="the-experience-heading" class="bg-bg">
   <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
-    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+    <p
+      data-reveal
+      class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted"
+    >
       The stay
     </p>
     <h2
       id="the-experience-heading"
+      data-reveal
       class="max-w-[22ch] font-head text-3xl font-semibold text-ink sm:text-4xl"
     >
       Come for the beach. Stay for the pace.
     </h2>
-    <p class="mt-5 max-w-[52ch] text-lg text-muted">
+    <p data-reveal class="mt-5 max-w-[52ch] text-lg text-muted">
       There is not much to complicate a day here. Wake up to the water. Make
       coffee. Walk the beach. Read on the deck. Head into Liverpool for a meal
       or supplies. Come back before the light starts to change over the bay.
     </p>
-    <p class="mt-4 max-w-[52ch] text-lg text-muted">
+    <p data-reveal class="mt-4 max-w-[52ch] text-lg text-muted">
       Hi Tides is for people who want the coast without the crowd. It is quiet,
       comfortable, and close to the kind of beaches people usually do not expect
       to find in Nova Scotia.
@@ -36,6 +40,7 @@ import detail from '../assets/media/detail-pic.jpg';
     <!-- Refined asymmetric grid: one tall feature + a stacked pair, then a wide band -->
     <div class="mt-12 grid gap-4 sm:grid-cols-3 sm:gap-6">
       <figure
+        data-parallax
         class="overflow-hidden rounded-2xl border border-line sm:col-span-2 sm:row-span-2"
       >
         <Image
@@ -72,7 +77,10 @@ import detail from '../assets/media/detail-pic.jpg';
       </figure>
     </div>
 
-    <figure class="mt-4 overflow-hidden rounded-2xl border border-line sm:mt-6">
+    <figure
+      data-parallax
+      class="mt-4 overflow-hidden rounded-2xl border border-line sm:mt-6"
+    >
       <Image
         src={detail}
         alt="Small coastal decor detail inside the cottage"
