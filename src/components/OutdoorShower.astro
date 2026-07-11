@@ -1,0 +1,62 @@
+---
+// Section — "Outdoor shower".
+// A small, memorable amenity that fits the coastal-cottage story: rinse off the
+// salt and sand after a beach day, out under the trees. Placed between The
+// Experience and The Home as a dark cinematic beat — the greenery and bright
+// cedar read beautifully on the ink band, and it sits well apart from The View
+// so the two dark sections bookend the lighter middle rather than compete.
+import { Image } from 'astro:assets';
+// The shower in context: cedar-and-corrugated enclosure beside the cottage,
+// with the deck and bay just behind it.
+import showerEntrance from '../assets/media/outdoor-shower-entrance.jpg';
+// The editorial side: bamboo sunburst, a little fish, greenery closing in.
+import showerSide from '../assets/media/outdoor-shower-side.jpg';
+---
+
+<section aria-labelledby="outdoor-shower-heading" class="bg-ink text-white">
+  <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
+    <p class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-gold">
+      Outdoor shower
+    </p>
+    <h2
+      id="outdoor-shower-heading"
+      class="max-w-[20ch] font-head text-3xl font-semibold sm:text-4xl lg:text-5xl"
+    >
+      Rinse off the beach under the trees.
+    </h2>
+    <p class="mt-5 max-w-[52ch] text-lg text-white/85">
+      Steps from the deck, a private outdoor shower with hot water — the easiest
+      way to wash off the salt and sand before you head back inside.
+    </p>
+    <p class="mt-4 max-w-[52ch] text-lg text-white/85">
+      Cedar posts, a little whimsy, and the tree canopy overhead. It is a small
+      thing that ends up being everyone's favourite part of the day.
+    </p>
+
+    <!-- Two-up: the shower in context, then the editorial detail. -->
+    <div class="mt-12 grid gap-6 sm:grid-cols-2">
+      <figure class="overflow-hidden rounded-2xl border border-white/10">
+        <Image
+          src={showerEntrance}
+          alt="Private outdoor shower beside the cottage at Hi Tides, with the deck and bay just behind"
+          widths={[480, 768, 1200, 1800]}
+          sizes="(min-width: 640px) 50vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[3/2] w-full object-cover"
+        />
+      </figure>
+      <figure class="overflow-hidden rounded-2xl border border-white/10">
+        <Image
+          src={showerSide}
+          alt="Cedar outdoor shower tucked into the greenery, with a bamboo sunburst detail"
+          widths={[480, 768, 1200, 1800]}
+          sizes="(min-width: 640px) 50vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[3/2] w-full object-cover"
+        />
+      </figure>
+    </div>
+  </div>
+</section>

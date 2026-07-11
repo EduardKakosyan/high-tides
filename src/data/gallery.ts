@@ -43,6 +43,20 @@ export interface GalleryGroup {
 // Grouped by space. Alt text is meaningful and specific (accessibility req).
 export const groups: GalleryGroup[] = [
   {
+    id: 'views',
+    title: 'The view',
+    images: [
+      {
+        src: img('view-1.jpg'),
+        alt: 'View over Port Mouton bay from the cottage grounds, with an island offshore',
+      },
+      {
+        src: img('view-2.jpg'),
+        alt: 'The bay framed through a cottage window, with coastal trinkets on the sill',
+      },
+    ],
+  },
+  {
     id: 'living',
     title: 'Living & seating',
     images: [
@@ -157,6 +171,20 @@ export const groups: GalleryGroup[] = [
       {
         src: img('back-full-shot.jpg'),
         alt: 'Back of the cottage and deck viewed from the yard',
+      },
+    ],
+  },
+  {
+    id: 'outdoor-shower',
+    title: 'Outdoor shower',
+    images: [
+      {
+        src: img('outdoor-shower-side.jpg'),
+        alt: 'Cedar outdoor shower tucked into the greenery, with a bamboo sunburst detail',
+      },
+      {
+        src: img('outdoor-shower-entrance.jpg'),
+        alt: 'Private outdoor shower beside the cottage, with the deck and bay just behind',
       },
     ],
   },

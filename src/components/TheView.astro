@@ -10,6 +10,10 @@ import { Image } from 'astro:assets';
 import aerialBay from '../assets/media/dji_20250819115309_0032_d.jpg';
 // The cottage framed against the coastline and bay behind it.
 import aerialVista from '../assets/media/dji_20250819115401_0037_d.jpg';
+// Eye-level views — what you actually see standing on the property and looking
+// out through the windows, to ground the aerials in reality.
+import viewFromYard from '../assets/media/view-1.jpg';
+import viewFromWindow from '../assets/media/view-2.jpg';
 ---
 
 <section aria-labelledby="the-view-heading" class="bg-ink text-white">
@@ -66,6 +70,32 @@ import aerialVista from '../assets/media/dji_20250819115401_0037_d.jpg';
       <p class="max-w-[34ch] text-base text-white/80 sm:col-span-2">
         A short walk to the sand, with the full bay waiting when you come back.
       </p>
+    </div>
+
+    <!-- Eye-level reality: the same bay from the yard and from inside. -->
+    <div class="mt-6 grid gap-6 sm:grid-cols-2">
+      <figure class="overflow-hidden rounded-2xl border border-white/10">
+        <Image
+          src={viewFromYard}
+          alt="View over Port Mouton bay from the cottage grounds, with an island offshore"
+          widths={[480, 768, 1200, 1800]}
+          sizes="(min-width: 640px) 50vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[3/2] w-full object-cover"
+        />
+      </figure>
+      <figure class="overflow-hidden rounded-2xl border border-white/10">
+        <Image
+          src={viewFromWindow}
+          alt="The bay framed through a cottage window, with coastal trinkets on the sill"
+          widths={[480, 768, 1200, 1800]}
+          sizes="(min-width: 640px) 50vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="aspect-[3/2] w-full object-cover"
+        />
+      </figure>
     </div>
   </div>
 </section>
