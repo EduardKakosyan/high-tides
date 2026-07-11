@@ -27,3 +27,4 @@ npm-debug.log*
 Content/
 .work/
 prototype.html
+.vercel

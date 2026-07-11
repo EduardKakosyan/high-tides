@@ -1,0 +1,36 @@
+# Files the Vercel CLI (`vercel deploy`) should never upload from the local
+# working directory. Mirrors .gitignore so a CLI deploy matches the clean
+# GitHub checkout the Git integration builds from. Without this, the CLI tries
+# to upload the multi-GB RAW masters in Content/ and .work/ and fails with
+# "File size is greater than 2 GiB".
+
+# Raw source media (multi-GB RAW stills + drone video) — processed into
+# src/assets/media and public/media separately, never deployed.
+Content/
+.work/
+
+# Build output (Vercel builds this itself)
+dist/
+.astro/
+
+# Dependencies (Vercel installs these itself)
+node_modules/
+
+# Test artifacts
+test-results/
+playwright-report/
+
+# Local env + tooling
+.env
+.env.*
+!.env.example
+.netlify/
+.vercel/
+
+# OS / editor
+.DS_Store
+*.log
+npm-debug.log*
+
+# Standalone prototype, not part of the site
+prototype.html
