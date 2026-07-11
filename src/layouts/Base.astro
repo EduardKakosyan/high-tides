@@ -4,6 +4,13 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/space-grotesk';
 import '../styles/global.css';
 
+// Preload the two latin variable-font files. Without this they queue behind
+// the hero image on slow connections and the late font swap drags LCP past
+// budget (text is the LCP element on both pages). The ?url imports resolve to
+// the same hashed assets the @font-face rules point at.
+import interWoff2 from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import groteskWoff2 from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
+
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
@@ -27,6 +34,20 @@ const {
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={groteskWoff2}
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={interWoff2}
+      crossorigin
+    />
 
     <title>{title}</title>
     <meta name="description" content={description} />

@@ -1,20 +1,23 @@
 ---
+import { Picture } from 'astro:assets';
 import Wordmark from './Wordmark.astro';
+import beachStill from '../assets/media/beach-loop.jpg';
 
 // Cinematic hero (issue #7) — opens the story page with the processed beach
 // loop (from Content/videos/drone/"beach video.mov") playing full-bleed behind
 // the Hi Tides wordmark and the primary inquiry CTA.
 //
 // First-paint / no-JS / reduced-motion strategy:
-//  - The still (/media/beach-loop.jpg) is rendered as an always-present <img>
-//    layered behind the video, so the hero looks correct before the video
-//    decodes, with JS off, and when motion is reduced.
+//  - The still (src/assets/media/beach-loop.jpg via <Picture>) is rendered as
+//    an always-present image layered behind the video, so the hero looks
+//    correct before the video decodes, with JS off, and when motion is
+//    reduced. It doubles as the poster, so the video sets none of its own.
 //  - Above-the-fold, the hero uses the lean H.264 MP4 only (universal support
 //    for muted autoplay loops); the heavier VP9 WebM is skipped here to keep
 //    first load light.
-//  - The <video> uses poster + preload="metadata" so it never blocks first
-//    paint, and is hidden via a scoped reduced-motion media query so only the
-//    still shows for visitors who prefer reduced motion.
+//  - The <video> uses preload="metadata" so it never blocks first paint, and
+//    is hidden via a scoped reduced-motion media query so only the still
+//    shows for visitors who prefer reduced motion.
 //
 // The global Header sits transparent over this hero, so foreground content
 // keeps generous top padding to clear it.
@@ -24,12 +27,17 @@ import Wordmark from './Wordmark.astro';
   class="relative flex min-h-[100svh] items-end overflow-hidden bg-ink text-white"
 >
   <!-- Always-present still: first paint + no-JS + reduced-motion fallback -->
-  <img
-    src="/media/beach-loop.jpg"
+  <!-- Optimized via astro:assets (AVIF/WebP + srcset): the raw 194 KB JPEG
+       measurably dragged mobile LCP. Not fetchpriority=high — the LCP element
+       is the hero *text*, so this image must not outrank fonts/CSS. -->
+  <Picture
+    src={beachStill}
+    formats={['avif', 'webp']}
+    widths={[640, 960, 1280]}
+    sizes="100vw"
     alt="White-sand beach and clear Atlantic water in Port Mouton, Nova Scotia"
-    class="absolute inset-0 h-full w-full object-cover"
-    fetchpriority="high"
     decoding="async"
+    class="absolute inset-0 h-full w-full object-cover"
   />
 
   <!-- Processed beach loop layered on top; hidden under reduced motion -->
@@ -40,7 +48,6 @@ import Wordmark from './Wordmark.astro';
     loop
     playsinline
     preload="metadata"
-    poster="/media/beach-loop.jpg"
     aria-label="Aerial video of the beach, clear water, and coastline in Port Mouton, Nova Scotia"
   >
     <source src="/media/beach-loop.mp4" type="video/mp4" />
