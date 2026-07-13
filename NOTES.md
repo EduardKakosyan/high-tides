@@ -98,12 +98,13 @@ building: guest features (calendar, tours), host tooling, analytics.
 - **Photo morph identity:** `transition:name` derived from image alt text
   (`morphName()` in `src/data/gallery.ts`) — alt is already each image's
   identity (`featuredAltSet`).
-- **Hero (workstream D, pending spike verdict):** scroll-scrubbed drone
-  flight beach→cottage (clip `DJI_..._0039`, ~36s→76s). Pin ≤ 2 viewports,
-  visible scroll cue, the ONLY pinned section on the page. Reduced-motion /
-  data-saver / no-JS get the current loop/still. All-keyframe encode ≤ 8 MB.
-  Spike lives on `spike/hero-scrub` (throwaway — validate feel on a real
-  phone, then rebuild properly; never merge).
+- **Hero: scroll-scrub REJECTED (2026-07-13).** The spike (throwaway
+  `spike/hero-scrub` branch, since deleted) was tested on a real phone:
+  the ≤8 MB all-keyframe encode read as pixelated while scrubbing, and the
+  scroll-to-fly interaction didn't feel good. Verdict: keep the original
+  muted autoplaying beach-loop hero. No pinned/scrubbed sections anywhere on
+  the site — the motion vocabulary below is the whole motion story. Don't
+  re-propose scrubbing unless footage AND the size budget change materially.
 - **Motion vocabulary (everything below the hero):** exactly three
   primitives — `data-reveal` (fade-and-rise, once), `data-stagger`
   (quick facts, how-it-works), `data-parallax` (four largest photos, ±5%
