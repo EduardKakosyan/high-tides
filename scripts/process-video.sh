@@ -44,8 +44,12 @@ CONTENT_DIR="${CONTENT_DIR:-$(find_content_dir)}"
 OUT_DIR="${OUT_DIR:-$REPO_ROOT/public/media}"
 START="${START:-00:00:00}"   # trim start (HH:MM:SS)
 DUR="${DUR:-12}"             # trim duration in seconds (~10-20s loop)
-MAX_W="${MAX_W:-1280}"       # cap width; height auto (keeps file small)
-CRF="${CRF:-30}"            # H.264 quality knob (higher = smaller). 28-32 is sane for loops.
+MAX_W="${MAX_W:-1920}"       # cap width; height auto. Full-bleed heroes need 1080p —
+                             # 720p upscaled reads pixelated on retina displays.
+FPS="${FPS:-30}"             # cap fps. Drone masters are 60fps; a background loop
+                             # doesn't need it, and the bits are better spent per frame.
+TARGET_MB="${TARGET_MB:-7.5}" # MP4 size budget per clip. CI rejects committed video
+                              # >8 MB (see .github/workflows/ci.yml); 7.5 leaves margin.
 WEBM_CRF="${WEBM_CRF:-36}"  # VP9 quality knob; VP9 needs a higher CRF than x264 for similar size.
 
 # Curated SAMPLE clip(s): source (under Content/) | output name | start | dur
@@ -74,28 +78,46 @@ process_clip() {
   local poster="$OUT_DIR/$name.jpg"
   mkdir -p "$OUT_DIR"
 
-  # Scale filter: cap width to MAX_W, keep aspect, force even dims (codec req).
-  local vf="scale='min($MAX_W,iw)':-2"
+  # Scale filter: cap fps + width (keep aspect, force even dims — codec req).
+  local vf="fps=$FPS,scale='min($MAX_W,iw)':-2"
 
-  # --- MP4 (H.264) ---
+  # Shared size budget: kbps = MB * 8192 / seconds, minus ~2% mux overhead.
+  local kbps
+  kbps=$(awk -v mb="$TARGET_MB" -v s="$dur" 'BEGIN{printf "%d", mb*8192*0.98/s}')
+
+  # --- MP4 (H.264) — two-pass, sized to the TARGET_MB budget ---
+  # CRF can't promise a size; two-pass spends the whole budget evenly, which
+  # is what a fixed CI cap wants. kbps = MB * 8192 / seconds, minus ~2% mux.
   if newer_than_src "$mp4" "$src"; then
     log "ok (up to date): $name.mp4"
   else
+    local passlog
+    passlog="$(mktemp -t x264pass)"
     ffmpeg -y -loglevel error -ss "$start" -t "$dur" -i "$src" \
       -an -vf "$vf" \
-      -c:v libx264 -profile:v high -pix_fmt yuv420p -crf "$CRF" -preset slow \
+      -c:v libx264 -profile:v high -pix_fmt yuv420p -preset slow \
+      -b:v "${kbps}k" -pass 1 -passlogfile "$passlog" \
+      -f null /dev/null
+    ffmpeg -y -loglevel error -ss "$start" -t "$dur" -i "$src" \
+      -an -vf "$vf" \
+      -c:v libx264 -profile:v high -pix_fmt yuv420p -preset slow \
+      -b:v "${kbps}k" -maxrate "$((kbps * 14 / 10))k" -bufsize "$((kbps * 2))k" \
+      -pass 2 -passlogfile "$passlog" \
       -movflags +faststart \
       "$mp4"
-    log "wrote: $name.mp4 ($(du -h "$mp4" | cut -f1))"
+    rm -f "$passlog"*
+    log "wrote: $name.mp4 ($(du -h "$mp4" | cut -f1), ${kbps} kbps)"
   fi
 
-  # --- WebM (VP9) ---
+  # --- WebM (VP9) — constrained quality: CRF capped by the same budget ---
   if newer_than_src "$webm" "$src"; then
     log "ok (up to date): $name.webm"
   else
+    # VP9 treats -b:v as a soft target and overshoots short clips; feed it
+    # 90% of the budget so the result stays under the CI cap.
     ffmpeg -y -loglevel error -ss "$start" -t "$dur" -i "$src" \
       -an -vf "$vf" \
-      -c:v libvpx-vp9 -b:v 0 -crf "$WEBM_CRF" -row-mt 1 \
+      -c:v libvpx-vp9 -b:v "$((kbps * 9 / 10))k" -crf "$WEBM_CRF" -row-mt 1 \
       "$webm"
     log "wrote: $name.webm ($(du -h "$webm" | cut -f1))"
   fi
@@ -123,7 +145,7 @@ command -v ffmpeg >/dev/null || { echo "ERROR: ffmpeg not found on PATH" >&2; ex
 echo "Video pipeline"
 echo "  source : $CONTENT_DIR"
 echo "  output : $OUT_DIR"
-echo "  trim   : start=$START dur=${DUR}s   max width=${MAX_W}px   crf=$CRF"
+echo "  trim   : start=$START dur=${DUR}s   max ${MAX_W}px @ ${FPS}fps   mp4 budget=${TARGET_MB}MB"
 echo
 
 for entry in "${SAMPLE_CLIPS[@]}"; do
