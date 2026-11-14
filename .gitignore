@@ -29,3 +29,6 @@ Content/
 .work/
 prototype.html
 .vercel
+
+# Riptide artifacts (cloud-synced)
+.humanlayer/tasks/
