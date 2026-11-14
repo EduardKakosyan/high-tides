@@ -167,13 +167,15 @@ with a play glyph, and the story page is ~24 phone screens of scroll.
 
 Brian's review of the live site, point by point. All of it landed together.
 
-- **Hero loop:** still the videographer's clip, now cut at 4.6 s (after the
-  drone's drop out of the wide shot) and looped for 7.3 s with a 1 s
-  crossfade back to the start. scripts/process-video.sh takes
-  `start|loop|xfade|MB` per clip and auto tone-maps HLG masters through
-  VideoToolbox if one is ever used. 5.0 MB MP4, 4.6 MB WebM; the poster is the
-  loop's first frame and is copied to src/assets/media for the hero still.
-  The unused aerial loop and MediaShowcase are gone.
+- **Hero loop:** still the videographer's clip, from its first frame. "The
+  drop" Brian meant is at the END: at ~10.8 s, close to the cottage, the
+  gimbal pitches down. The window ends at 10.4 s and the last 1.5 s dissolve
+  back into the opening, so the loop is 8.9 s. (First attempt cut the opening
+  instead; wrong reading, corrected the same day.) scripts/process-video.sh
+  takes `start|loop|xfade|MB` per clip and auto tone-maps HLG masters through
+  VideoToolbox if one is ever used. ~5 MB MP4; the poster is the loop's first
+  frame and is copied to src/assets/media for the hero still. The unused
+  aerial loop and MediaShowcase are gone.
 - **Hero:** one line and two buttons, centred vertically and horizontally.
   No wordmark (the navbar carries it) and no "Port Mouton, Nova Scotia"
   eyebrow. Still 100svh (LCP, see above).

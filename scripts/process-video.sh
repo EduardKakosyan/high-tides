@@ -56,13 +56,13 @@ FORCE="${FORCE:-0}"
 
 # Curated clip(s):  source (under Content/) | output | start (s) | loop length (s) | crossfade (s) | MB budget
 #
-# beach-loop: the videographer's 13 s beach->cottage export. The first 4.6 s
-# are the drone dropping out of a wide shot (weak, flat frames), so the loop
-# starts once it has settled above the water, flies in to the cottage, and
-# dissolves back. 5 MB for 7.3 s is ~5.5 Mbps at 1080p30, well under CI's
-# 8 MB per-file cap.
+# beach-loop: the videographer's 13 s beach->cottage export, from the start.
+# At ~10.8 s, close to the cottage, the gimbal pitches down and the last two
+# seconds look wrong (Brian: "the drop"), so the window ends at 10.4 s and the
+# final 1.5 s dissolve back into the opening frames. 5 MB for 8.9 s is
+# ~4.6 Mbps at 1080p30, well under CI's 8 MB per-file cap.
 CLIPS=(
-  "videos/drone/beach video.mov|beach-loop|4.6|7.3|1.0|5"
+  "videos/drone/beach video.mov|beach-loop|0|8.9|1.5|5"
 )
 
 # --- helpers --------------------------------------------------------------
