@@ -1,31 +1,46 @@
 ---
 import Base from '../layouts/Base.astro';
 
-// The Hi Tides story page, assembled in the locked section order (NOTES.md):
-// Hero → The View → Quick facts → The Experience → The Home → The Area →
-// The Host → Good to know / How it works → Inquire.
-// Each section is a self-contained component so this page stays a thin spine.
-import Hero from '../components/Hero.astro'; // #7
-import TheView from '../components/TheView.astro'; // #10
-import QuickFacts from '../components/QuickFacts.astro'; // #9
-import TheExperience from '../components/TheExperience.astro'; // #10
-import OutdoorShower from '../components/OutdoorShower.astro';
-import TheHome from '../components/TheHome.astro'; // #11
-import TheArea from '../components/TheArea.astro'; // #12
-import TheHost from '../components/TheHost.astro'; // #13
-import GoodToKnow from '../components/GoodToKnow.astro'; // #9
-import InquiryForm from '../components/InquiryForm.astro'; // #8
+// The Hi Tides story page. Desktop reads top to bottom: Hero, The view, The
+// essentials, The cottage, Outside, The area, Your host, Inquire. Phones get
+// the same sections behind the navbar's tabs (TabPanel + src/scripts/tabs.ts;
+// NOTES.md). Within a panel, `max-md:order-first` pulls the essentials to the
+// top on a phone without touching the desktop flow.
+import Hero from '../components/Hero.astro';
+import TabPanel from '../components/TabPanel.astro';
+import TheView from '../components/TheView.astro';
+import QuickFacts from '../components/QuickFacts.astro';
+import TheHome from '../components/TheHome.astro';
+import TheStay from '../components/TheStay.astro';
+import TheArea from '../components/TheArea.astro';
+import TheHost from '../components/TheHost.astro';
+import InquiryForm from '../components/InquiryForm.astro';
 ---
 
 <Base>
   <Hero />
-  <TheView />
-  <QuickFacts />
-  <TheExperience />
-  <OutdoorShower />
-  <TheHome />
-  <TheArea />
-  <TheHost />
-  <GoodToKnow />
-  <InquiryForm />
+  <!-- Where the panels start: the phone tab switch scrolls here. -->
+  <div data-tabs-anchor aria-hidden="true"></div>
+
+  <TabPanel id="overview">
+    <TheView />
+    <div class="max-md:order-first md:contents"><QuickFacts /></div>
+  </TabPanel>
+
+  <TabPanel id="cottage">
+    <TheHome />
+    <TheStay />
+  </TabPanel>
+
+  <TabPanel id="area">
+    <TheArea />
+  </TabPanel>
+
+  <TabPanel id="host">
+    <TheHost />
+  </TabPanel>
+
+  <TabPanel id="inquiry">
+    <InquiryForm />
+  </TabPanel>
 </Base>

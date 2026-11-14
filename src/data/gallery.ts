@@ -1,23 +1,21 @@
-// Shared, grouped gallery image list (issue #11).
+// The photo set, in one flat list ordered as a walkthrough: up the drive, in
+// the front door, through the living room and kitchen, the bedrooms and bath,
+// out to the deck and the yard, the outdoor shower, and finally the beach.
 //
-// Single source of truth for the cottage interiors/exterior, grouped by space.
-// Both TheHome.astro (a curated subset) and gallery.astro (the full set) read
-// from here so the two stay in sync. Source JPEGs live in src/assets/media/ and
-// were produced by scripts/process-images.sh from the host's .CR3 originals.
+// No groups and no captions. Each photo's alt text is its only description
+// (read by screen readers and the lightbox) and also its identity for the
+// view transition between the story page and /gallery (see morphName).
 //
-// We import the source modules eagerly via import.meta.glob so Astro's <Image>
-// pipeline can emit AVIF/WebP + responsive srcset for each (astro:assets needs a
-// real ImageMetadata import, not a runtime string path).
+// Source JPEGs live in src/assets/media/ (from scripts/process-images.sh and
+// the beach photos the host sent). Astro's <Image> turns them into AVIF/WebP
+// with responsive srcsets at build time.
 import type { ImageMetadata } from 'astro';
 
-// Eagerly resolve every JPEG in src/assets/media so we can look images up by
-// filename. `eager: true` gives us the metadata object Astro's <Image> expects.
 const sources = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/media/*.jpg',
   { eager: true },
 );
 
-/** Resolve a bare filename (e.g. "kitchen-1.jpg") to its ImageMetadata. */
 function img(file: string): ImageMetadata {
   const mod = sources[`../assets/media/${file}`];
   if (!mod) {
@@ -33,218 +31,71 @@ export interface GalleryImage {
   alt: string;
 }
 
-export interface GalleryGroup {
-  /** Stable id for headings / anchors. */
-  id: string;
-  title: string;
-  images: GalleryImage[];
-}
+const photo = (file: string, alt: string): GalleryImage => ({
+  src: img(file),
+  alt,
+});
 
-// Grouped by space. Alt text is meaningful and specific (accessibility req).
-export const groups: GalleryGroup[] = [
-  {
-    id: 'views',
-    title: 'The view',
-    images: [
-      {
-        src: img('view-1.jpg'),
-        alt: 'View over Port Mouton bay from the cottage grounds, with an island offshore',
-      },
-      {
-        src: img('view-2.jpg'),
-        alt: 'The bay framed through a cottage window, with coastal trinkets on the sill',
-      },
-    ],
-  },
-  {
-    id: 'living',
-    title: 'Living & seating',
-    images: [
-      {
-        src: img('seating-area-2.jpg'),
-        alt: 'Bright living area with a mustard sofa and coastal daylight',
-      },
-      {
-        src: img('seating-area-indoor-1.jpg'),
-        alt: 'Comfortable indoor seating area arranged for relaxed evenings',
-      },
-      {
-        src: img('seating-area-flowers.jpg'),
-        alt: 'Living-room corner with fresh flowers on the table',
-      },
-      {
-        src: img('tv-1.jpg'),
-        alt: 'Seating area with a television',
-      },
-    ],
-  },
-  {
-    id: 'kitchen',
-    title: 'Kitchen',
-    images: [
-      {
-        src: img('kitchen-1.jpg'),
-        alt: 'Full kitchen at Hi Tides with bright natural light',
-      },
-      {
-        src: img('kitchen-2.jpg'),
-        alt: 'Kitchen counter and cabinetry with prep space',
-      },
-      {
-        src: img('kitchen-3.jpg'),
-        alt: 'Fully equipped kitchen viewed from the dining side',
-      },
-    ],
-  },
-  {
-    id: 'bedrooms',
-    title: 'Bedrooms',
-    images: [
-      {
-        src: img('main-bedroom-1.jpg'),
-        alt: 'Main bedroom with a queen bed in calm coastal tones',
-      },
-      {
-        src: img('back-main-bedroom.jpg'),
-        alt: 'Light main bedroom viewed from the back of the room',
-      },
-      {
-        src: img('bed-1.jpg'),
-        alt: 'Second bedroom with a queen bed and crisp linens',
-      },
-    ],
-  },
-  {
-    id: 'bathrooms',
-    title: 'Bathrooms',
-    images: [
-      {
-        src: img('bathroom-main-1.jpg'),
-        alt: 'Bright full bathroom with a clean finish',
-      },
-      {
-        src: img('on-suit-bathroom-1.jpg'),
-        alt: 'En-suite bathroom with vanity and mirror',
-      },
-      {
-        src: img('on-suite-bathroom-2.jpg'),
-        alt: 'Second view of the en-suite bathroom layout',
-      },
-      {
-        src: img('shower-1.jpg'),
-        alt: 'Walk-in shower with tiled surround',
-      },
-    ],
-  },
-  {
-    id: 'deck-exterior',
-    title: 'Deck & exterior',
-    images: [
-      {
-        src: img('deck-seating-back.jpg'),
-        alt: 'Back deck seating with a view over the bay',
-      },
-      {
-        src: img('seating-deck-back.jpg'),
-        alt: 'Outdoor seating on the back deck',
-      },
-      {
-        src: img('side-deck.jpg'),
-        alt: 'Side deck along the cedar-shingle siding',
-      },
-      {
-        src: img('side-deck-house.jpg'),
-        alt: 'Side deck looking back toward the grey-blue cedar-shingle cottage',
-      },
-      {
-        src: img('front-house.jpg'),
-        alt: 'Front exterior of Hi Tides with cedar shingles',
-      },
-      {
-        src: img('back-of-house.jpg'),
-        alt: 'Back of the cottage facing the deck and bay',
-      },
-      {
-        src: img('back-house.jpg'),
-        alt: 'Rear view of Hi Tides above the beach',
-      },
-      {
-        src: img('back-full-shot.jpg'),
-        alt: 'Back of the cottage and deck viewed from the yard',
-      },
-    ],
-  },
-  {
-    id: 'outdoor-shower',
-    title: 'Outdoor shower',
-    images: [
-      {
-        src: img('shower-inside.jpg'),
-        alt: 'Inside the outdoor shower: rainfall head, cedar walls, string lights and lobster-rope art',
-      },
-      {
-        src: img('shower-seat.jpg'),
-        alt: "The outdoor shower's cedar bench and woven rope panel, with the cottage beyond the open door",
-      },
-      {
-        src: img('outdoor-shower-side.jpg'),
-        alt: 'Cedar outdoor shower tucked into the greenery, with a bamboo sunburst detail',
-      },
-      {
-        src: img('outdoor-shower-entrance.jpg'),
-        alt: 'Private outdoor shower beside the cottage, with the deck and bay just behind',
-      },
-    ],
-  },
-  {
-    id: 'details',
-    title: 'Details & utility',
-    images: [
-      {
-        src: img('detail-pic.jpg'),
-        alt: 'Small interior detail inside the cottage',
-      },
-      {
-        src: img('hallway-pic.jpg'),
-        alt: 'Hallway connecting the rooms inside Hi Tides',
-      },
-      {
-        src: img('entrance-area-1.jpg'),
-        alt: 'Entrance area leading in from the deck',
-      },
-      {
-        src: img('dryer-washer.jpg'),
-        alt: 'In-unit washer and dryer',
-      },
-    ],
-  },
+// Twenty photos: four blocks of five, which is what the gallery grid's
+// large-tile rhythm (every fifth photo) is built around.
+export const walkthrough: GalleryImage[] = [
+  photo('front-house.jpg', 'The front of Hi Tides, grey cedar shingles above the lawn and boulders'),
+  photo('hallway-pic.jpg', 'Entry hall with blue panelling and coat hooks'),
+  photo('entrance-area-1.jpg', 'Living room with the yellow sofa, a writing desk, and the french doors'),
+  photo('seating-area-2.jpg', 'Living room with the television and reading chairs'),
+  photo('seating-area-indoor-1.jpg', 'Two yellow armchairs under the cedar wall, looking out to the trees'),
+  photo('kitchen-1.jpg', 'Full kitchen with island seating and a wall oven'),
+  photo('dryer-washer.jpg', 'Stacked washer and dryer'),
+  photo('detail-pic.jpg', 'Stained glass hummingbird and flowers in a window'),
+  photo('main-bedroom-1.jpg', 'Main bedroom with a queen bed'),
+  photo('on-suit-bathroom-1.jpg', 'En suite bathroom with a walk-in shower'),
+  photo('bed-1.jpg', 'Second bedroom with a queen bed and a quilt'),
+  photo('side-deck-house.jpg', 'Back deck with two red Adirondack chairs'),
+  photo('side-deck.jpg', 'The deck looking out over Port Mouton bay'),
+  photo('back-full-shot.jpg', 'The cottage from the lawn, with the bay behind'),
+  photo('deck-seating-back.jpg', 'Patio seating on the back terrace'),
+  photo('shower-inside.jpg', 'Inside the outdoor shower, cedar walls and a rainfall head'),
+  photo('seating-area-flowers.jpg', 'Flowers along the back terrace'),
+  photo('outdoor-shower-side.jpg', 'The outdoor shower among the trees'),
+  photo('beach-sand.jpg', 'White sand and dunes on a clear day near Port Mouton'),
+  photo('beach-sunset.jpg', 'Sunset over the beach at low tide'),
 ];
 
-// A curated, tasteful subset for the homepage "The Home" section — one or two
-// strong frames per space, kept to ~8 images so the section stays editorial.
-export const featuredAltSet = new Set<string>([
-  'Bright living area with a mustard sofa and coastal daylight',
-  'Seating area with a television',
-  'Full kitchen at Hi Tides with bright natural light',
-  'Main bedroom with a queen bed in calm coastal tones',
-  'Bright full bathroom with a clean finish',
-  'Back deck seating with a view over the bay',
-  'Front exterior of Hi Tides with cedar shingles',
-  'Side deck along the cedar-shingle siding',
-]);
+/** The full, ordered list used by the gallery and the lightbox. */
+export const allImages: GalleryImage[] = walkthrough;
 
-export const featured: GalleryImage[] = groups
-  .flatMap((g) => g.images)
-  .filter((i) => featuredAltSet.has(i.alt));
+function byFile(file: string): GalleryImage {
+  const meta = img(file);
+  const found = walkthrough.find((p) => p.src === meta);
+  if (!found) throw new Error(`gallery.ts: "${file}" is not in the walkthrough`);
+  return found;
+}
 
-/** The full, ordered list (used by the gallery + lightbox). */
-export const allImages: GalleryImage[] = groups.flatMap((g) => g.images);
+/** The cottage section on the story page: four interiors, living room leads. */
+export const homeFeatured: GalleryImage[] = [
+  byFile('seating-area-2.jpg'),
+  byFile('kitchen-1.jpg'),
+  byFile('main-bedroom-1.jpg'),
+  byFile('on-suit-bathroom-1.jpg'),
+];
+
+/** The outside section: deck and bay first, then the outdoor shower. */
+export const stayPhotos: GalleryImage[] = [
+  byFile('side-deck.jpg'),
+  byFile('side-deck-house.jpg'),
+  byFile('shower-inside.jpg'),
+  byFile('outdoor-shower-side.jpg'),
+];
+
+/** Photos used outside the gallery list (The View). */
+export const beachWaves: GalleryImage = photo(
+  'beach-waves.jpg',
+  'Clear water breaking on white sand near Port Mouton',
+);
 
 /**
  * Stable view-transition name for a photo, shared by the story page and
- * /gallery so the same photo morphs between them on navigation. Alt text is
- * already each image's identity (see featuredAltSet); slug it into a valid
- * CSS custom-ident.
+ * /gallery so the same photo morphs between them on navigation.
  */
 export function morphName(image: GalleryImage): string {
   return (

@@ -42,4 +42,4 @@ size. An Inquiry is NOT a booking and NOT a payment — it is the start of a con
 ### Stay
 A period during which a Guest occupies the Cottage. Arranged privately between Host and
 Guest after an Inquiry; the site does not track or confirm Stays. Minimum 6 nights / 7 days.
-No pets. Children welcome. Rates are not published on the site — shared on request.
+No pets. Rates are not published on the site — shared on request.

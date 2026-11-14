@@ -7,15 +7,15 @@ test.describe('Hero CTAs', () => {
   test('"Request your stay" targets the Inquire section', async ({ page }) => {
     await page.goto('/');
 
-    const cta = page.getByRole('link', { name: /request your stay/i });
+    const cta = page.getByRole('link', { name: /request your stay/i }).first();
     await expect(cta).toBeVisible();
     await expect(cta).toHaveAttribute('href', '#inquire');
   });
 
-  test('"See the cottage" navigates to the gallery', async ({ page }) => {
+  test('"See the photos" navigates to the gallery', async ({ page }) => {
     await page.goto('/');
 
-    await page.getByRole('link', { name: /see the cottage/i }).click();
+    await page.getByRole('link', { name: /see the photos/i }).click();
 
     await expect(page).toHaveURL(/\/gallery\/?$/);
     await expect(

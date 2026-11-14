@@ -1,11 +1,20 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 // Happy-path coverage for the Inquiry experience (issue #8).
 // We intercept the POST to "/" so no real Netlify backend is needed, then
 // assert the success panel appears and the form is replaced.
+//
+// The form is reached the way a Guest reaches it — via the hero CTA — which
+// scrolls to it on desktop and opens the Inquire tab on a phone.
+async function openInquiry(page: Page) {
+  await page.goto('/');
+  await page.getByRole('link', { name: /request your stay/i }).first().click();
+  await expect(page.locator('#inquiry-form')).toBeVisible();
+}
+
 test.describe('Inquiry form', () => {
   test('renders all six fields', async ({ page }) => {
-    await page.goto('/');
+    await openInquiry(page);
 
     await expect(page.locator('#inquiry-name')).toBeVisible();
     await expect(page.locator('#inquiry-email')).toBeVisible();
@@ -25,7 +34,7 @@ test.describe('Inquiry form', () => {
       }
     });
 
-    await page.goto('/');
+    await openInquiry(page);
 
     await page.fill('#inquiry-name', 'Avery Tester');
     await page.fill('#inquiry-email', 'avery@example.com');

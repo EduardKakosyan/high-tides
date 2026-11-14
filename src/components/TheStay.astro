@@ -1,0 +1,64 @@
+---
+// Outside: the deck and the bay, then the outdoor shower. One section where
+// there used to be two ("The stay" and "Outdoor shower"), four photos.
+import { Image } from 'astro:assets';
+import { stayPhotos, morphName } from '../data/gallery';
+
+const [lead, ...rest] = stayPhotos;
+---
+
+<section aria-labelledby="the-stay-heading" class="bg-bg">
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+    <p data-reveal class="text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+      Outside
+    </p>
+    <h2
+      id="the-stay-heading"
+      data-reveal
+      class="mt-3 max-w-[22ch] text-3xl font-semibold tracking-tight text-ink sm:text-5xl"
+    >
+      The deck, the bay, and an outdoor shower.
+    </h2>
+    <p data-reveal class="mt-5 max-w-[54ch] text-lg text-muted">
+      Coffee on the deck with the water in front of you. A beach day at
+      Carters. Then back to the cottage for a hot outdoor shower before dinner.
+    </p>
+
+    <figure transition:name={morphName(lead)} data-parallax class="mt-12 overflow-hidden rounded-2xl">
+      <Image
+        src={lead.src}
+        alt={lead.alt}
+        widths={[480, 768, 1200, 1800]}
+        sizes="(min-width: 1024px) 1152px, 100vw"
+        loading="lazy"
+        decoding="async"
+        class="aspect-[16/9] w-full object-cover"
+      />
+    </figure>
+
+    <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {
+        rest.map((image) => (
+          <figure transition:name={morphName(image)} class="overflow-hidden rounded-2xl">
+            <Image
+              src={image.src}
+              alt={image.alt}
+              widths={[400, 640, 960]}
+              sizes="(min-width: 640px) 33vw, 100vw"
+              loading="lazy"
+              decoding="async"
+              class="aspect-[4/3] w-full object-cover"
+            />
+          </figure>
+        ))
+      }
+    </div>
+
+    <div class="mt-10">
+      <a href="#inquire" class="link-arrow">
+        Request your stay
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14 M13 6l6 6-6 6" /></svg>
+      </a>
+    </div>
+  </div>
+</section>

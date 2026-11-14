@@ -1,77 +1,55 @@
 ---
-// Section 5 — "The Home" (issue #11).
-//
-// A curated, editorial selection of the cottage's interiors and exterior — a
-// tasteful subset of the full set (the complete, grouped collection lives on
-// /gallery). One strong frame leads; the rest read as a refined, reflowing
-// grid. A prominent gold CTA sends visitors to the full gallery.
-//
-// Images flow through Astro's <Image> (astro:assets) → AVIF/WebP + responsive
-// srcset, lazy-loaded, with meaningful alt text. "Cool & coastal" tokens only.
+// The cottage: four interiors from the walkthrough (src/data/gallery.ts),
+// living room leading, then the way to every photo. The lead frame shares a
+// view-transition name with its tile on /gallery, so it morphs across.
 import { Image } from 'astro:assets';
-import { featured, morphName } from '../data/gallery';
+import { homeFeatured, morphName } from '../data/gallery';
 
-const [lead, ...rest] = featured;
+const [lead, ...rest] = homeFeatured;
 ---
 
 <section aria-labelledby="the-home-heading" class="bg-surface">
-  <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
-    <p
-      data-reveal
-      class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted"
-    >
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+    <p data-reveal class="text-xs font-semibold uppercase tracking-[0.22em] text-muted">
       The cottage
     </p>
     <h2
       id="the-home-heading"
       data-reveal
-      class="max-w-[20ch] text-3xl font-semibold text-ink sm:text-4xl"
+      class="mt-3 max-w-[20ch] text-3xl font-semibold tracking-tight text-ink sm:text-5xl"
     >
       Simple, bright, and easy to settle into.
     </h2>
-    <p data-reveal class="mt-5 max-w-[52ch] text-lg text-muted">
-      Inside, the cottage has two bedrooms, two full baths, a full kitchen,
-      comfortable living space, and a wood stove for cooler days. The deck faces
-      the bay and gives you the best seat in the house.
-    </p>
-    <p data-reveal class="mt-4 max-w-[52ch] text-lg text-muted">
-      It is not a resort. It is not trying to be one. Hi Tides is a clean, calm
-      coastal cottage in a beautiful place, made for slow mornings, beach days,
-      and quiet evenings in.
+    <p data-reveal class="mt-5 max-w-[54ch] text-lg text-muted">
+      Two bedrooms with queen beds, two full bathrooms, a full kitchen, and a
+      living room with a wood stove for the cool months. The big windows and
+      the deck face the water.
     </p>
 
-    <!-- Lead frame + curated grid. Reflows to a single column on mobile. -->
-    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        lead && (
-          <figure
-            transition:name={morphName(lead)}
-            data-parallax
-            class="overflow-hidden rounded-2xl border border-line sm:col-span-2 sm:row-span-2"
-          >
-            <Image
-              src={lead.src}
-              alt={lead.alt}
-              widths={[480, 768, 1200, 1800]}
-              sizes="(min-width: 1024px) 66vw, (min-width: 640px) 100vw, 100vw"
-              loading="lazy"
-              decoding="async"
-              class="h-full w-full object-cover"
-            />
-          </figure>
-        )
-      }
+    <div class="mt-12 grid gap-4 sm:grid-cols-3">
+      <figure
+        transition:name={morphName(lead)}
+        data-parallax
+        class="overflow-hidden rounded-2xl sm:col-span-2 sm:row-span-2"
+      >
+        <Image
+          src={lead.src}
+          alt={lead.alt}
+          widths={[480, 768, 1200, 1800]}
+          sizes="(min-width: 640px) 66vw, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="h-full w-full object-cover"
+        />
+      </figure>
       {
         rest.map((image) => (
-          <figure
-            transition:name={morphName(image)}
-            class="overflow-hidden rounded-2xl border border-line"
-          >
+          <figure transition:name={morphName(image)} class="overflow-hidden rounded-2xl">
             <Image
               src={image.src}
               alt={image.alt}
               widths={[400, 640, 960]}
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              sizes="(min-width: 640px) 33vw, 100vw"
               loading="lazy"
               decoding="async"
               class="aspect-[4/3] h-full w-full object-cover"
@@ -81,16 +59,12 @@ const [lead, ...rest] = featured;
       }
     </div>
 
-    <div class="mt-10 flex flex-wrap items-center gap-4">
-      <a
-        href="/gallery"
-        class="rounded-full bg-blue px-7 py-3.5 font-semibold text-white transition-transform hover:-translate-y-0.5"
-      >
-        See all photos
+    <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+      <a href="/gallery" class="btn btn-primary">See all photos</a>
+      <a href="#inquire" class="link-arrow">
+        Request your stay
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14 M13 6l6 6-6 6" /></svg>
       </a>
-      <span class="text-sm text-muted">
-        Every room, grouped by space.
-      </span>
     </div>
   </div>
 </section>

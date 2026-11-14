@@ -1,0 +1,29 @@
+---
+// One section group on the story page (see src/data/tabs.ts).
+//
+// Below `md` the panel is a flex column that lays out only when it is the
+// active tab (global.css hides inactive panels; src/scripts/tabs.ts toggles
+// data-active). From `md` up it is a plain block, so the desktop page is the
+// same flow of sections it always was; the block exists so the navbar's
+// anchor links and scrollspy have a real box to target.
+//
+// Children can opt into a phone-first position with `max-md:order-first`
+// (Quick facts lead Overview on a phone, after The View on desktop).
+import { defaultTab } from '../data/tabs';
+
+interface Props {
+  id: string;
+}
+
+const { id } = Astro.props;
+const active = id === defaultTab;
+---
+
+<div
+  id={id}
+  data-tab-panel={id}
+  data-active={active ? '' : undefined}
+  class="max-md:flex max-md:flex-col md:block"
+>
+  <slot />
+</div>

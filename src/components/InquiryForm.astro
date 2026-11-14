@@ -1,40 +1,62 @@
 ---
-// Section 9 — Inquire (issue #8).
-// The whole site exists to produce an Inquiry: a warm, low-friction email
-// to Brian — not a booking, not a payment. No price and no payment UI here.
+// Inquire. The whole site exists to produce an inquiry: a short email to
+// Brian, not a booking and not a payment. No price and no payment UI here.
 //
 // Wired for Netlify Forms (data-netlify + honeypot). A small client script
 // intercepts submit and POSTs the url-encoded body to "/" (the Netlify Forms
-// endpoint) via fetch, then swaps the form for a success panel — so the
+// endpoint) via fetch, then swaps the form for a success panel, so the
 // success state is observable in tests/preview without a live backend.
-//
-// "Cool & coastal" tokens throughout; host is Brian Greening (CONTEXT.md).
 
-// Cottage sleeps 4 (CONTEXT.md) — guests capped at 4.
+const steps = [
+  'Send your dates and who is coming.',
+  'Brian confirms availability and rates by email.',
+  'Settle in.',
+];
+
+// Cottage sleeps 4 (CONTEXT.md): guests capped at 4.
 const guestOptions = [1, 2, 3, 4];
 
-// Shared input styling — cool white field, hairline border, blue focus ring.
 const fieldClass =
   'w-full rounded-xl border border-line bg-bg px-4 py-3 text-ink placeholder:text-muted/70 transition focus:border-blue focus:outline-none focus:ring-2 focus:ring-blue/40';
 const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
 ---
 
 <section id="inquire" aria-labelledby="inquire-heading" class="bg-surface">
-  <div class="mx-auto max-w-3xl px-6 py-24 sm:px-8">
-    <p
+  <div class="mx-auto max-w-3xl px-5 py-20 sm:px-8 sm:py-28">
+    <p data-reveal class="text-xs font-semibold uppercase tracking-[0.22em] text-muted">
+      Inquire
+    </p>
+    <h2
+      id="inquire-heading"
       data-reveal
-      class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-muted"
+      class="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl"
     >
-      Start here
-    </p>
-    <h2 id="inquire-heading" data-reveal class="text-3xl font-semibold sm:text-4xl">
-      Send your inquiry
+      Request your stay
     </h2>
-    <p data-reveal class="mt-4 max-w-[54ch] text-lg text-muted">
-      Share your dates, the number of guests, and anything useful about your
-      trip. Hi Tides sleeps up to 4 guests, has a 6-night minimum stay, and is
-      open year-round. Rates are shared on request.
+    <p data-reveal class="mt-5 max-w-[54ch] text-lg text-muted">
+      Send your dates and the number of guests. Brian replies personally with
+      availability and rates. Hi Tides sleeps up to four, has a 6-night
+      minimum, is open year-round, and does not take pets.
     </p>
+
+    <ol data-stagger class="mt-8 grid gap-3 sm:grid-cols-3">
+      {
+        steps.map((step, i) => (
+          <li class="flex items-start gap-3 rounded-2xl bg-bg px-4 py-4 ring-1 ring-ink/5">
+            <span
+              class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue font-head text-sm font-semibold text-white"
+              aria-hidden="true"
+            >
+              {i + 1}
+            </span>
+            <span class="text-sm text-ink">
+              <span class="sr-only">{`Step ${i + 1}: `}</span>
+              {step}
+            </span>
+          </li>
+        ))
+      }
+    </ol>
 
     <!-- Inquiry form (Netlify Forms). The hidden form-name + honeypot are
          required for Netlify to register and protect the form. -->
@@ -44,11 +66,11 @@ const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
       method="POST"
       data-netlify="true"
       netlify-honeypot="bot-field"
-      class="mt-10 rounded-2xl border border-line bg-bg p-6 sm:p-9"
+      class="mt-8 rounded-2xl bg-bg p-6 ring-1 ring-ink/5 sm:p-9"
     >
       <input type="hidden" name="form-name" value="inquiry" />
       <p hidden>
-        <label>Don&rsquo;t fill this out: <input name="bot-field" /></label>
+        <label>Do not fill this out: <input name="bot-field" /></label>
       </p>
 
       <div class="grid gap-6 sm:grid-cols-2">
@@ -118,7 +140,7 @@ const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
             id="inquiry-message"
             name="message"
             rows="5"
-            placeholder="Your dates, who is coming, and what you are hoping for…"
+            placeholder="Your dates, who is coming, and anything else that helps"
             class={`${fieldClass} resize-y`}></textarea>
         </div>
       </div>
@@ -137,18 +159,18 @@ const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
 
       <button
         type="submit"
-        class="mt-8 rounded-full bg-blue px-7 py-3.5 font-semibold text-white transition-transform hover:-translate-y-0.5"
+        class="btn btn-primary mt-8"
       >
         Send your inquiry
       </button>
     </form>
 
-    <!-- Success panel — revealed by the script on a successful submit. -->
+    <!-- Success panel, revealed by the script on a successful submit. -->
     <div
       id="inquiry-success"
       hidden
       role="status"
-      class="mt-10 rounded-2xl border border-line bg-bg p-8 text-center sm:p-12"
+      class="mt-8 rounded-2xl bg-bg p-8 text-center ring-1 ring-ink/5 sm:p-12"
     >
       <span
         class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue text-white"
@@ -166,9 +188,9 @@ const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
           <path d="M20 6 9 17l-5-5"></path>
         </svg>
       </span>
-      <h3 class="mt-5 text-2xl font-semibold text-ink">Thanks, your inquiry has been sent</h3>
+      <h3 class="mt-5 text-2xl font-semibold text-ink">Thanks, your inquiry is on its way</h3>
       <p class="mx-auto mt-3 max-w-[46ch] text-muted">
-        Your note is on its way. You should receive a reply soon.
+        Brian will reply by email soon.
       </p>
     </div>
   </div>

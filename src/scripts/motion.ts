@@ -1,16 +1,16 @@
-// Shared motion vocabulary — the ONLY scroll animation on the site outside
+// Shared motion vocabulary, the ONLY scroll animation on the site outside
 // the hero. Three primitives, applied declaratively via data attributes so
 // every section speaks the same, quiet language:
 //
-//   data-reveal   — fade-and-rise, once, on first entering the viewport
-//   data-stagger  — children fade-and-rise in sequence (quick-facts, steps)
-//   data-parallax — the image inside drifts slower than scroll (large photos)
+//   data-reveal  , fade-and-rise, once, on first entering the viewport
+//   data-stagger , children fade-and-rise in sequence (quick-facts, steps)
+//   data-parallax, the image inside drifts slower than scroll (large photos)
 //
 // Restraint rules (locked in NOTES.md): no other pins, no scrubbing, no
-// bespoke choreography here — the hero owns the page's entire motion budget.
+// bespoke choreography here, the hero owns the page's entire motion budget.
 //
 // prefers-reduced-motion: everything inside gsap.matchMedia simply never
-// runs — the site is the calm static version.
+// runs, the site is the calm static version.
 //
 // ClientRouter lifecycle: init on astro:page-load, full revert on
 // astro:before-swap so ScrollTriggers never leak across navigations.
@@ -78,3 +78,9 @@ document.addEventListener('astro:before-swap', () => {
   mm?.revert();
   mm = null;
 });
+
+// Mobile tabs (scripts/tabs.ts): a tab switch lays out a panel that had no
+// box when the triggers were measured, so re-measure. Reveals inside panels
+// that were hidden at init have already completed (zero-height elements read
+// as "past" the start), which is the quiet behaviour we want on a phone.
+document.addEventListener('hitides:tabchange', () => ScrollTrigger.refresh());

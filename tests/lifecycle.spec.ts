@@ -9,7 +9,7 @@ test.describe('ClientRouter lifecycle', () => {
     page,
   }) => {
     await page.goto('/');
-    await page.getByRole('link', { name: /see the cottage/i }).click();
+    await page.getByRole('link', { name: /see the photos/i }).click();
     await expect(page).toHaveURL(/\/gallery\/?$/);
 
     const firstThumb = page.locator('[data-lightbox-trigger]').first();
@@ -38,8 +38,12 @@ test.describe('ClientRouter lifecycle', () => {
     });
 
     await page.goto('/gallery');
-    await page.getByRole('link', { name: /back to home/i }).click();
+    await page.getByRole('link', { name: /back to home/i }).first().click();
     await expect(page).toHaveURL(/\/$/);
+
+    // The header's Inquire link: a scroll on desktop, a tab switch on a phone.
+    await page.locator('header').getByRole('link', { name: /^inquire$/i }).click();
+    await expect(page.locator('#inquiry-form')).toBeVisible();
 
     await page.fill('#inquiry-name', 'Avery Tester');
     await page.fill('#inquiry-email', 'avery@example.com');

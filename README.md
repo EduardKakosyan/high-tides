@@ -53,7 +53,6 @@ src/
     Wordmark.astro          # "Hi" (gold) + "Tides" (purple) — from the painted sign
     Header.astro            # responsive header, wordmark + Inquire CTA
     Footer.astro            # wordmark + location line
-    MediaShowcase.astro     # optimized <Image> stills + processed video loop (#6)
   pages/index.astro         # home: placeholder hero (real hero -> #3) + intro + media demo
   styles/global.css         # Cool & coastal tokens + base styles
   assets/media/             # committed web JPEG stills (Astro <Image> optimizes these)

@@ -6,7 +6,7 @@
 // data-lightbox-index; the script below reads them into an ordered list and
 // wires up open/close, keyboard nav, focus trapping and focus restoration.
 //
-// No npm packages, no framework — just an Astro <script> island.
+// No npm packages, no framework, just an Astro <script> island.
 ---
 
 <div
@@ -98,11 +98,6 @@
         </svg>
       </button>
 
-      <figcaption
-        class="mt-3 max-w-[60ch] text-center text-sm text-white/80"
-        data-lightbox-caption
-      >
-      </figcaption>
     </figure>
   </div>
 </div>
@@ -113,7 +108,7 @@
   // so the markup stays the single source of truth.
   //
   // ClientRouter lifecycle: this module executes once per visit, but the DOM
-  // it wires is replaced on every client-side navigation — so all setup lives
+  // it wires is replaced on every client-side navigation, so all setup lives
   // in an init function re-run on astro:page-load.
   type Slide = { src: string; alt: string };
 
@@ -125,9 +120,6 @@
     if (!lightbox) return;
     const imageEl = lightbox.querySelector<HTMLImageElement>(
       '[data-lightbox-image]',
-    );
-    const captionEl = lightbox.querySelector<HTMLElement>(
-      '[data-lightbox-caption]',
     );
     const counterEl = lightbox.querySelector<HTMLElement>(
       '[data-lightbox-counter]',
@@ -181,7 +173,6 @@
       if (!slide || !imageEl) return;
       imageEl.src = slide.src;
       imageEl.alt = slide.alt;
-      if (captionEl) captionEl.textContent = slide.alt;
       if (counterEl)
         counterEl.textContent = `${current + 1} / ${slides.length}`;
     }

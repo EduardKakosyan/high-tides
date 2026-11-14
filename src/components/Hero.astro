@@ -3,9 +3,10 @@ import { Picture } from 'astro:assets';
 import Wordmark from './Wordmark.astro';
 import beachStill from '../assets/media/beach-loop.jpg';
 
-// Cinematic hero (issue #7) — opens the story page with the processed beach
-// loop (from Content/videos/drone/"beach video.mov") playing full-bleed behind
-// the Hi Tides wordmark and the primary inquiry CTA.
+// The hero. The processed beach loop (scripts/process-video.sh, from
+// Content/videos/drone/"beach video.mov": the drone settles above the water,
+// flies in to the cottage, and dissolves back) plays full-bleed behind one
+// line and two buttons. No wordmark here (the navbar carries it), no eyebrow.
 //
 // First-paint / no-JS / reduced-motion strategy:
 //  - The still (src/assets/media/beach-loop.jpg via <Picture>) is rendered as
@@ -19,17 +20,27 @@ import beachStill from '../assets/media/beach-loop.jpg';
 //    is hidden via a scoped reduced-motion media query so only the still
 //    shows for visitors who prefer reduced motion.
 //
-// The global Header sits transparent over this hero, so foreground content
-// keeps generous top padding to clear it.
+// Autoplay polish (NOTES.md, 2026-11-14): if playback is refused or fails
+// (iOS Low Power Mode, "Auto-Play Video Previews" off, Data Saver, a missing
+// codec, a failed fetch) the video is removed from layout so the still is the
+// hero, no half-loaded frame with a play glyph on it, and the first tap
+// anywhere retries playback.
+//
+// The hero MUST stay full-viewport (min-h-[100svh]) on every breakpoint.
+// Chrome's LCP ignores an image/video that covers the whole viewport (it is
+// treated as a background), which is why the hero *text* is the LCP element
+// (1.5 s). An 88svh phone hero made the video an LCP candidate at 5.3 s under
+// Lighthouse's throttling (budget 2.5 s). Measured; not a guess.
 ---
 
 <section
-  class="relative flex min-h-[100svh] items-end overflow-hidden bg-ink text-white"
+  data-hero
+  class="relative flex min-h-[100svh] items-center justify-center overflow-hidden bg-ink text-white"
 >
   <!-- Always-present still: first paint + no-JS + reduced-motion fallback -->
-  <!-- Optimized via astro:assets (AVIF/WebP + srcset): the raw 194 KB JPEG
-       measurably dragged mobile LCP. Not fetchpriority=high — the LCP element
-       is the hero *text*, so this image must not outrank fonts/CSS. -->
+  <!-- Optimized via astro:assets (AVIF/WebP + srcset): the raw JPEG dragged
+       mobile LCP. Not fetchpriority=high: the LCP element is the hero *text*,
+       so this image must not outrank fonts/CSS. -->
   <Picture
     src={beachStill}
     formats={['avif', 'webp']}
@@ -40,66 +51,61 @@ import beachStill from '../assets/media/beach-loop.jpg';
     class="absolute inset-0 h-full w-full object-cover"
   />
 
-  <!-- Processed beach loop layered on top; hidden under reduced motion -->
+  <!-- Processed beach loop layered on top; removed if it cannot play; hidden
+       under reduced motion -->
   <video
     class="hero-video absolute inset-0 h-full w-full object-cover"
+    data-hero-video
     autoplay
     muted
     loop
     playsinline
+    disablepictureinpicture
+    disableremoteplayback
     preload="metadata"
-    aria-label="Aerial video of the beach, clear water, and coastline in Port Mouton, Nova Scotia"
+    aria-label="Aerial video flying in over the beach to the cottage in Port Mouton, Nova Scotia"
   >
     <source src="/media/beach-loop.mp4" type="video/mp4" />
   </video>
 
-  <!-- Coastal gradient overlays for legible white foreground text -->
+  <!-- Coastal gradient for legible white text -->
   <div
-    class="absolute inset-0 bg-gradient-to-b from-ink/40 via-blue/30 to-cedar/40"
-    aria-hidden="true"
-  >
-  </div>
-  <div
-    class="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-ink/40"
+    class="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/25 to-ink/55"
     aria-hidden="true"
   >
   </div>
 
-  <!-- Foreground content -->
-  <div class="relative z-10 mx-auto w-full max-w-6xl px-6 pb-20 pt-32 sm:px-8 sm:pb-24 sm:pt-36">
-    <Wordmark variant="light" class="h-16 sm:h-20" />
-
-    <p
-      class="mb-4 mt-8 text-xs font-semibold uppercase tracking-[0.22em] text-white/80"
-    >
-      Port Mouton, Nova Scotia
-    </p>
-    <h1 class="max-w-[16ch] text-4xl font-semibold sm:text-6xl lg:text-7xl">
+  <!-- Foreground: centred, nothing but the line and the two ways in -->
+  <div class="relative z-10 mx-auto w-full max-w-4xl px-6 pb-24 pt-28 text-center">
+    <h1 class="text-balance text-5xl font-semibold tracking-tight sm:text-7xl">
       A cottage above the beach.
     </h1>
-    <p class="mt-5 max-w-[42ch] text-lg text-white/90 sm:text-xl">
-      Hi Tides sits above the white sand of Port Mouton, with open views across
-      the bay and the Atlantic just below.
+    <p class="mx-auto mt-6 max-w-[40ch] text-balance text-lg text-white/85 sm:text-xl">
+      Two bedrooms on Nova Scotia's South Shore, with the bay in front of you
+      and white sand five minutes down the road.
     </p>
-
-    <div class="mt-8 flex flex-wrap gap-4">
-      <a
-        href="#inquire"
-        class="rounded-full bg-blue px-7 py-3.5 font-semibold text-white transition-transform hover:-translate-y-0.5"
-      >
-        Request your stay
-      </a>
-      <a
-        href="/gallery"
-        class="rounded-full border border-white/70 px-7 py-3.5 font-semibold text-white transition-colors hover:bg-white/10"
-      >
-        See the cottage
-      </a>
+    <div class="mt-10 flex flex-wrap justify-center gap-3">
+      <a href="#inquire" class="btn btn-primary">Request your stay</a>
+      <a href="/gallery" class="btn btn-light">See the photos</a>
     </div>
   </div>
 </section>
 
 <style>
+  /* Set by the script when playback is refused or fails: the still beneath is
+     the hero. Cleared again the moment the loop actually plays. */
+  .hero-video.is-blocked {
+    display: none;
+  }
+
+  /* Belt and braces for WebKit: never show the inline start-playback glyph or
+     any other native chrome on this decorative, muted loop. */
+  .hero-video::-webkit-media-controls,
+  .hero-video::-webkit-media-controls-start-playback-button {
+    display: none !important;
+    -webkit-appearance: none;
+  }
+
   /* Reduced-motion / no-video fallback: hide the looping video so only the
      still image background shows. The still <img> beneath always remains. */
   @media (prefers-reduced-motion: reduce) {
@@ -108,3 +114,68 @@ import beachStill from '../assets/media/beach-loop.jpg';
     }
   }
 </style>
+
+<script>
+  // Hero loop lifecycle. The video is visible from the first paint (it has no
+  // poster, so the still shows through until the first frame decodes) and is
+  // left to the autoplay attribute. If it cannot play it is hidden, leaving
+  // the still, which is also exactly what reduced-motion visitors get (for
+  // them autoplay is cancelled up front, so only the preload metadata is
+  // ever fetched).
+  //
+  // ClientRouter: the hero DOM is replaced on every client-side navigation
+  // back to the story page, so binding re-runs on astro:page-load.
+  const REDUCED = '(prefers-reduced-motion: reduce)';
+  // Autoplay refusal raises no event. If the first frame is in hand and
+  // nothing has started this long after it, treat autoplay as refused (or
+  // the network as too slow to matter) and show the still instead.
+  const GRACE_MS = 800;
+
+  function initHeroVideo(): void {
+    const video = document.querySelector<HTMLVideoElement>('video[data-hero-video]');
+    if (!video) return;
+
+    if (window.matchMedia(REDUCED).matches) {
+      video.removeAttribute('autoplay');
+      video.pause();
+      return;
+    }
+
+    const block = () => video.classList.add('is-blocked');
+    const unblock = () => video.classList.remove('is-blocked');
+
+    video.addEventListener('playing', unblock);
+    video.addEventListener('error', block);
+    // A failed fetch of the only <source> reports on the source element, and
+    // may already have happened before this script ran.
+    for (const source of video.querySelectorAll('source')) {
+      source.addEventListener('error', block);
+    }
+    if (video.error || video.networkState === video.NETWORK_NO_SOURCE) block();
+
+    const check = () => {
+      if (video.isConnected && video.paused) block();
+    };
+    const arm = (delay: number) => () => window.setTimeout(check, delay);
+    if (video.readyState >= video.HAVE_CURRENT_DATA) arm(GRACE_MS)();
+    else video.addEventListener('loadeddata', arm(GRACE_MS), { once: true });
+    // If only metadata ever arrives (autoplay refused with preload=metadata)
+    // there is no first frame to wait for; give it longer, then decide.
+    if (video.readyState >= video.HAVE_METADATA) arm(GRACE_MS * 3)();
+    else video.addEventListener('loadedmetadata', arm(GRACE_MS * 3), { once: true });
+
+    // Playback is allowed again from a user gesture, so the first one retries;
+    // `playing` then clears the block. Listeners are one-shot and harmless if
+    // the hero has since been swapped away.
+    const retry = () => {
+      if (!video.isConnected || !video.paused) return;
+      const attempt = video.play();
+      if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
+    };
+    for (const type of ['pointerdown', 'keydown', 'touchend']) {
+      window.addEventListener(type, retry, { once: true, passive: true });
+    }
+  }
+
+  document.addEventListener('astro:page-load', initHeroVideo);
+</script>

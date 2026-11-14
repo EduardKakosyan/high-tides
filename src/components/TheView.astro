@@ -1,51 +1,32 @@
 ---
-// Section 2 — "The View" (issue #10).
-// The differentiator: the cottage sits *above* the beach with a commanding
-// Atlantic view — not beachfront, better. Drone-led so the first thing a
-// Guest reads is the cottage-above-the-shore relationship. Dark band so it
-// reads as a confident, cinematic beat distinct from the lighter sections.
+// The view: the one thing that sets the cottage apart. Three photos: the
+// drone frame that shows the cottage sitting above the beach, the beach on a
+// clear day, and the bay through the front window.
 import { Image } from 'astro:assets';
-// Establishing shot: the cottage in the foreground with the white-sand beach
-// and the open bay beyond — the whole point of "the view."
 import aerialBay from '../assets/media/dji_20250819115309_0032_d.jpg';
-// The cottage framed against the coastline and bay behind it.
-import aerialVista from '../assets/media/dji_20250819115401_0037_d.jpg';
-// Eye-level views — what you actually see standing on the property and looking
-// out through the windows, to ground the aerials in reality.
-import viewFromYard from '../assets/media/view-1.jpg';
 import viewFromWindow from '../assets/media/view-2.jpg';
+import { beachWaves } from '../data/gallery';
 ---
 
 <section aria-labelledby="the-view-heading" class="bg-ink text-white">
-  <div class="mx-auto max-w-6xl px-6 py-24 sm:px-8">
-    <p
-      data-reveal
-      class="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-gold"
-    >
+  <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+    <p data-reveal class="text-xs font-semibold uppercase tracking-[0.22em] text-gold">
       The view
     </p>
     <h2
       id="the-view-heading"
       data-reveal
-      class="max-w-[20ch] font-head text-3xl font-semibold sm:text-4xl lg:text-5xl"
+      class="mt-3 max-w-[20ch] font-head text-3xl font-semibold tracking-tight sm:text-5xl"
     >
       High enough to see the whole bay.
     </h2>
-    <p data-reveal class="mt-5 max-w-[52ch] text-lg text-white/85">
-      The cottage is set above the shore, not down at sea level. From here, the
-      beach, bay, and open Atlantic all sit in front of you.
-    </p>
-    <p data-reveal class="mt-4 max-w-[52ch] text-lg text-white/85">
-      Walk down to the sand when you want the beach. Come back up when you want
-      the view. Morning, evening, clear weather, rough weather, it is the kind
-      of outlook that changes all day without ever getting old.
+    <p data-reveal class="mt-5 max-w-[54ch] text-lg text-white/80">
+      Hi Tides sits on the rise above the shore. From the deck and the front
+      windows you look straight out over the bay to the islands. Carters Beach,
+      white sand and clear water, is a five-minute drive.
     </p>
 
-    <!-- Lead drone frame: the cottage-above-the-shore relationship -->
-    <figure
-      data-parallax
-      class="mt-12 overflow-hidden rounded-2xl border border-white/10"
-    >
+    <figure data-parallax class="mt-12 overflow-hidden rounded-2xl">
       <Image
         src={aerialBay}
         alt="Aerial view of Hi Tides above the white-sand beach and bay in Port Mouton, Nova Scotia"
@@ -57,50 +38,36 @@ import viewFromWindow from '../assets/media/view-2.jpg';
       />
     </figure>
 
-    <!-- Supporting vista + the vantage in words -->
-    <div class="mt-6 grid items-center gap-6 sm:grid-cols-5">
-      <figure
-        class="overflow-hidden rounded-2xl border border-white/10 sm:col-span-3"
-      >
+    <div class="mt-4 grid gap-4 sm:grid-cols-2">
+      <figure class="overflow-hidden rounded-2xl">
         <Image
-          src={aerialVista}
-          alt="Hi Tides cottage overlooking the South Shore coastline and Atlantic bay"
-          widths={[480, 768, 1200, 1800]}
-          sizes="(min-width: 640px) 60vw, 100vw"
+          src={beachWaves.src}
+          alt={beachWaves.alt}
+          widths={[480, 768, 1200]}
+          sizes="(min-width: 640px) 50vw, 100vw"
           loading="lazy"
           decoding="async"
           class="aspect-[4/3] w-full object-cover"
         />
       </figure>
-      <p class="max-w-[34ch] text-base text-white/80 sm:col-span-2">
-        A short walk to the sand, with the full bay waiting when you come back.
-      </p>
-    </div>
-
-    <!-- Eye-level reality: the same bay from the yard and from inside. -->
-    <div class="mt-6 grid gap-6 sm:grid-cols-2">
-      <figure class="overflow-hidden rounded-2xl border border-white/10">
-        <Image
-          src={viewFromYard}
-          alt="View over Port Mouton bay from the cottage grounds, with an island offshore"
-          widths={[480, 768, 1200, 1800]}
-          sizes="(min-width: 640px) 50vw, 100vw"
-          loading="lazy"
-          decoding="async"
-          class="aspect-[3/2] w-full object-cover"
-        />
-      </figure>
-      <figure class="overflow-hidden rounded-2xl border border-white/10">
+      <figure class="overflow-hidden rounded-2xl">
         <Image
           src={viewFromWindow}
-          alt="The bay framed through a cottage window, with coastal trinkets on the sill"
-          widths={[480, 768, 1200, 1800]}
+          alt="The bay through the cottage's front window"
+          widths={[480, 768, 1200]}
           sizes="(min-width: 640px) 50vw, 100vw"
           loading="lazy"
           decoding="async"
-          class="aspect-[3/2] w-full object-cover"
+          class="aspect-[4/3] w-full object-cover"
         />
       </figure>
+    </div>
+
+    <div class="mt-10">
+      <a href="#inquire" class="link-arrow link-arrow-light">
+        Request your stay
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14 M13 6l6 6-6 6" /></svg>
+      </a>
     </div>
   </div>
 </section>

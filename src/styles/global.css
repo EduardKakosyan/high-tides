@@ -1,12 +1,12 @@
 /*
-  source("../") confines Tailwind's class scanner to ./src — without it, v4
+  source("../") confines Tailwind's class scanner to ./src, without it, v4
   auto-detection walks the whole repo, including the multi-GB raw media in
   Content/ and .work/, and pegs every core trying to read video as text.
 */
 @import 'tailwindcss' source('../');
 
 /*
-  "Cool & coastal" design system — the locked visual direction (see NOTES.md).
+  "Cool & coastal" design system, the locked visual direction (see NOTES.md).
   Tokens live in Tailwind's @theme so they are available both as utilities
   (bg-bg, text-ink, font-head, …) and as CSS custom properties (var(--color-ink)).
 */
@@ -24,7 +24,7 @@
   --color-purple: #4a3b8c; /* brand accent (held back; from the sign) */
   --color-cedar: #7e8a93; /* grey-blue cedar tone */
 
-  /* Type — headline grotesk + Inter body (self-hosted via @fontsource) */
+  /* Type, headline grotesk + Inter body (self-hosted via @fontsource) */
   --font-head: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
 }
@@ -45,5 +45,244 @@
     font-family: var(--font-head);
     line-height: 1.1;
     letter-spacing: -0.02em;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Smooth in-page scrolling for the navbar's section links. Off under
+   reduced motion, where jumps are the calm option.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Buttons and text links. Plain CSS on the theme tokens so every CTA on the
+   site is the same two or three shapes.
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.875rem 1.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn-primary {
+  background: var(--color-blue);
+  color: #fff;
+}
+.btn-primary:hover {
+  background: color-mix(in oklab, var(--color-blue), black 10%);
+}
+.btn-light {
+  color: #fff;
+  background: rgb(255 255 255 / 0.14);
+  border: 1px solid rgb(255 255 255 / 0.55);
+  backdrop-filter: blur(6px);
+}
+.btn-light:hover {
+  background: rgb(255 255 255 / 0.24);
+}
+.btn-ghost {
+  color: var(--color-ink);
+  border: 1px solid var(--color-line);
+}
+.btn-ghost:hover {
+  border-color: var(--color-ink);
+}
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: var(--color-blue);
+}
+.link-arrow svg {
+  width: 1rem;
+  height: 1rem;
+  transition: transform 150ms ease;
+}
+.link-arrow:hover svg {
+  transform: translateX(3px);
+}
+.link-arrow-light {
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   Navbar (Header.astro). State comes from src/scripts/tabs.ts:
+     data-over-hero   the hero is under the bar: transparent, white
+     data-has-hero    page has a hero (story page): phone top row folds
+                      away once scrolled past it
+   -------------------------------------------------------------------------- */
+.site-header {
+  color: var(--color-ink);
+  background: color-mix(in oklab, var(--color-bg) 88%, transparent);
+  border-bottom: 1px solid var(--color-line);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition:
+    background-color 250ms ease,
+    border-color 250ms ease,
+    color 250ms ease;
+}
+.site-header[data-over-hero] {
+  color: #fff;
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.wordmark-light {
+  display: none;
+}
+.site-header[data-over-hero] .wordmark-light {
+  display: block;
+}
+.site-header[data-over-hero] .wordmark-brand {
+  display: none;
+}
+
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  border-radius: 9999px;
+  transition: color 150ms ease;
+}
+.nav-link:hover,
+.nav-link[aria-current='true'] {
+  color: var(--color-ink);
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.15rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 200ms ease;
+}
+.nav-link[aria-current='true']::after {
+  transform: scaleX(1);
+}
+.site-header[data-over-hero] .nav-link {
+  color: rgb(255 255 255 / 0.75);
+}
+.site-header[data-over-hero] .nav-link:hover,
+.site-header[data-over-hero] .nav-link[aria-current='true'] {
+  color: #fff;
+}
+
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 9999px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-blue);
+  transition:
+    background-color 150ms ease,
+    transform 150ms ease;
+}
+.nav-cta:hover {
+  transform: translateY(-1px);
+}
+.site-header[data-over-hero] .nav-cta {
+  background: rgb(255 255 255 / 0.16);
+  border: 1px solid rgb(255 255 255 / 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.tab-pill {
+  flex: 1 0 auto;
+  white-space: nowrap;
+  border-radius: 9999px;
+  padding: 0.45rem 0.85rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+.tab-pill[aria-selected='true'] {
+  background: var(--color-ink);
+  color: #fff;
+}
+.site-header[data-over-hero] .tab-pill {
+  color: rgb(255 255 255 / 0.8);
+}
+.site-header[data-over-hero] .tab-pill[aria-selected='true'] {
+  background: #fff;
+  color: var(--color-ink);
+}
+
+/* --------------------------------------------------------------------------
+   Section panels (TabPanel.astro). Below md only the active panel is laid
+   out; from md up every panel is a plain block in the story flow.
+   -------------------------------------------------------------------------- */
+[data-tab-panel],
+[data-tab-panel] section,
+#inquire {
+  scroll-margin-top: 5rem;
+}
+
+@media (max-width: 47.99rem) {
+  /* Past the hero only the 44px tab row stays. */
+  .site-header[data-has-hero]:not([data-over-hero]) .nav-top {
+    display: none;
+  }
+
+  [data-tab-panel]:not([data-active]) {
+    display: none;
+  }
+
+  [data-tab-panel],
+  [data-tab-panel] section,
+  #inquire {
+    scroll-margin-top: 3.5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    [data-tab-panel][data-entered] {
+      animation: tab-panel-in 240ms ease-out;
+    }
+  }
+}
+
+@keyframes tab-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
   }
 }
