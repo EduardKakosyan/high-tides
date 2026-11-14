@@ -24,8 +24,15 @@ import beachStill from '../assets/media/beach-loop.jpg';
 // Autoplay polish (NOTES.md, 2026-11-14): if playback is refused or fails
 // (iOS Low Power Mode, "Auto-Play Video Previews" off, Data Saver, a missing
 // codec, a failed fetch) the video is removed from layout so the still is the
-// hero, no half-loaded frame with a play glyph on it, and the first tap
-// anywhere retries playback.
+// hero, no half-loaded frame with a play glyph on it.
+//
+// Nothing may ever call play() on this element and it takes no pointer
+// events. iOS 26 (Safari and every iOS browser, since they are all WebKit)
+// will put its full native inline player over a controls-less <video> when a
+// tap reaches the video layer or when playback is started by script from a
+// user gesture. Seen on Firefox for iOS: pause, skip, scrubber, the lot, on
+// top of the hero. The autoplay attribute alone drives playback; if a device
+// refuses it, the still is the hero and that is the end of it.
 //
 // The hero MUST stay full-viewport (min-h-[100svh]) on every breakpoint.
 // Chrome's LCP ignores an image/video that covers the whole viewport (it is
@@ -55,7 +62,7 @@ import beachStill from '../assets/media/beach-loop.jpg';
   <!-- Processed beach loop layered on top; removed if it cannot play; hidden
        under reduced motion -->
   <video
-    class="hero-video absolute inset-0 h-full w-full object-cover"
+    class="hero-video pointer-events-none absolute inset-0 h-full w-full object-cover"
     data-hero-video
     autoplay
     muted
@@ -63,6 +70,8 @@ import beachStill from '../assets/media/beach-loop.jpg';
     playsinline
     disablepictureinpicture
     disableremoteplayback
+    controlslist="nodownload nofullscreen noremoteplayback"
+    x-webkit-airplay="deny"
     preload="metadata"
     aria-label="Aerial video flying in over the beach to the cottage in Port Mouton, Nova Scotia"
   >
@@ -165,17 +174,8 @@ import beachStill from '../assets/media/beach-loop.jpg';
     if (video.readyState >= video.HAVE_METADATA) arm(GRACE_MS * 3)();
     else video.addEventListener('loadedmetadata', arm(GRACE_MS * 3), { once: true });
 
-    // Playback is allowed again from a user gesture, so the first one retries;
-    // `playing` then clears the block. Listeners are one-shot and harmless if
-    // the hero has since been swapped away.
-    const retry = () => {
-      if (!video.isConnected || !video.paused) return;
-      const attempt = video.play();
-      if (attempt && typeof attempt.catch === 'function') attempt.catch(() => {});
-    };
-    for (const type of ['pointerdown', 'keydown', 'touchend']) {
-      window.addEventListener(type, retry, { once: true, passive: true });
-    }
+    // Deliberately no gesture retry: script-started playback is one of the two
+    // things that make iOS 26 draw its native player over the hero.
   }
 
   document.addEventListener('astro:page-load', initHeroVideo);

@@ -130,10 +130,16 @@ with a play glyph, and the story page is ~24 phone screens of scroll.
   Mode, "Auto-Play Video Previews" off, Data Saver, missing codec, failed
   fetch) the `<video>` is removed from layout and the still is the hero — no
   half-loaded frame with a play glyph, no player chrome (WebKit's start-
-  playback button is also hidden by CSS). The first tap anywhere retries
-  `play()`. For reduced-motion visitors autoplay is cancelled up front, so
-  only the preload metadata is fetched (verified in WebKit). Guarded by
-  tests/motion.spec.ts ("Hero loop fallback"). Autoplay refusal
+  playback button is also hidden by CSS). For reduced-motion visitors
+  autoplay is cancelled up front, so only the preload metadata is fetched
+  (verified in WebKit). Guarded by tests/motion.spec.ts ("Hero loop
+  fallback").
+  **No play() from gestures, and pointer-events: none on the video.** iOS 26
+  draws its full native inline player (pause, skip, scrubber, PiP) over a
+  controls-less video when a tap reaches the video layer or when playback is
+  started by script inside a user gesture. Brian saw exactly that in Firefox
+  for iOS (WebKit). The first-tap retry was removed the same day; if a
+  device refuses autoplay, the still is the hero, full stop. Autoplay refusal
   raises no event, so it is detected by a short grace timer after the first
   frame; the bare `autoplay` attribute is left to start playback.
 - **Hero stays 100svh on phones — LCP depends on it (measured).** Chrome's
