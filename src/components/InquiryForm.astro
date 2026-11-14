@@ -7,12 +7,6 @@
 // endpoint) via fetch, then swaps the form for a success panel, so the
 // success state is observable in tests/preview without a live backend.
 
-const steps = [
-  'Send your dates and who is coming.',
-  'Brian confirms availability and rates by email.',
-  'Settle in.',
-];
-
 // Cottage sleeps 4 (CONTEXT.md): guests capped at 4.
 const guestOptions = [1, 2, 3, 4];
 
@@ -34,29 +28,9 @@ const labelClass = 'mb-1.5 block text-sm font-medium text-ink';
       Request your stay
     </h2>
     <p data-reveal class="mt-5 max-w-[54ch] text-lg text-muted">
-      Send your dates and the number of guests. Brian replies personally with
-      availability and rates. Hi Tides sleeps up to four, has a 6-night
-      minimum, is open year-round, and does not take pets.
+      Hi Tides sleeps up to four, has a 6-night minimum, and is open
+      year-round.
     </p>
-
-    <ol data-stagger class="mt-8 grid gap-3 sm:grid-cols-3">
-      {
-        steps.map((step, i) => (
-          <li class="flex items-start gap-3 rounded-2xl bg-bg px-4 py-4 ring-1 ring-ink/5">
-            <span
-              class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue font-head text-sm font-semibold text-white"
-              aria-hidden="true"
-            >
-              {i + 1}
-            </span>
-            <span class="text-sm text-ink">
-              <span class="sr-only">{`Step ${i + 1}: `}</span>
-              {step}
-            </span>
-          </li>
-        ))
-      }
-    </ol>
 
     <!-- Inquiry form (Netlify Forms). The hidden form-name + honeypot are
          required for Netlify to register and protect the form. -->
