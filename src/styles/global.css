@@ -212,6 +212,12 @@
 .nav-cta:hover {
   transform: translateY(-1px);
 }
+/* Phones carry the CTA in the tab row instead (see .tab-cta). */
+@media (max-width: 47.99rem) {
+  .nav-cta {
+    display: none;
+  }
+}
 .site-header[data-over-hero] .nav-cta {
   background: rgb(255 255 255 / 0.16);
   border: 1px solid rgb(255 255 255 / 0.55);
