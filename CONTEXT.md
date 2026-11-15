@@ -26,7 +26,8 @@ accents; grey-blue weathered cedar is the brand's material backdrop. The site's 
 and palette derive from this sign, not from invented colors.
 
 ### Host
-The owner of the Cottage, **Brian Greening** (inquiries → briangreening@eastlink.ca).
+The owner of the Cottage, **Brian Greening**. Inquiries reach his inbox through the site's
+form; the address itself is private (Vercel environment, never in the repo or the HTML).
 Receives Inquiries by email and personally follows up to arrange a stay. Loves the local
 community; his personal voice and named, human presence are a core trust signal of the
 site. Never named "admin" or "landlord."

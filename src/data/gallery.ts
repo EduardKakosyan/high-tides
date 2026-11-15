@@ -79,9 +79,9 @@ export const homeFeatured: GalleryImage[] = [
   byFile('on-suit-bathroom-1.jpg'),
 ];
 
-/** The outside section: deck and bay first, then the outdoor shower. */
+/** The outside section: the beach at sunset leads, then the deck and the outdoor shower. */
 export const stayPhotos: GalleryImage[] = [
-  byFile('side-deck.jpg'),
+  byFile('beach-sunset.jpg'),
   byFile('side-deck-house.jpg'),
   byFile('shower-inside.jpg'),
   byFile('outdoor-shower-side.jpg'),

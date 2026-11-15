@@ -43,7 +43,7 @@ Prototype lives at `prototype.html` (throwaway — delete once the real Astro si
 - **Purpose:** vacation rental; visitors send an email Inquiry, host follows up personally. No payments/booking engine.
 - **Structure:** single cinematic scrolling story page + `/gallery` sub-page for all photos. On phones (< `md`) the same sections sit behind five tabs — see "Mobile" (2026-11-14).
 - **Stack:** Astro + Tailwind, static, CDN-hosted.
-- **Hosting + form:** Netlify + Netlify Forms (emails the host, built-in spam protection).
+- **Hosting + form:** Vercel (moved from Netlify). The form posts to `/api/inquire`, a Vercel Function that emails the host through Resend; see "Inquiry backend" (2026-11-14).
 - **Pricing:** not shown — "rates on request."
 - **Host presence:** named + one photo + short first-person note. Personal-reply promise is a feature.
 - **Hero:** the beach→house drone clip, muted/looping, with a drone still as poster/fallback.
@@ -68,7 +68,7 @@ Sub-page: `/gallery`: 20 photos in walkthrough order, one grid, no headings, no 
 
 ## Host & place (from Brian, 2026-06-18)
 
-- **Host:** Brian Greening · inquiries → **briangreening@eastlink.ca** · photo provided later.
+- **Host:** Brian Greening · inquiries → his inbox via the form (address kept private in Vercel env `INQUIRY_TO`) · photo provided later.
 - **Domain:** **hitides.ca** (final target; may start on Netlify subdomain).
 - **Sense of place (raw, to shape into copy):** built into a small, hidden Nova Scotia
   fishing village; tropical-like water and white-sand beaches; **5 minutes from Carters
@@ -229,3 +229,21 @@ tabs plus a blue Inquire pill (an anchor to #inquire); the top-row Inquire
 button is desktop-only, so a phone never shows two. The host block became a
 small round avatar beside the name (the empty 320px placeholder square was
 most of the phone screen).
+
+## Inquiry backend (2026-11-14)
+
+The live site runs on Vercel, not Netlify, and the form was still posting to
+Netlify Forms: every submission got a 405. Now `api/inquire.ts` (Vercel's
+zero-config functions directory, beside the static Astro build) takes the
+POST, validates it, drops bots (honeypot field + a fill-time stamp), and
+emails the host through Resend with the guest as reply-to. With JS off the
+form posts normally and the function redirects back with `?sent=1`/`0`.
+
+The destination address is private by design: it lives only in the Vercel
+project environment (`INQUIRY_TO`), never in the repo (public) or the HTML,
+so it cannot be scraped. The footer's mailto and the error panel's address
+are gone for the same reason. Required env: `RESEND_API_KEY`, `INQUIRY_TO`,
+optional `INQUIRY_FROM` (needs the sending domain verified in Resend;
+otherwise Resend's onboarding sender is used, which only delivers to the
+Resend account's own address). Until the key is set the function answers
+503 and the form shows its "try again" panel. netlify.toml removed.

@@ -29,12 +29,12 @@ test.describe('ClientRouter lifecycle', () => {
   test('inquiry form still submits after a round trip to /gallery and back', async ({
     page,
   }) => {
-    await page.route('/', async (route) => {
-      if (route.request().method() === 'POST') {
-        await route.fulfill({ status: 200, body: 'OK' });
-      } else {
-        await route.continue();
-      }
+    await page.route('**/api/inquire', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ ok: true }),
+      });
     });
 
     await page.goto('/gallery');

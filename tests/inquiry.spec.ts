@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 
 // Happy-path coverage for the Inquiry experience (issue #8).
-// We intercept the POST to "/" so no real Netlify backend is needed, then
+// We stub POST /api/inquire so no real email backend is needed, then
 // assert the success panel appears and the form is replaced.
 //
 // The form is reached the way a Guest reaches it — via the hero CTA — which
@@ -25,13 +25,13 @@ test.describe('Inquiry form', () => {
   });
 
   test('submits and shows the success panel', async ({ page }) => {
-    // Stub the Netlify Forms endpoint so submission succeeds offline.
-    await page.route('/', async (route) => {
-      if (route.request().method() === 'POST') {
-        await route.fulfill({ status: 200, body: 'OK' });
-      } else {
-        await route.continue();
-      }
+    // Stub the inquiry function so submission succeeds offline.
+    await page.route('**/api/inquire', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ ok: true }),
+      });
     });
 
     await openInquiry(page);
