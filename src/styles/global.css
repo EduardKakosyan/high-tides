@@ -225,12 +225,12 @@
 }
 
 .tab-pill {
-  flex: 1 0 auto;
+  flex: 0 0 auto;
   white-space: nowrap;
   border-radius: 9999px;
-  padding: 0.45rem 0.85rem;
+  padding: 0.4rem 0.7rem;
   text-align: center;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: var(--color-muted);
   transition:
@@ -252,8 +252,8 @@
 /* The phone's persistent CTA, at the end of the tab row. */
 .tab-cta {
   border-radius: 9999px;
-  padding: 0.45rem 0.95rem;
-  font-size: 0.875rem;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8125rem;
   font-weight: 600;
   color: #fff;
   background: var(--color-blue);
@@ -271,7 +271,9 @@
    -------------------------------------------------------------------------- */
 [data-tab-panel],
 [data-tab-panel] section,
-#inquire {
+#inquire,
+h1[id],
+h2[id] {
   scroll-margin-top: 5rem;
 }
 
@@ -287,8 +289,10 @@
 
   [data-tab-panel],
   [data-tab-panel] section,
-  #inquire {
-    scroll-margin-top: 3.5rem;
+  #inquire,
+  h1[id],
+  h2[id] {
+    scroll-margin-top: 3.75rem;
   }
 
   @media (prefers-reduced-motion: no-preference) {
