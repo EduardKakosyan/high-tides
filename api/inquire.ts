@@ -16,8 +16,11 @@
 //
 // Responses: JSON for fetch() callers; a redirect back to the form for a
 // plain HTML submit (JS off). Bots get a cheerful 200 and nothing is sent.
-
-export const config = { runtime: 'nodejs' };
+//
+// Vercel may invoke this with the Web signature (Request -> Response) or the
+// classic Node one (IncomingMessage, ServerResponse); the default export
+// below accepts either and runs the same Web handler.
+import type { IncomingMessage, ServerResponse } from 'node:http';
 
 const MAX = { name: 120, email: 200, message: 4000, guests: 4 } as const;
 const MIN_FILL_MS = 2500; // humans do not fill five fields in two seconds
@@ -62,7 +65,46 @@ function respond(req: Request, ok: boolean, status: number, error?: string): Res
   return new Response(null, { status: 303, headers: { location: where, 'cache-control': 'no-store' } });
 }
 
-export default async function handler(req: Request): Promise<Response> {
+export async function POST(req: Request): Promise<Response> {
+  return handle(req);
+}
+
+export async function GET(): Promise<Response> {
+  return new Response('Method Not Allowed', { status: 405, headers: { allow: 'POST' } });
+}
+
+/** Default export: Web signature when given a Request, Node signature otherwise. */
+export default async function entry(
+  reqOrNode: Request | IncomingMessage,
+  res?: ServerResponse,
+): Promise<Response | void> {
+  if (typeof (reqOrNode as Request).headers?.get === 'function') {
+    return handle(reqOrNode as Request);
+  }
+  const node = reqOrNode as IncomingMessage;
+  const chunks: Buffer[] = [];
+  for await (const chunk of node) chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  const headers = new Headers();
+  for (const [k, v] of Object.entries(node.headers)) {
+    if (typeof v === 'string') headers.set(k, v);
+    else if (Array.isArray(v)) headers.set(k, v.join(', '));
+  }
+  const host = node.headers.host ?? 'hitides.ca';
+  const method = node.method ?? 'GET';
+  const request = new Request(`https://${host}${node.url ?? '/api/inquire'}`, {
+    method,
+    headers,
+    body: method === 'GET' || method === 'HEAD' ? undefined : Buffer.concat(chunks),
+  });
+  const response = await handle(request);
+  if (!res) return response;
+  res.statusCode = response.status;
+  response.headers.forEach((value, key) => res.setHeader(key, value));
+  const body = Buffer.from(await response.arrayBuffer());
+  res.end(body.length ? body : undefined);
+}
+
+async function handle(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
     return new Response('Method Not Allowed', { status: 405, headers: { allow: 'POST' } });
   }
