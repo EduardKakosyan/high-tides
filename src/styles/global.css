@@ -243,6 +243,22 @@
   color: var(--color-ink);
 }
 
+/* The phone's persistent CTA, at the end of the tab row. */
+.tab-cta {
+  border-radius: 9999px;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--color-blue);
+  white-space: nowrap;
+}
+.site-header[data-over-hero] .tab-cta {
+  background: rgb(255 255 255 / 0.18);
+  border: 1px solid rgb(255 255 255 / 0.55);
+  backdrop-filter: blur(6px);
+}
+
 /* --------------------------------------------------------------------------
    Section panels (TabPanel.astro). Below md only the active panel is laid
    out; from md up every panel is a plain block in the story flow.

@@ -61,7 +61,9 @@ Prototype lives at `prototype.html` (throwaway — delete once the real Astro si
 7. Your host: Brian, note, "Send an inquiry"
 8. Inquire: 3 steps + Netlify form; rules in one sentence; "rates on request"
 
-Phones: 2–3 → Overview, 4–5 → Cottage, 6 → Area, 7 → Host, 8 → Inquire (navbar tabs).
+Phones: 2–3 → Overview, 4–5 → Cottage, 6 → Area, 7 → Host (navbar tabs); 8, Inquire,
+is not a tab: it sits below whichever panel is open, so every scroll ends at the
+form, and the tab row carries a blue Inquire pill that jumps to it.
 Sub-page: `/gallery`: 20 photos in walkthrough order, one grid, no headings, no captions.
 
 ## Host & place (from Brian, 2026-06-18)
@@ -217,3 +219,13 @@ Brian's review of the live site, point by point. All of it landed together.
 - **New photos from Brian:** originals in Content/images/beach/, web JPEGs at
   src/assets/media/beach-{sand,waves,moonrise,sunset}.jpg. Waves is in The
   view; sand and sunset close the gallery; moonrise is unused for now.
+
+## Phone follow-up: Inquire is not a tab (2026-11-14)
+
+Brian: "why is inquire not part of the main scroll?" Right: a visitor on the
+Overview tab never met the form. Now the form renders after the panels, so it
+ends every scroll on a phone and stays last on desktop. The tab row has four
+tabs plus a blue Inquire pill (an anchor to #inquire); the top-row Inquire
+button is desktop-only, so a phone never shows two. The host block became a
+small round avatar beside the name (the empty 320px placeholder square was
+most of the phone screen).

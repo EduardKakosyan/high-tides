@@ -6,6 +6,10 @@
 // "Mobile tabs"). Panel ids double as URL fragments (/#cottage), so a tab is
 // deep-linkable and survives a refresh. The first tab is the default and is
 // server-rendered as the active panel.
+//
+// Inquire is deliberately NOT a tab: the form sits below whichever panel is
+// open, at the end of every scroll, and the navbar's Inquire control is an
+// anchor to it.
 export interface StoryTab {
   /** Panel element id and URL fragment. */
   id: string;
@@ -18,7 +22,6 @@ export const storyTabs: StoryTab[] = [
   { id: 'cottage', label: 'Cottage' },
   { id: 'area', label: 'Area' },
   { id: 'host', label: 'Host' },
-  { id: 'inquiry', label: 'Inquire' },
 ];
 
 export const defaultTab = storyTabs[0].id;

@@ -22,7 +22,9 @@ test.describe('Navbar and section tabs', () => {
     await expect(page.getByRole('tablist', { name: /sections/i })).toBeVisible();
     await expect(page.getByRole('tab', { name: 'Overview' })).toHaveAttribute('aria-selected', 'true');
     await expect(page.locator('#the-area-heading')).toBeHidden();
-    await expect(page.locator('#inquiry-form')).toBeHidden();
+    // The form is not a tab: it ends the scroll whichever panel is open.
+    expect((await layout(page, '#inquiry-form')).laidOut).toBe(true);
+    await expect(page.locator('[data-tablist-wrap]').getByRole('link', { name: 'Inquire' })).toHaveAttribute('href', '#inquire');
 
     // Both Overview sections are laid out, and the essentials lead on a phone.
     const facts = await layout(page, '#quick-facts-heading');
@@ -36,27 +38,31 @@ test.describe('Navbar and section tabs', () => {
     test.skip(!isMobile, 'mobile layout only');
     await page.goto('/');
 
-    await page.getByRole('tab', { name: 'Inquire' }).click();
-    await expect(page.locator('#inquiry-form')).toBeVisible();
+    await page.getByRole('tab', { name: 'Area' }).click();
+    expect((await layout(page, '#the-area-heading')).laidOut).toBe(true);
     await expect(page.locator('#overview')).toBeHidden();
-    await expect(page.getByRole('tab', { name: 'Inquire' })).toHaveAttribute('aria-selected', 'true');
-    await expect(page).toHaveURL(/#inquiry$/);
+    await expect(page.getByRole('tab', { name: 'Area' })).toHaveAttribute('aria-selected', 'true');
+    await expect(page).toHaveURL(/#area$/);
 
     await page.getByRole('tab', { name: 'Overview' }).click();
     await expect(page.locator('#overview')).toBeVisible();
-    await expect(page.locator('#inquiry-form')).toBeHidden();
+    await expect(page.locator('#area')).toBeHidden();
     await expect(page).not.toHaveURL(/#/);
   });
 
-  test('phone: the hero CTA opens the Inquire tab and lands on the form', async ({ page, isMobile }) => {
+  test('phone: the hero CTA and the tab-row Inquire pill both land on the form', async ({ page, isMobile }) => {
     test.skip(!isMobile, 'mobile layout only');
     await page.goto('/');
 
     await page.getByRole('link', { name: /request your stay/i }).first().click();
-
-    await expect(page.getByRole('tab', { name: 'Inquire' })).toHaveAttribute('aria-selected', 'true');
-    await expect(page.locator('#inquiry-form')).toBeVisible();
     await expect(page.locator('#inquire-heading')).toBeInViewport();
+    // Overview stays the open tab; the form simply sits below it.
+    await expect(page.getByRole('tab', { name: 'Overview' })).toHaveAttribute('aria-selected', 'true');
+
+    await page.getByRole('tab', { name: 'Area' }).click();
+    await page.locator('[data-tablist-wrap]').getByRole('link', { name: 'Inquire' }).click();
+    await expect(page.locator('#inquire-heading')).toBeInViewport();
+    await expect(page.getByRole('tab', { name: 'Area' })).toHaveAttribute('aria-selected', 'true');
   });
 
   test('phone: a deep link opens its tab', async ({ page, isMobile }) => {
@@ -66,9 +72,9 @@ test.describe('Navbar and section tabs', () => {
     await expect(page.getByRole('tab', { name: 'Cottage' })).toHaveAttribute('aria-selected', 'true');
     expect((await layout(page, '#the-home-heading')).laidOut).toBe(true);
 
-    // An anchor inside a panel (the form section's own id) opens that panel too.
-    await page.goto('/#inquire');
-    await expect(page.locator('#inquiry-form')).toBeVisible();
+    // An anchor inside a panel opens that panel too.
+    await page.goto('/#the-host-heading');
+    await expect(page.getByRole('tab', { name: 'Host' })).toHaveAttribute('aria-selected', 'true');
     await expect(page.locator('#overview')).toBeHidden();
   });
 

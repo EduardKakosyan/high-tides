@@ -7,9 +7,10 @@
 //
 // Desktop (md+): wordmark, the section links (scroll the story page, current
 // one highlighted), and the Inquire button. Phones: a top row with the
-// wordmark and Inquire button, and a row of tabs underneath that switch the
-// section panels. Once a phone scrolls past the hero the top row folds away
-// and only the slim tab row stays, so the bar costs 44px, not 100.
+// wordmark, and a row underneath with the section tabs plus a blue Inquire
+// pill that jumps to the form (the form sits below every panel). Once a
+// phone scrolls past the hero the top row folds away and only the slim tab
+// row stays, so the bar costs 44px, not 100, and the CTA never leaves.
 //
 // Both wordmark finishes are rendered and CSS shows the right one, so the
 // swap costs no script and no image reload.
@@ -21,7 +22,6 @@ import { storyTabs } from '../data/tabs';
 // exists where there are panels to switch.
 const onStory = Astro.url.pathname === '/';
 const base = onStory ? '' : '/';
-const navTabs = storyTabs.filter((t) => t.id !== 'inquiry');
 ---
 
 <header data-site-header class="site-header fixed inset-x-0 top-0 z-40">
@@ -36,7 +36,7 @@ const navTabs = storyTabs.filter((t) => t.id !== 'inquiry');
     <nav aria-label="Sections" class="hidden md:block" data-navlinks>
       <ul class="flex items-center gap-1">
         {
-          navTabs.map((tab) => (
+          storyTabs.map((tab) => (
             <li>
               <a href={`${base}#${tab.id}`} data-tab={tab.id} class="nav-link">
                 {tab.label}
@@ -47,23 +47,26 @@ const navTabs = storyTabs.filter((t) => t.id !== 'inquiry');
       </ul>
     </nav>
 
-    <a href={`${base}#inquire`} class="nav-cta">Inquire</a>
+    <a href={`${base}#inquire`} class="nav-cta hidden md:inline-flex">Inquire</a>
   </div>
 
   {
     onStory && (
       <div class="nav-tabs md:hidden" data-tablist-wrap>
-        <div
-          role="tablist"
-          aria-label="Sections"
-          data-tablist
-          class="mx-auto flex max-w-6xl gap-1 overflow-x-auto px-3 pb-2 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          {storyTabs.map((tab) => (
-            <a href={`#${tab.id}`} data-tab={tab.id} class="tab-pill">
-              {tab.label}
-            </a>
-          ))}
+        <div class="mx-auto flex max-w-6xl items-center gap-1 px-3 pb-2 pt-1">
+          <div
+            role="tablist"
+            aria-label="Sections"
+            data-tablist
+            class="flex min-w-0 flex-1 gap-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {storyTabs.map((tab) => (
+              <a href={`#${tab.id}`} data-tab={tab.id} class="tab-pill">
+                {tab.label}
+              </a>
+            ))}
+          </div>
+          <a href="#inquire" class="tab-cta shrink-0">Inquire</a>
         </div>
       </div>
     )
