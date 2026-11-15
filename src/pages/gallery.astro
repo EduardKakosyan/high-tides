@@ -1,7 +1,7 @@
 ---
-// /gallery: every photo, front door to back deck to the beach, in one grid.
-// Every fifth photo is a large tile (alternating left and right) so the page
-// reads like a photo tour rather than a contact sheet. Each tile is a
+// /gallery: every photo, approach to beach, in one grid. Every fifth photo
+// is a large tile (alternating left and right) while a full block of five
+// follows, so the page reads like a photo tour rather than a contact sheet. Each tile is a
 // <button> that opens the shared Lightbox; alt text is the only description.
 import { Image, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
@@ -32,6 +32,21 @@ const leadPreload = await getImage({
   format: 'webp',
   quality: leadQuality,
 });
+
+// Every fifth photo is a 2x2 tile, alternating sides, but only while a full
+// block of five follows it; a short last block is plain tiles, so the grid
+// never ends on an empty cell. Computed here, not in the template: the Astro
+// compiler reads a less-than sign inside a template expression as a tag.
+const tiles = allImages.map((_, i) => {
+  const large = i % 5 === 0 && i + 5 <= allImages.length;
+  const right = large && (i / 5) % 2 === 1;
+  return {
+    large,
+    className: [large ? 'col-span-2 row-span-2' : '', right ? 'md:col-start-3' : '']
+      .join(' ')
+      .trim(),
+  };
+});
 ---
 
 <Base
@@ -61,15 +76,13 @@ const leadPreload = await getImage({
         Front door to back deck, in the order you would walk it. Select any photo to see it larger.
       </p>
 
-      <ul
-        class="mt-10 grid grid-flow-dense grid-cols-2 gap-2 sm:gap-3 md:grid-cols-4 [&>li:nth-child(5n+1)]:col-span-2 [&>li:nth-child(5n+1)]:row-span-2 md:[&>li:nth-child(10n+6)]:col-start-3"
-      >
+      <ul class="mt-10 grid grid-flow-dense grid-cols-2 gap-2 sm:gap-3 md:grid-cols-4">
         {
           allImages.map((image, i) => {
             const full = fullViews[i];
-            const large = i % 5 === 0;
+            const { large, className } = tiles[i];
             return (
-              <li transition:name={morphName(image)}>
+              <li transition:name={morphName(image)} class={className || undefined}>
                 <button
                   type="button"
                   class="group block h-full w-full overflow-hidden rounded-xl bg-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue"

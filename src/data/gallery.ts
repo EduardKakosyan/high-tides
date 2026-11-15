@@ -36,27 +36,27 @@ const photo = (file: string, alt: string): GalleryImage => ({
   alt,
 });
 
-// Twenty-five photos: five blocks of five, which is what the gallery grid's
-// large-tile rhythm (every fifth photo) is built around. Every photo shown
-// anywhere on the story page is in here too, so the gallery is complete.
+// Twenty-four photos, approach to beach. Every photo shown anywhere on the
+// story page is in here too, so the gallery is complete. The grid makes
+// every fifth photo a large tile while a full block of five remains, so the
+// strong frames sit at 1, 6, 11 and 16.
 export const walkthrough: GalleryImage[] = [
   photo('dji_20250819115309_0032_d.jpg', 'Aerial view of Hi Tides above the white-sand beach and bay in Port Mouton, Nova Scotia'),
   photo('front-house.jpg', 'The front of Hi Tides, grey cedar shingles above the lawn and boulders'),
   photo('hallway-pic.jpg', 'Entry hall with blue panelling and coat hooks'),
-  photo('entrance-area-1.jpg', 'Living room with the yellow sofa, a writing desk, and the french doors'),
   photo('seating-area-2.jpg', 'Living room with the television and reading chairs'),
-  photo('kitchen-1.jpg', 'Full kitchen with island seating and a wall oven'),
   photo('seating-area-indoor-1.jpg', 'Two yellow armchairs under the cedar wall, looking out to the trees'),
+  photo('kitchen-1.jpg', 'Full kitchen with island seating and a wall oven'),
   photo('detail-pic.jpg', 'Stained glass hummingbird and flowers in a window'),
   photo('view-2.jpg', "The bay through the cottage's front window"),
   photo('dryer-washer.jpg', 'Stacked washer and dryer'),
-  photo('main-bedroom-1.jpg', 'Main bedroom with a queen bed'),
   photo('on-suit-bathroom-1.jpg', 'En suite bathroom with a walk-in shower'),
+  photo('main-bedroom-1.jpg', 'Main bedroom with a queen bed'),
   photo('bed-1.jpg', 'Second bedroom with a queen bed and a quilt'),
   photo('side-deck-house.jpg', 'Back deck with two red Adirondack chairs'),
   photo('side-deck.jpg', 'The deck looking out over Port Mouton bay'),
-  photo('back-full-shot.jpg', 'The cottage from the lawn, with the bay behind'),
   photo('deck-seating-back.jpg', 'Patio seating on the back terrace'),
+  photo('back-full-shot.jpg', 'The cottage from the lawn, with the bay behind'),
   photo('seating-area-flowers.jpg', 'Flowers along the back terrace'),
   photo('shower-inside.jpg', 'Inside the outdoor shower, cedar walls and a rainfall head'),
   photo('outdoor-shower-side.jpg', 'The outdoor shower among the trees'),
