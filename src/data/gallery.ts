@@ -36,17 +36,20 @@ const photo = (file: string, alt: string): GalleryImage => ({
   alt,
 });
 
-// Twenty photos: four blocks of five, which is what the gallery grid's
-// large-tile rhythm (every fifth photo) is built around.
+// Twenty-five photos: five blocks of five, which is what the gallery grid's
+// large-tile rhythm (every fifth photo) is built around. Every photo shown
+// anywhere on the story page is in here too, so the gallery is complete.
 export const walkthrough: GalleryImage[] = [
+  photo('dji_20250819115309_0032_d.jpg', 'Aerial view of Hi Tides above the white-sand beach and bay in Port Mouton, Nova Scotia'),
   photo('front-house.jpg', 'The front of Hi Tides, grey cedar shingles above the lawn and boulders'),
   photo('hallway-pic.jpg', 'Entry hall with blue panelling and coat hooks'),
   photo('entrance-area-1.jpg', 'Living room with the yellow sofa, a writing desk, and the french doors'),
   photo('seating-area-2.jpg', 'Living room with the television and reading chairs'),
-  photo('seating-area-indoor-1.jpg', 'Two yellow armchairs under the cedar wall, looking out to the trees'),
   photo('kitchen-1.jpg', 'Full kitchen with island seating and a wall oven'),
-  photo('dryer-washer.jpg', 'Stacked washer and dryer'),
+  photo('seating-area-indoor-1.jpg', 'Two yellow armchairs under the cedar wall, looking out to the trees'),
   photo('detail-pic.jpg', 'Stained glass hummingbird and flowers in a window'),
+  photo('view-2.jpg', "The bay through the cottage's front window"),
+  photo('dryer-washer.jpg', 'Stacked washer and dryer'),
   photo('main-bedroom-1.jpg', 'Main bedroom with a queen bed'),
   photo('on-suit-bathroom-1.jpg', 'En suite bathroom with a walk-in shower'),
   photo('bed-1.jpg', 'Second bedroom with a queen bed and a quilt'),
@@ -54,10 +57,13 @@ export const walkthrough: GalleryImage[] = [
   photo('side-deck.jpg', 'The deck looking out over Port Mouton bay'),
   photo('back-full-shot.jpg', 'The cottage from the lawn, with the bay behind'),
   photo('deck-seating-back.jpg', 'Patio seating on the back terrace'),
-  photo('shower-inside.jpg', 'Inside the outdoor shower, cedar walls and a rainfall head'),
   photo('seating-area-flowers.jpg', 'Flowers along the back terrace'),
+  photo('shower-inside.jpg', 'Inside the outdoor shower, cedar walls and a rainfall head'),
   photo('outdoor-shower-side.jpg', 'The outdoor shower among the trees'),
-  photo('beach-sand.jpg', 'White sand and dunes on a clear day near Port Mouton'),
+  photo('beach-turquoise.jpg', 'Clear turquoise water and white dunes on a calm day'),
+  photo('beach-waves.jpg', 'Clear water breaking on white sand near Port Mouton'),
+  photo('beach-waves-2.jpg', 'Small waves on white sand under a blue sky'),
+  photo('beach-boulders.jpg', "Granite boulders along the sand at the water's edge"),
   photo('beach-sunset.jpg', 'Sunset over the beach at low tide'),
 ];
 
@@ -87,11 +93,12 @@ export const stayPhotos: GalleryImage[] = [
   byFile('outdoor-shower-side.jpg'),
 ];
 
-/** Photos used outside the gallery list (The View). */
-export const beachWaves: GalleryImage = photo(
-  'beach-waves.jpg',
-  'Clear water breaking on white sand near Port Mouton',
-);
+/** The view section: the aerial, the beach on a clear day, the window. */
+export const viewPhotos: GalleryImage[] = [
+  byFile('dji_20250819115309_0032_d.jpg'),
+  byFile('beach-waves.jpg'),
+  byFile('view-2.jpg'),
+];
 
 /**
  * Stable view-transition name for a photo, shared by the story page and

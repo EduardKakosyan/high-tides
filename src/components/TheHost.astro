@@ -1,25 +1,26 @@
 ---
-// The host. Brian Greening, by name, in his own words. A small round
-// placeholder stands in for the portrait until the real photo lands: drop it
-// at src/assets/media/host-brian.jpg and swap the circle for
-// <Image src={brian} alt="Brian Greening, host of Hi Tides" class="h-24 w-24 rounded-full object-cover" />.
+// The host. Brian Greening, by name, in his own words, with his photo (on
+// his boat in the bay, the cottages behind him). The portrait is deliberately
+// not in the gallery; it lives only here.
+import { Image } from 'astro:assets';
+import brian from '../assets/media/host-brian.jpg';
 
 const hostName = 'Brian Greening';
-const initials = 'BG';
 ---
 
 <section aria-labelledby="the-host-heading" class="bg-bg">
   <div class="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
     <div class="flex items-start gap-5 sm:gap-8">
-      <div
-        class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-surface to-cedar/35 ring-1 ring-ink/5 sm:h-24 sm:w-24"
-        role="img"
-        aria-label="Portrait of Brian Greening, host of Hi Tides, coming soon"
-      >
-        <span class="font-head text-xl font-semibold tracking-tight text-cedar sm:text-3xl" aria-hidden="true">
-          {initials}
-        </span>
-      </div>
+      <Image
+        src={brian}
+        alt="Brian Greening, host of Hi Tides, on his boat in Port Mouton bay"
+        width={320}
+        height={320}
+        densities={[1, 2]}
+        loading="lazy"
+        decoding="async"
+        class="h-24 w-24 shrink-0 rounded-full object-cover object-[50%_30%] ring-1 ring-ink/10 sm:h-40 sm:w-40"
+      />
 
       <div class="min-w-0">
         <p data-reveal class="text-xs font-semibold uppercase tracking-[0.22em] text-muted">

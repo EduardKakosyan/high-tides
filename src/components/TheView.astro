@@ -3,9 +3,9 @@
 // drone frame that shows the cottage sitting above the beach, the beach on a
 // clear day, and the bay through the front window.
 import { Image } from 'astro:assets';
-import aerialBay from '../assets/media/dji_20250819115309_0032_d.jpg';
-import viewFromWindow from '../assets/media/view-2.jpg';
-import { beachWaves } from '../data/gallery';
+import { viewPhotos, morphName } from '../data/gallery';
+
+const [aerial, beach, window] = viewPhotos;
 ---
 
 <section aria-labelledby="the-view-heading" class="bg-ink text-white">
@@ -26,10 +26,10 @@ import { beachWaves } from '../data/gallery';
       white sand and clear water, is a five-minute drive.
     </p>
 
-    <figure data-parallax class="mt-12 overflow-hidden rounded-2xl">
+    <figure transition:name={morphName(aerial)} data-parallax class="mt-12 overflow-hidden rounded-2xl">
       <Image
-        src={aerialBay}
-        alt="Aerial view of Hi Tides above the white-sand beach and bay in Port Mouton, Nova Scotia"
+        src={aerial.src}
+        alt={aerial.alt}
         widths={[480, 768, 1200, 1800]}
         sizes="(min-width: 1024px) 1152px, 100vw"
         loading="lazy"
@@ -39,10 +39,10 @@ import { beachWaves } from '../data/gallery';
     </figure>
 
     <div class="mt-4 grid gap-4 sm:grid-cols-2">
-      <figure class="overflow-hidden rounded-2xl">
+      <figure transition:name={morphName(beach)} class="overflow-hidden rounded-2xl">
         <Image
-          src={beachWaves.src}
-          alt={beachWaves.alt}
+          src={beach.src}
+          alt={beach.alt}
           widths={[480, 768, 1200]}
           sizes="(min-width: 640px) 50vw, 100vw"
           loading="lazy"
@@ -50,10 +50,10 @@ import { beachWaves } from '../data/gallery';
           class="aspect-[4/3] w-full object-cover"
         />
       </figure>
-      <figure class="overflow-hidden rounded-2xl">
+      <figure transition:name={morphName(window)} class="overflow-hidden rounded-2xl">
         <Image
-          src={viewFromWindow}
-          alt="The bay through the cottage's front window"
+          src={window.src}
+          alt={window.alt}
           widths={[480, 768, 1200]}
           sizes="(min-width: 640px) 50vw, 100vw"
           loading="lazy"

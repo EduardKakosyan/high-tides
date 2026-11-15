@@ -247,3 +247,18 @@ optional `INQUIRY_FROM` (needs the sending domain verified in Resend;
 otherwise Resend's onboarding sender is used, which only delivers to the
 Resend account's own address). Until the key is set the function answers
 503 and the form shows its "try again" panel. netlify.toml removed.
+
+## Photos round two (2026-11-14, late)
+
+- Gallery is 25 photos now and includes every photo shown on the story page
+  (the aerial, the window view and the beach-waves shot from The view were
+  missing). Three new beach photos from Brian: turquoise water with the
+  dunes (replaces the earlier white-sand photo, which is out), a second
+  waves-on-sand shot, and the granite boulders. The boulders photo arrived
+  as a PNG stored on its side with no orientation tag; it is rotated upright
+  in the pipeline step (sips --rotate 90). Originals in Content/images/beach/.
+- The View reads its three photos from gallery.ts now, so they morph to
+  their gallery tiles like the cottage photos do.
+- Brian's portrait is in (src/assets/media/host-brian.jpg, original in
+  Content/images/host/). Round crop beside his name, face-weighted. Not in
+  the gallery, by his request.
